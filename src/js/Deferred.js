@@ -4,7 +4,6 @@
  * TODO add promise api that allows a limited api
  */
 class Deferred {
-
   static createResolved (data) {
     let deferred = new Deferred()
     deferred.resolve(data)

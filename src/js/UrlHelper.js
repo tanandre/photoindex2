@@ -3,6 +3,10 @@ class UrlHelper {
     this.serverUrl = serverUrl
   }
 
+  getListing () {
+    return this.serverUrl + '/listing'
+  }
+
   getThumbnailUrl (photo) {
     return this.getPhotoUrl(photo, 300)
   }

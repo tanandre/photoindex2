@@ -22,4 +22,7 @@
 </script>
 
 <style scoped>
+  .thumbnailGallery {
+    overflow: hidden;
+  }
 </style>

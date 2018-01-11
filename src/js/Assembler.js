@@ -1,13 +1,18 @@
-import injector from 'vue-inject'
 import UrlHelper from './UrlHelper.js'
 import ImageWorker from './loaders/ImageWorker'
 import QueuedLoader from './loaders/QueuedLoader'
 
-export default {
-  assemble: function (serverUrl) {
-    injector.constant('serverUrl', serverUrl)
-    injector.service('urlHelper', UrlHelper)
+class Assembler {
+  constructor (injector) {
+    this.injector = injector
+  }
 
-    injector.constant('imageLoader', new QueuedLoader([new ImageWorker()], true))
+  assemble (serverUrl) {
+    this.injector.constant('serverUrl', serverUrl)
+    this.injector.service('urlHelper', UrlHelper)
+
+    this.injector.constant('imageLoader', new QueuedLoader([new ImageWorker()], true))
   }
 }
+
+export default Assembler
