@@ -5,7 +5,10 @@
         <md-icon>menu</md-icon>
       </md-button>
       <h2 class="md-title">{{ title }}</h2>
+      <small>{{album.images.length}}</small>
       <search-input v-model="tags" class="searchInput"></search-input>
+      <md-progress-spinner v-if="loading" :md-diameter="30" :md-stroke="3" class="md-accent"
+                           md-mode="indeterminate"></md-progress-spinner>
     </md-toolbar>
     <thumbnail-gallery v-bind:album="album"></thumbnail-gallery>
   </div>
@@ -30,24 +33,34 @@
           images: [],
           imageItems: []
         },
-        tags: []
+        tags: [],
+        loading: false
       }
     },
+
     mounted: function () {
       let serverUrl = this.$route.query.server
-      new Assembler(injector).assemble(serverUrl)
-      this.retrieveImages(serverUrl)
+      new Assembler(injector, Vue.http).assemble(serverUrl)
+      this.retrieveImages({})
     },
-    methods: {
-      retrieveImages: function (serverUrl) {
-        let urlHelper = injector.get('urlHelper')
 
-        Vue.http.get(urlHelper.getListing()).then(response => {
-          let index = Math.round(Math.random() * 1000)
+    methods: {
+      retrieveImages: function (data) {
+        let urlHelper = injector.get('urlHelper')
+        let jsonLoader = injector.get('jsonLoader')
+
+        // TODO cancel current one if still active
+        this.loading = true
+        jsonLoader.load(urlHelper.getListing(), {params: data}).then(response => {
+          this.loading = false
+          let images = response
+          let end = 50
+          let start = Math.round(Math.random() * images.length) - end
           this.album = {
-            images: response.body.splice(index, 30)
+            images: images.splice(start, end)
           }
-        }).catch(err => {
+        }, err => {
+          this.loading = false
           console.error(err)
         })
       }
@@ -57,7 +70,7 @@
         console.log('watch', arguments)
       },
       tags: function (tags) {
-        console.log('watchTags', tags)
+        this.retrieveImages({tag: tags})
       }
     }
   }

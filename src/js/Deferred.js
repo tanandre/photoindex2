@@ -1,5 +1,3 @@
-'use strict'
-
 /**
  * TODO add promise api that allows a limited api
  */

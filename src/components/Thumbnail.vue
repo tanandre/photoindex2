@@ -1,26 +1,85 @@
 <template>
   <div ref="thumbnail" class="thumbnail highlightable">
     <md-progress-bar v-if="status == 'loading'" md-mode="indeterminate"></md-progress-bar>
+    <span v-if="status === 'error'">error</span>
     <slot></slot>
   </div>
 </template>
 
 <script>
+  function isElementInViewport (el) {
+    let rect = el.getBoundingClientRect()
+    return rect.bottom > 0 && rect.right > 0 && rect.top <
+      (window.innerHeight || document.documentElement.clientHeight) && rect.left <
+      (window.innerWidth || document.documentElement.clientWidth)
+  }
+
   export default {
-    dependencies: ['urlHelper', 'imageLoader'],
+    dependencies: ['urlHelper', 'thumbnailLoader'],
     props: ['photo'],
     data: function () {
       return {
-        status: 'loading'
+        status: 'idle',
+        isDone: false,
+        promise: null
       }
     },
-    mounted: function () {
-      let url = this.urlHelper.getThumbnailUrl(this.photo)
 
-      this.imageLoader.load(url).then(() => {
-        this.status = 'completed'
-        this.$refs['thumbnail'].style.backgroundImage = 'url(' + url + ')'
+    mounted: function () {
+      ['DOMContentLoaded', 'load', 'scroll', 'resize'].forEach((event) => {
+        window.addEventListener(event, this.loadThumbnailIfInViewport, false)
       })
+      this.loadThumbnailIfInViewport()
+    },
+
+    beforeDestroy: function () {
+      ['DOMContentLoaded', 'load', 'scroll', 'resize'].forEach((event) => {
+        window.removeEventListener(event, this.loadThumbnailIfInViewport, false)
+      })
+
+      this.status = 'destroyed'
+      if (this.promise) {
+        this.promise.cancel()
+      }
+    },
+
+    methods: {
+      loadThumbnailIfInViewport: function () {
+        if (this.isDone) {
+          return
+        }
+
+        if (!isElementInViewport(this.$el)) {
+          // console.log('not in viewport');
+          // cancel queued items that have not been started
+          if (this.promise && !this.promise.hasProgress()) {
+            this.status = 'canceled'
+            this.promise.cancel()
+            this.promise = null
+          }
+          return
+        }
+
+        // already on the queue
+        if (this.promise) {
+          return
+        }
+
+        this.status = 'in queue'
+        let thumbnail = this.$refs['thumbnail']
+
+        let url = this.urlHelper.getThumbnailUrl(this.photo)
+        this.promise = this.thumbnailLoader.load(url).then(() => {
+          this.status = 'completed'
+          thumbnail.style.backgroundImage = 'url(' + url + ')'
+        }, (err) => {
+          console.error(err)
+          this.status = 'error'
+          this.isDone = true
+        }, () => {
+          this.status = 'loading'
+        })
+      }
     }
   }
 </script>
