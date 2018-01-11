@@ -1,6 +1,7 @@
 <template>
   <div ref="thumbnail" class="thumbnail highlightable">
     <md-progress-bar v-if="status == 'loading'" md-mode="indeterminate"></md-progress-bar>
+    <md-tooltip md-direction="bottom">{{photo.date}}</md-tooltip>
     <span v-if="status === 'error'">error</span>
     <slot></slot>
   </div>
@@ -86,7 +87,6 @@
 
 <style scoped>
   .thumbnail {
-    height: 200px;
     display: inline-block;
     background-size: cover;
     background-position: center;
@@ -111,30 +111,6 @@
     -webkit-transition: opacity .3s ease-out;
     -o-transition: opacity .3s ease-out;
     transition: all .3s ease-out;
-  }
-
-  @media only screen and (max-width: 480px) {
-    .thumbnail {
-      width: calc(100% / 3);
-    }
-  }
-
-  @media only screen and (max-width: 650px) and (min-width: 481px) {
-    .thumbnail {
-      width: calc(100% / 4);
-    }
-  }
-
-  @media only screen and (max-width: 1024px) and (min-width: 481px) {
-    .thumbnail {
-      width: calc(100% / 5);
-    }
-  }
-
-  @media only screen and (min-width: 1025px) {
-    .thumbnail {
-      width: calc(100% / 7);
-    }
   }
 
 </style>
