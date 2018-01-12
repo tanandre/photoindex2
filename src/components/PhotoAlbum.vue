@@ -1,5 +1,7 @@
 <template>
-  <div class="photoAlbum">
+  <div class="photoAlbum" :class="{inPhotoDetailView: selectedImage !== null}">
+    <photo-detail-view v-if="selectedImage !== null"
+                       v-on:close="selectedImage = null"></photo-detail-view>
     <md-toolbar>
       <md-button class="md-icon-button">
         <md-icon>menu</md-icon>
@@ -14,7 +16,7 @@
                   :page-count="album.pageCount"></pagination>
                   -->
     </md-toolbar>
-    <thumbnail-gallery v-bind:album="album"></thumbnail-gallery>
+    <thumbnail-gallery v-bind:album="album" v-on:select="selectImage"></thumbnail-gallery>
   </div>
 </template>
 
@@ -22,7 +24,7 @@
   import Vue from 'vue'
   import Assembler from '../js/Assembler'
   import ThumbnailGallery from './ThumbnailGallery.vue'
-  import Pagination from './Pagination.vue'
+  import PhotoDetailView from './PhotoDetailView.vue'
   import SearchInput from './SearchInput.vue'
   import injector from 'vue-inject'
 
@@ -30,7 +32,7 @@
     components: {
       ThumbnailGallery,
       SearchInput,
-      Pagination
+      PhotoDetailView
     },
     data () {
       return {
@@ -39,6 +41,7 @@
           images: [],
           imageItems: []
         },
+        selectedImage: null,
         tags: [],
         loading: false
       }
@@ -51,6 +54,9 @@
     },
 
     methods: {
+      selectImage: function (image) {
+        this.selectedImage = image
+      },
       retrieveImages: function (data) {
         let urlHelper = injector.get('urlHelper')
         let jsonLoader = injector.get('jsonLoader')
@@ -82,6 +88,14 @@
 </script>
 
 <style scoped>
+  .photoAlbum {
+    height: 100%;
+  }
+
+  .inPhotoDetailView {
+    overflow: hidden;
+  }
+
   .searchInput {
     margin-left: 10px;
   }

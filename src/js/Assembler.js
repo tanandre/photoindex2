@@ -14,6 +14,7 @@ class Assembler {
     this.injector.service('urlHelper', UrlHelper)
 
     this.injector.constant('thumbnailLoader', new QueuedLoader([new ImageWorker()], true))
+    this.injector.constant('photoLoader', new QueuedLoader([new ImageWorker()], false))
     this.injector.constant('jsonLoader', new QueuedLoader([new XhrWorker(this.http)], true))
   }
 }

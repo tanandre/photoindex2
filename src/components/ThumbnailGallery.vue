@@ -2,9 +2,8 @@
   <div class="thumbnailGallery">
     <pagination v-if="pageCount > 1" v-model="currentPage"
                 :page-count="pageCount"></pagination>
-
     <thumbnail class="thumbnail" v-for="image in getImagesForCurrentPage()" v-bind:photo="image"
-               :key="image.id">
+               :key="image.id" @click.native="onClickThumbnail(image)">
     </thumbnail>
   </div>
 </template>
@@ -35,6 +34,9 @@
     },
 
     methods: {
+      onClickThumbnail: function (image) {
+        this.$emit('select', image);
+      },
       calibratePageCount: function () {
         this.pageCount = Math.ceil(this.album.images.length / this.imagesPerPage)
       },

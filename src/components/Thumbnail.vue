@@ -104,7 +104,7 @@
     opacity: 1;
     box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.9);
     transform: scale(1.05);
-    z-index: 1000;
+    z-index: 10;
   }
 
   .highlightable {

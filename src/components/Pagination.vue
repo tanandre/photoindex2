@@ -18,6 +18,9 @@
     },
     methods: {
       shouldDisplay: function (idx) {
+        if (this.pageCount < 10) {
+          return true
+        }
         if (idx === this.pageCount) {
           return true
         }
