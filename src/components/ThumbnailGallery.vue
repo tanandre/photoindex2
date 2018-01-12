@@ -1,5 +1,8 @@
 <template>
   <div class="thumbnailGallery">
+    <pagination v-if="pageCount > 1" v-model="currentPage"
+                :page-count="pageCount"></pagination>
+
     <thumbnail class="thumbnail" v-for="image in getImagesForCurrentPage()" v-bind:photo="image"
                :key="image.id">
     </thumbnail>
@@ -8,18 +11,69 @@
 
 <script>
   import Thumbnail from './Thumbnail.vue'
+  import Pagination from './Pagination.vue'
 
   export default {
     components: {
-      Thumbnail
+      Thumbnail,
+      Pagination
     },
     props: ['album'],
+    data: function () {
+      return {
+        pageCount: 1,
+        imagesPerPage: 0,
+        currentPage: 0
+      }
+    },
+    mounted: function () {
+      window.addEventListener('resize', this.calibrateImagesPerPage)
+    },
+
+    beforeDestroy: function () {
+      window.removeEventListener('resize', this.calibrateImagesPerPage)
+    },
+
     methods: {
+      calibratePageCount: function () {
+        this.pageCount = Math.ceil(this.album.images.length / this.imagesPerPage)
+      },
+      calibrateImagesPerPage: function () {
+        let width = window.screen.width
+        if (width < 480) {
+          this.imagesPerPage = 3 * 5
+          return
+        }
+        if (width < 650) {
+          this.imagesPerPage = 4 * 5
+          return
+        }
+        if (width < 1024) {
+          this.imagesPerPage = 5 * 5
+          return
+        }
+        if (width < 1280) {
+          this.imagesPerPage = 6 * 5
+          return
+        }
+        if (width >= 1280) {
+          this.imagesPerPage = 7 * 5
+        }
+      },
       getImagesForCurrentPage: function () {
         let images = this.album.images
-        let begin = this.album.currentPage * this.album.imagesPerPage
-        let end = Math.min(images.length, begin + this.album.imagesPerPage)
+        let begin = this.currentPage * this.imagesPerPage
+        let end = Math.min(images.length, begin + this.imagesPerPage)
         return images.slice(begin, end)
+      }
+    },
+    watch: {
+      album: function () {
+        this.calibrateImagesPerPage()
+        this.calibratePageCount()
+      },
+      imagesPerPage: function () {
+        this.calibratePageCount()
       }
     }
   }
@@ -52,7 +106,13 @@
     }
   }
 
-  @media only screen and (min-width: 1025px) {
+  @media only screen and (max-width: 1280px) and (min-width: 1025px) {
+    .thumbnail {
+      width: calc(100% / 6);
+    }
+  }
+
+  @media only screen and (min-width: 1280px) {
     .thumbnail {
       width: calc(100% / 7);
     }

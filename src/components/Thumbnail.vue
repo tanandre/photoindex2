@@ -28,20 +28,24 @@
 
     mounted: function () {
       ['DOMContentLoaded', 'load', 'scroll', 'resize'].forEach((event) => {
-        window.addEventListener(event, this.loadThumbnailIfInViewport, false)
+        window.addEventListener(event, this.loadThumbnailIfInViewport)
       })
       this.loadThumbnailIfInViewport()
     },
 
     beforeDestroy: function () {
       ['DOMContentLoaded', 'load', 'scroll', 'resize'].forEach((event) => {
-        window.removeEventListener(event, this.loadThumbnailIfInViewport, false)
+        window.removeEventListener(event, this.loadThumbnailIfInViewport)
       })
 
       this.status = 'destroyed'
       if (this.promise) {
         this.promise.cancel()
       }
+    },
+
+    updated: function () {
+      this.loadThumbnailIfInViewport()
     },
 
     methods: {

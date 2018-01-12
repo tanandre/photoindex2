@@ -6,12 +6,13 @@
       </md-button>
       <h2 class="md-title">{{ title }}</h2>
       <small>{{album.images.length}}</small>
-      <small>|{{album.currentPage}}</small>
       <search-input v-model="tags" class="searchInput"></search-input>
       <md-progress-spinner v-if="loading" :md-diameter="30" :md-stroke="3" class="md-accent"
                            md-mode="indeterminate"></md-progress-spinner>
+      <!--
       <pagination v-if="album.pageCount > 1" v-model="album.currentPage"
                   :page-count="album.pageCount"></pagination>
+                  -->
     </md-toolbar>
     <thumbnail-gallery v-bind:album="album"></thumbnail-gallery>
   </div>
@@ -25,8 +26,6 @@
   import SearchInput from './SearchInput.vue'
   import injector from 'vue-inject'
 
-  let imagesPerPage = 30
-
   export default {
     components: {
       ThumbnailGallery,
@@ -38,10 +37,7 @@
         title: 'Photo Index',
         album: {
           images: [],
-          imageItems: [],
-          currentPage: 0,
-          pageCount: 1,
-          imagesPerPage: imagesPerPage
+          imageItems: []
         },
         tags: [],
         loading: false
@@ -64,15 +60,9 @@
         jsonLoader.load(urlHelper.getListing(), {params: data}).then(response => {
           this.loading = false
           let images = response
-//          let end = 50
-//          let start = Math.round(Math.random() * images.length) - end
-//          images = images.splice(start, end)
           this.album = {
             images: images,
-            imageItems: [],
-            currentPage: 0,
-            pageCount: Math.ceil(images.length / imagesPerPage),
-            imagesPerPage: imagesPerPage
+            imageItems: []
           }
         }, err => {
           this.loading = false

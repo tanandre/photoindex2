@@ -1,6 +1,7 @@
 <template>
   <div class="pagination">
-    <md-button @click.native="onClick(idx)" class="paginationButton md-icon-button md-raised pageButton"
+    <md-button @click.native="onClick(idx)"
+               class="paginationButton md-icon-button md-raised pageButton"
                v-if="shouldDisplay(idx)" v-for="idx in pageCount" :key="idx"
                :class="getCssClass(idx)">{{idx}}
     </md-button>
@@ -12,7 +13,7 @@
     props: ['value', 'pageCount'],
     data: function () {
       return {
-        range: 2
+        range: 1
       }
     },
     methods: {
@@ -47,6 +48,7 @@
   .paginationButton:first-child {
     margin-right: 10px;
   }
+
   .paginationButton:last-child {
     margin-left: 10px;
   }
