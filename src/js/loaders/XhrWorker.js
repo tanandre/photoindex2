@@ -13,7 +13,6 @@ class XhrWorker {
   execute (url, params) {
     this._isAvailable = false
     let deferred = new Deferred()
-
     this._http.get(url, params).then(response => {
       this._isAvailable = true
       deferred.resolve(response.body)

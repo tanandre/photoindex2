@@ -30,6 +30,7 @@
       ['DOMContentLoaded', 'load', 'scroll', 'resize'].forEach((event) => {
         window.addEventListener(event, this.loadThumbnailIfInViewport)
       })
+      console.log('mounted thumbnail')
       this.loadThumbnailIfInViewport()
     },
 

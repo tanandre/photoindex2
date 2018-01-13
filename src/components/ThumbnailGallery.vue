@@ -12,6 +12,7 @@
   import Thumbnail from './Thumbnail.vue'
   import Pagination from './Pagination.vue'
 
+  let rows = 10
   export default {
     components: {
       Thumbnail,
@@ -35,31 +36,36 @@
 
     methods: {
       onClickThumbnail: function (image) {
-        this.$emit('select', image);
+        this.$emit('select', image)
       },
       calibratePageCount: function () {
         this.pageCount = Math.ceil(this.album.images.length / this.imagesPerPage)
       },
+      resetCurrentPage: function () {
+        if (this.currentPage >= this.pageCount) {
+          this.currentPage = 0
+        }
+      },
       calibrateImagesPerPage: function () {
         let width = window.screen.width
         if (width < 480) {
-          this.imagesPerPage = 3 * 5
+          this.imagesPerPage = 3 * rows
           return
         }
         if (width < 650) {
-          this.imagesPerPage = 4 * 5
+          this.imagesPerPage = 4 * rows
           return
         }
         if (width < 1024) {
-          this.imagesPerPage = 5 * 5
+          this.imagesPerPage = 5 * rows
           return
         }
         if (width < 1280) {
-          this.imagesPerPage = 6 * 5
+          this.imagesPerPage = 6 * rows
           return
         }
         if (width >= 1280) {
-          this.imagesPerPage = 7 * 5
+          this.imagesPerPage = 7 * rows
         }
       },
       getImagesForCurrentPage: function () {
@@ -73,6 +79,7 @@
       album: function () {
         this.calibrateImagesPerPage()
         this.calibratePageCount()
+        this.resetCurrentPage()
       },
       imagesPerPage: function () {
         this.calibratePageCount()
@@ -82,9 +89,9 @@
 </script>
 
 <style scoped>
-  .thumbnailGallery {
-    overflow: hidden;
-  }
+  /*.thumbnailGallery {*/
+    /*overflow: hidden;*/
+  /*}*/
 
   .thumbnail {
     height: 200px;

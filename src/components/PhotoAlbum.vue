@@ -1,8 +1,8 @@
 <template>
   <div class="photoAlbum" :class="{inPhotoDetailView: selectedImage !== null}">
-    <photo-detail-view v-if="selectedImage !== null"
+    <photo-detail-view v-if="selectedImage !== null" v-bind:photo="selectedImage"
                        v-on:close="selectedImage = null"></photo-detail-view>
-    <md-toolbar>
+    <md-toolbar class="md-dense">
       <md-button class="md-icon-button">
         <md-icon>menu</md-icon>
       </md-button>
@@ -16,7 +16,8 @@
                   :page-count="album.pageCount"></pagination>
                   -->
     </md-toolbar>
-    <thumbnail-gallery v-bind:album="album" v-on:select="selectImage"></thumbnail-gallery>
+    <thumbnail-gallery v-bind:album="album"
+                       v-on:select="selectImage"></thumbnail-gallery>
   </div>
 </template>
 
@@ -50,10 +51,22 @@
     mounted: function () {
       let serverUrl = this.$route.query.server
       new Assembler(injector, Vue.http).assemble(serverUrl)
+
+      window.addEventListener('keydown', this.onKeyDown)
       this.retrieveImages({})
     },
 
+    beforeDestroy: function () {
+      window.removeEventListener('keydown', this.onKeyDown)
+    },
+
     methods: {
+      onKeyDown: function (key) {
+        if (key.keyCode === 27) {
+          this.selectedImage = null
+        }
+      },
+
       selectImage: function (image) {
         this.selectedImage = image
       },
