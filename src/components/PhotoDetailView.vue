@@ -37,7 +37,11 @@
       }
     },
     mounted: function () {
+      document.body.classList.add('noScroll')
       this.downloadUrl = this.urlHelper.getPhotoUrl(this.photo)
+    },
+    beforeDestroy: function () {
+      document.body.classList.remove('noScroll')
     }
   }
 </script>

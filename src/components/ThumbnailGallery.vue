@@ -89,10 +89,6 @@
 </script>
 
 <style scoped>
-  /*.thumbnailGallery {*/
-    /*overflow: hidden;*/
-  /*}*/
-
   .thumbnail {
     height: 200px;
   }

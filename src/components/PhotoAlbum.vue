@@ -1,5 +1,5 @@
 <template>
-  <div class="photoAlbum" :class="{inPhotoDetailView: selectedImage !== null}">
+  <div class="photoAlbum">
     <photo-detail-view v-if="selectedImage !== null" v-bind:photo="selectedImage"
                        v-on:close="selectedImage = null"></photo-detail-view>
     <md-toolbar class="md-dense">
@@ -101,15 +101,8 @@
 </script>
 
 <style scoped>
-  .photoAlbum {
-    height: 100%;
-  }
-
-  .inPhotoDetailView {
-    overflow: hidden;
-  }
-
   .searchInput {
     margin-left: 10px;
   }
+
 </style>
