@@ -1,10 +1,12 @@
 <template>
   <div class="pagination">
-    <md-button @click.native="onClick(idx)"
-               class="paginationButton md-icon-button md-raised pageButton"
-               v-if="shouldDisplay(idx)" v-for="idx in pageCount" :key="idx"
-               :class="getCssClass(idx)">{{idx}}
-    </md-button>
+
+    <router-link v-if="shouldDisplay(idx)" v-for="idx in pageCount" :key="idx"
+                 :to="'/album/gallery/' + idx">
+      <md-button :class="getCssClass(idx)"
+                 class="paginationButton md-icon-button md-raised pageButton">{{idx}}
+      </md-button>
+    </router-link>
   </div>
 </template>
 
@@ -18,7 +20,7 @@
     },
     methods: {
       shouldDisplay: function (idx) {
-        if (this.pageCount < 10) {
+        if (this.pageCount < 20) {
           return true
         }
         if (idx === this.pageCount) {
@@ -31,10 +33,6 @@
           return true
         }
         return false
-      },
-
-      onClick: function (idx) {
-        this.$emit('input', Number(idx) - 1)
       },
 
       getCssClass: function (idx) {

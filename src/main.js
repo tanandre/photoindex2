@@ -11,7 +11,7 @@ import 'vue-material/dist/theme/default-dark.css'
 // fix issue: https://github.com/vuematerial/vue-material/issues/1182
 import VueMaterial from 'vue-material'
 
-import {MdField, MdToolbar, MdIcon, MdButton, MdContent, MdTabs, MdProgress, MdSnackbar} from 'vue-material/dist/components'
+import {MdDrawer, MdField, MdToolbar, MdIcon, MdButton, MdContent, MdTabs, MdProgress, MdSnackbar} from 'vue-material/dist/components'
 import VueResource from 'vue-resource'
 
 Vue.use(injector)
@@ -25,6 +25,7 @@ Vue.use(MdIcon)
 Vue.use(MdProgress)
 Vue.use(MdField)
 Vue.use(MdSnackbar)
+Vue.use(MdDrawer)
 
 Vue.config.productionTip = false
 

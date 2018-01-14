@@ -10,7 +10,8 @@
           <md-icon>get_app</md-icon>
         </md-button>
       </a>
-      <span>{{getPhotoName()}}</span>
+      <div>{{getPhotoDate()}}</div>
+      <div>{{photo.path}}</div>
     </div>
   </div>
 </template>
@@ -28,7 +29,7 @@
       }
     },
     methods: {
-      getPhotoName: function () {
+      getPhotoDate: function () {
         let date = new Date(this.photo.dateInMillis)
         return date.toDateString() + ' ' + date.toLocaleTimeString()
       },

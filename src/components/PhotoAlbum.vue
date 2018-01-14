@@ -3,9 +3,11 @@
     <photo-detail-view v-if="selectedImage !== null" v-bind:photo="selectedImage"
                        v-on:close="selectedImage = null"></photo-detail-view>
     <md-toolbar class="md-dense">
-      <md-button class="md-icon-button">
+
+      <md-button class="md-icon-button" @click="showMenu = true">
         <md-icon>menu</md-icon>
       </md-button>
+
       <h2 class="md-title">{{ title }}</h2>
       <small>{{album.images.length}}</small>
       <search-input v-model="tags" class="searchInput"></search-input>
@@ -16,6 +18,10 @@
                   :page-count="album.pageCount"></pagination>
                   -->
     </md-toolbar>
+    <md-drawer :md-active.sync="showMenu">
+      <menu-settings></menu-settings>
+    </md-drawer>
+
     <thumbnail-gallery v-bind:album="album"
                        v-on:select="selectImage"></thumbnail-gallery>
   </div>
@@ -23,33 +29,37 @@
 
 <script>
   import Vue from 'vue'
+  import injector from 'vue-inject'
   import Assembler from '../js/Assembler'
   import ThumbnailGallery from './ThumbnailGallery.vue'
   import PhotoDetailView from './PhotoDetailView.vue'
+  import MenuSettings from './MenuSettings.vue'
   import SearchInput from './SearchInput.vue'
-  import injector from 'vue-inject'
 
   export default {
     components: {
       ThumbnailGallery,
       SearchInput,
-      PhotoDetailView
+      PhotoDetailView,
+      MenuSettings
     },
     data () {
       return {
         title: 'Photo Index',
         album: {
           images: [],
-          imageItems: []
+          imageItems: [],
+          currentPage: 0
         },
         selectedImage: null,
         tags: [],
-        loading: false
+        loading: false,
+        showMenu: false
       }
     },
 
     mounted: function () {
-      let serverUrl = this.$route.query.server
+      let serverUrl = localStorage.getItem('serverUrl')
       new Assembler(injector, Vue.http).assemble(serverUrl)
 
       window.addEventListener('keydown', this.onKeyDown)
@@ -96,7 +106,8 @@
           let images = response
           this.album = {
             images: images,
-            imageItems: []
+            imageItems: [],
+            currentPage: (Number(this.$route.params.page) - 1)
           }
         }, err => {
           this.loading = false
@@ -110,6 +121,10 @@
       },
       tags: function (tags) {
         this.retrieveImages({tag: tags})
+      },
+      '$route.params.page' (next, prev) {
+        console.log('page has changed')
+        this.album.currentPage = (Number(this.$route.params.page) - 1)
       }
     }
   }

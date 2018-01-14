@@ -1,6 +1,6 @@
 <template>
   <div class="thumbnailGallery">
-    <pagination v-if="pageCount > 1" v-model="currentPage"
+    <pagination v-if="pageCount > 1" v-model="album.currentPage"
                 :page-count="pageCount"></pagination>
     <thumbnail class="thumbnail" v-for="image in getImagesForCurrentPage()" v-bind:photo="image"
                :key="image.id" @click.native="onClickThumbnail(image)">
@@ -22,8 +22,7 @@
     data: function () {
       return {
         pageCount: 1,
-        imagesPerPage: 0,
-        currentPage: 0
+        imagesPerPage: 0
       }
     },
     mounted: function () {
@@ -43,7 +42,7 @@
       },
       resetCurrentPage: function () {
         if (this.currentPage >= this.pageCount) {
-          this.currentPage = 0
+          this.album.currentPage = 0
         }
       },
       calibrateImagesPerPage: function () {
@@ -70,7 +69,7 @@
       },
       getImagesForCurrentPage: function () {
         let images = this.album.images
-        let begin = this.currentPage * this.imagesPerPage
+        let begin = this.album.currentPage * this.imagesPerPage
         let end = Math.min(images.length, begin + this.imagesPerPage)
         return images.slice(begin, end)
       }
