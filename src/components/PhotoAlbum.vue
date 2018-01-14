@@ -62,9 +62,24 @@
 
     methods: {
       onKeyDown: function (key) {
-        if (key.keyCode === 27) {
-          this.selectedImage = null
+        if (this.selectedImage === null) {
+          // todo
+        } else {
+          if (key.keyCode === 27) {
+            this.selectedImage = null
+          } else if (key.keyCode === 37) {
+            this.selectImageByIndex(this.album.images.indexOf(this.selectedImage) - 1)
+          } else if (key.keyCode === 39) {
+            this.selectImageByIndex(this.album.images.indexOf(this.selectedImage) + 1)
+          }
         }
+      },
+
+      selectImageByIndex: function (index) {
+        if (index < 0 || index >= this.album.images.length) {
+          return
+        }
+        this.selectImage(this.album.images[index])
       },
 
       selectImage: function (image) {

@@ -20,7 +20,7 @@
 
   export default {
     components: {PhotoPane},
-    dependencies: ['urlHelper', 'photoLoader'],
+    dependencies: ['urlHelper'],
     props: ['photo'],
     data: function () {
       return {
