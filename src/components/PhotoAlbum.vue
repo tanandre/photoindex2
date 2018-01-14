@@ -31,7 +31,7 @@
   import SearchInput from './SearchInput.vue'
 
   export default {
-    dependencies: ['jsonLoader', 'urlHelper', 'navigator'],
+    dependencies: ['jsonLoader', 'urlHelper', 'navigator', 'keyHandler'],
     components: {
       ThumbnailGallery,
       SearchInput,
@@ -64,23 +64,10 @@
 
     methods: {
       onKeyDown: function (key) {
-        console.log(key.keyCode, key.altKey)
         if (this.selectedImage === null) {
-          if (key.keyCode === 49) {
-            this.navigator.setPage(1)
-          } else if (key.keyCode === 37 && !key.altKey) {
-            this.navigator.setPage(Number(this.$route.params.page) - 1)
-          } else if (key.keyCode === 39 && !key.altKey) {
-            this.navigator.setPage(Number(this.$route.params.page) + 1)
-          }
+          this.keyHandler.handlKeyEventGallery(event, this.album)
         } else {
-          if (key.keyCode === 27) {
-            this.navigator.clearPhoto()
-          } else if (key.keyCode === 37 && !key.altKey) {
-            this.selectImageByIndex(this.album.images.indexOf(this.selectedImage) - 1)
-          } else if (key.keyCode === 39 && !key.altKey) {
-            this.selectImageByIndex(this.album.images.indexOf(this.selectedImage) + 1)
-          }
+          this.keyHandler.handlKeyEventPhoto(event, this.album, this.selectedImage)
         }
       },
 
@@ -94,25 +81,19 @@
 
       onHashChangedPhoto: function (photoId) {
         if (photoId === -1) {
-          this.selectImage(null)
+          this.setSelectedImage(null)
           return
         }
         let foundPhoto = this.album.images.find(photo => {
           return photo.id === photoId
         })
-        this.selectImage(foundPhoto === undefined ? null : foundPhoto)
+        this.setSelectedImage(foundPhoto === undefined ? null : foundPhoto)
       },
 
-      selectImageByIndex: function (index) {
-        if (index < 0 || index >= this.album.images.length) {
-          return
-        }
-        this.navigator.setPhoto(this.album.images[index].id)
-      },
-
-      selectImage: function (image) {
+      setSelectedImage: function (image) {
         this.selectedImage = image
       },
+
       retrieveImages: function (data) {
         // TODO cancel current one if still active
         this.loading = true

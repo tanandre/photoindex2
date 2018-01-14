@@ -1,7 +1,6 @@
 class AlbumNavigator {
-  constructor (router, route) {
+  constructor (router) {
     this.router = router
-    this.route = route
   }
 
   clearPhoto () {
@@ -18,10 +17,6 @@ class AlbumNavigator {
   }
 
   setPage (page) {
-    if (page <= 0) {
-      return
-    }
-
     this.router.push({
       name: 'gallery',
       params: {
