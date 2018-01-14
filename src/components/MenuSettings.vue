@@ -6,7 +6,6 @@
     <md-list>
       <md-list-item>
         <md-icon>perm_media</md-icon>
-
         <md-field>
           <label>Server URL:</label>
           <md-input v-model="serverUrl"></md-input>

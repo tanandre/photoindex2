@@ -3,7 +3,6 @@
     <photo-detail-view v-if="selectedImage !== null" v-bind:photo="selectedImage"
                        v-on:close="selectedImage = null"></photo-detail-view>
     <md-toolbar class="md-dense">
-
       <md-button class="md-icon-button" @click="showMenu = true">
         <md-icon>menu</md-icon>
       </md-button>
@@ -28,15 +27,13 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import injector from 'vue-inject'
-  import Assembler from '../js/Assembler'
   import ThumbnailGallery from './ThumbnailGallery.vue'
   import PhotoDetailView from './PhotoDetailView.vue'
   import MenuSettings from './MenuSettings.vue'
   import SearchInput from './SearchInput.vue'
 
   export default {
+    dependencies: ['jsonLoader', 'urlHelper', 'navigator'],
     components: {
       ThumbnailGallery,
       SearchInput,
@@ -59,9 +56,6 @@
     },
 
     mounted: function () {
-      let serverUrl = localStorage.getItem('serverUrl')
-      new Assembler(injector, Vue.http).assemble(serverUrl)
-
       window.addEventListener('keydown', this.onKeyDown)
       this.retrieveImages({})
     },
@@ -72,8 +66,18 @@
 
     methods: {
       onKeyDown: function (key) {
+        console.log(key.keyCode)
         if (this.selectedImage === null) {
-          // todo
+          if (key.keyCode === 49) {
+            this.navigator.setPage(1)
+          }
+          if (key.keyCode === 37) {
+            if (this.$route.params.page > 0) {
+              this.navigator.setPage(Number(this.$route.params.page) - 1)
+            }
+          } else if (key.keyCode === 39) {
+            this.navigator.setPage(Number(this.$route.params.page) + 1)
+          }
         } else {
           if (key.keyCode === 27) {
             this.selectedImage = null
@@ -83,6 +87,14 @@
             this.selectImageByIndex(this.album.images.indexOf(this.selectedImage) + 1)
           }
         }
+      },
+
+      selectPage: function (page) {
+        // TODO move pageCount back to album and verify not out of bouds
+        if (page < 0) {
+          return
+        }
+        this.album.currentPage = page
       },
 
       selectImageByIndex: function (index) {
@@ -96,12 +108,9 @@
         this.selectedImage = image
       },
       retrieveImages: function (data) {
-        let urlHelper = injector.get('urlHelper')
-        let jsonLoader = injector.get('jsonLoader')
-
         // TODO cancel current one if still active
         this.loading = true
-        jsonLoader.load(urlHelper.getListing(), {params: data}).then(response => {
+        this.jsonLoader.load(this.urlHelper.getListing(), {params: data}).then(response => {
           this.loading = false
           let images = response
           this.album = {
@@ -116,15 +125,11 @@
       }
     },
     watch: {
-      album: function (value) {
-        console.log('watch', arguments)
-      },
       tags: function (tags) {
         this.retrieveImages({tag: tags})
       },
-      '$route.params.page' (next, prev) {
-        console.log('page has changed')
-        this.album.currentPage = (Number(this.$route.params.page) - 1)
+      '$route.params.page': function (value) {
+        this.selectPage(Number(value) - 1)
       }
     }
   }

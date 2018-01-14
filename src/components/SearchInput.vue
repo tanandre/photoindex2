@@ -3,7 +3,7 @@
     <div class="inputTag">
       <md-field>
         <md-input class="searchInput" v-model="searchTxt" placeholder="Search..."
-                  v-on:keyup.enter="onEnter" autofocus></md-input>
+                  @keydown="onKeyDown" v-on:keyup.enter="onEnter" autofocus></md-input>
       </md-field>
     </div>
     <div class="selectedTags">
@@ -26,6 +26,9 @@
       this.tags = this.value
     },
     methods: {
+      onKeyDown: function (event) {
+        event.stopPropagation()
+      },
       onEnter: function () {
         if (this.searchTxt !== '') {
           this.addTag(this.searchTxt)

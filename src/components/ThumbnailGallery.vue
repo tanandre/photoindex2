@@ -14,6 +14,7 @@
 
   let rows = 10
   export default {
+    dependencies: ['navigator'],
     components: {
       Thumbnail,
       Pagination
@@ -41,8 +42,8 @@
         this.pageCount = Math.ceil(this.album.images.length / this.imagesPerPage)
       },
       resetCurrentPage: function () {
-        if (this.currentPage >= this.pageCount) {
-          this.album.currentPage = 0
+        if (this.album.currentPage >= this.pageCount) {
+          this.navigator.setPage(1)
         }
       },
       calibrateImagesPerPage: function () {
