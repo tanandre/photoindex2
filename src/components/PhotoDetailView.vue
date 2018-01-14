@@ -21,7 +21,7 @@
 
   export default {
     components: {PhotoPane},
-    dependencies: ['urlHelper'],
+    dependencies: ['urlHelper', 'navigator'],
     props: ['photo'],
     data: function () {
       return {
@@ -34,7 +34,7 @@
         return date.toDateString() + ' ' + date.toLocaleTimeString()
       },
       onClose: function () {
-        this.$emit('close')
+        this.navigator.clearPhoto()
       }
     },
     mounted: function () {

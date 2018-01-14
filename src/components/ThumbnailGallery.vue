@@ -35,8 +35,8 @@
     },
 
     methods: {
-      onClickThumbnail: function (image) {
-        this.$emit('select', image)
+      onClickThumbnail: function (photo) {
+        this.navigator.setPhoto(photo.id)
       },
       calibratePageCount: function () {
         this.pageCount = Math.ceil(this.album.images.length / this.imagesPerPage)

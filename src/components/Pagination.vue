@@ -1,17 +1,16 @@
 <template>
   <div class="pagination">
 
-    <router-link v-if="shouldDisplay(idx)" v-for="idx in pageCount" :key="idx"
-                 :to="'/album/gallery/' + idx">
-      <md-button :class="getCssClass(idx)"
-                 class="paginationButton md-icon-button md-raised pageButton">{{idx}}
-      </md-button>
-    </router-link>
+    <md-button :class="getCssClass(idx)" v-if="shouldDisplay(idx)" v-for="idx in pageCount"
+               :key="idx" @click="onClick(idx)"
+               class="paginationButton md-icon-button md-raised pageButton">{{idx}}
+    </md-button>
   </div>
 </template>
 
 <script>
   export default {
+    dependencies: ['navigator'],
     props: ['value', 'pageCount'],
     data: function () {
       return {
@@ -19,6 +18,10 @@
       }
     },
     methods: {
+      onClick: function (idx) {
+        this.navigator.setPage(idx)
+      },
+
       shouldDisplay: function (idx) {
         if (this.pageCount < 20) {
           return true

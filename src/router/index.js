@@ -7,10 +7,12 @@ Vue.use(Router)
 export default new Router({
   routes: [{
     path: '*',
-    redirect: '/album/gallery/1'
+    redirect: '/gallery/1/photo/-1'
+    // redirect: '/album/gallery/1'
   }, {
-    path: '/album/gallery/:page',
-    name: 'PhotoAlbum',
+    path: '/gallery/:page/photo/:photoid',
+    // path: '/album/gallery/:page',
+    name: 'gallery',
     component: PhotoAlbum
   }]
 })

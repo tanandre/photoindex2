@@ -1,12 +1,11 @@
 <template>
   <div class="photoAlbum">
-    <photo-detail-view v-if="selectedImage !== null" v-bind:photo="selectedImage"
-                       v-on:close="selectedImage = null"></photo-detail-view>
+    <photo-detail-view v-if="selectedImage !== null"
+                       :photo="selectedImage"></photo-detail-view>
     <md-toolbar class="md-dense">
       <md-button class="md-icon-button" @click="showMenu = true">
         <md-icon>menu</md-icon>
       </md-button>
-
       <h2 class="md-title">{{ title }}</h2>
       <small>{{album.images.length}}</small>
       <search-input v-model="tags" class="searchInput"></search-input>
@@ -21,8 +20,7 @@
       <menu-settings></menu-settings>
     </md-drawer>
 
-    <thumbnail-gallery v-bind:album="album"
-                       v-on:select="selectImage"></thumbnail-gallery>
+    <thumbnail-gallery v-bind:album="album"></thumbnail-gallery>
   </div>
 </template>
 
@@ -66,30 +64,27 @@
 
     methods: {
       onKeyDown: function (key) {
-        console.log(key.keyCode)
+        console.log(key.keyCode, key.altKey)
         if (this.selectedImage === null) {
           if (key.keyCode === 49) {
             this.navigator.setPage(1)
-          }
-          if (key.keyCode === 37) {
-            if (this.$route.params.page > 0) {
-              this.navigator.setPage(Number(this.$route.params.page) - 1)
-            }
-          } else if (key.keyCode === 39) {
+          } else if (key.keyCode === 37 && !key.altKey) {
+            this.navigator.setPage(Number(this.$route.params.page) - 1)
+          } else if (key.keyCode === 39 && !key.altKey) {
             this.navigator.setPage(Number(this.$route.params.page) + 1)
           }
         } else {
           if (key.keyCode === 27) {
-            this.selectedImage = null
-          } else if (key.keyCode === 37) {
+            this.navigator.clearPhoto()
+          } else if (key.keyCode === 37 && !key.altKey) {
             this.selectImageByIndex(this.album.images.indexOf(this.selectedImage) - 1)
-          } else if (key.keyCode === 39) {
+          } else if (key.keyCode === 39 && !key.altKey) {
             this.selectImageByIndex(this.album.images.indexOf(this.selectedImage) + 1)
           }
         }
       },
 
-      selectPage: function (page) {
+      onHashChangedPage: function (page) {
         // TODO move pageCount back to album and verify not out of bouds
         if (page < 0) {
           return
@@ -97,11 +92,22 @@
         this.album.currentPage = page
       },
 
+      onHashChangedPhoto: function (photoId) {
+        if (photoId === -1) {
+          this.selectImage(null)
+          return
+        }
+        let foundPhoto = this.album.images.find(photo => {
+          return photo.id === photoId
+        })
+        this.selectImage(foundPhoto === undefined ? null : foundPhoto)
+      },
+
       selectImageByIndex: function (index) {
         if (index < 0 || index >= this.album.images.length) {
           return
         }
-        this.selectImage(this.album.images[index])
+        this.navigator.setPhoto(this.album.images[index].id)
       },
 
       selectImage: function (image) {
@@ -129,7 +135,10 @@
         this.retrieveImages({tag: tags})
       },
       '$route.params.page': function (value) {
-        this.selectPage(Number(value) - 1)
+        this.onHashChangedPage(Number(value) - 1)
+      },
+      '$route.params.photoid': function (value) {
+        this.onHashChangedPhoto(Number(value))
       }
     }
   }

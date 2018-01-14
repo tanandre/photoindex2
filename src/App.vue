@@ -13,7 +13,7 @@
     name: 'PhotoIndex',
     beforeCreate: function () {
       let serverUrl = localStorage.getItem('serverUrl')
-      new Assembler(injector, Vue.http, this.$router).assemble(serverUrl)
+      new Assembler(injector, Vue.http, this.$router, this.route).assemble(serverUrl)
     }
   }
 </script>
