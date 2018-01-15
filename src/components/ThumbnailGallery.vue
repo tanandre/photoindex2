@@ -1,8 +1,8 @@
 <template>
   <div class="thumbnailGallery">
-    <pagination v-if="pageCount > 1" v-model="album.currentPage"
+    <pagination v-if="pageCount > 1" :current-page="album.currentPage"
                 :page-count="pageCount"></pagination>
-    <thumbnail class="thumbnail" v-for="image in getImagesForCurrentPage()" v-bind:photo="image"
+    <thumbnail class="thumbnail" v-for="image in getImagesForCurrentPage()" :photo="image"
                :key="image.id" @click.native="onClickThumbnail(image)">
     </thumbnail>
   </div>

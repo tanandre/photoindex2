@@ -1,6 +1,6 @@
 <template>
   <div class="photoDetailView">
-    <photo-pane class="photoPane" v-bind:photo="photo"></photo-pane>
+    <photo-pane class="photoPane" :photo="photo"></photo-pane>
     <div class="photoDetailsPane">
       <md-button class="md-icon-button" @click="onClose" title="close">
         <md-icon>clear</md-icon>

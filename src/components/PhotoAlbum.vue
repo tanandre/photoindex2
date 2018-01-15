@@ -8,7 +8,7 @@
       </md-button>
       <h2 class="md-title">{{ title }}</h2>
       <small>{{album.images.length}}</small>
-      <search-input v-model="tags" class="searchInput"></search-input>
+      <search-input class="searchInput"></search-input>
       <md-progress-spinner v-if="loading" :md-diameter="30" :md-stroke="3" class="md-accent"
                            md-mode="indeterminate"></md-progress-spinner>
       <!--
@@ -20,7 +20,7 @@
       <menu-settings></menu-settings>
     </md-drawer>
 
-    <thumbnail-gallery v-bind:album="album"></thumbnail-gallery>
+    <thumbnail-gallery :album="album"></thumbnail-gallery>
   </div>
 </template>
 
@@ -47,7 +47,6 @@
           currentPage: 0
         },
         selectedImage: null,
-        tags: [],
         loading: false,
         showMenu: false
       }
@@ -55,7 +54,8 @@
 
     mounted: function () {
       window.addEventListener('keydown', this.onKeyDown)
-      this.retrieveImages({})
+      let tags = this.$route.query.q
+      this.retrieveImages({tag: (tags ? tags.split(',') : [])})
     },
 
     beforeDestroy: function () {
@@ -72,7 +72,6 @@
       },
 
       onHashChangedPage: function (page) {
-        // TODO move pageCount back to album and verify not out of bouds
         if (page < 0) {
           return
         }
@@ -80,11 +79,7 @@
       },
 
       onHashChangedPhoto: function (photoId) {
-        if (photoId === -1) {
-          this.setSelectedImage(null)
-          return
-        }
-        let foundPhoto = this.album.images.find(photo => {
+        let foundPhoto = photoId === -1 ? null : this.album.images.find(photo => {
           return photo.id === photoId
         })
         this.setSelectedImage(foundPhoto === undefined ? null : foundPhoto)
@@ -95,11 +90,13 @@
       },
 
       retrieveImages: function (data) {
+        console.log('retrieve images')
         // TODO cancel current one if still active
         this.loading = true
         this.jsonLoader.load(this.urlHelper.getListing(), {params: data}).then(response => {
           this.loading = false
           let images = response
+          console.log('setting album')
           this.album = {
             images: images,
             imageItems: [],
@@ -112,14 +109,17 @@
       }
     },
     watch: {
-      tags: function (tags) {
-        this.retrieveImages({tag: tags})
-      },
       '$route.params.page': function (value) {
         this.onHashChangedPage(Number(value) - 1)
       },
       '$route.params.photoid': function (value) {
         this.onHashChangedPhoto(Number(value))
+      },
+      '$route.query': function (query, old) {
+        if (JSON.stringify(query) !== JSON.stringify(old)) {
+          let tags = query.q
+          this.retrieveImages({tag: (tags ? tags.split(',') : [])})
+        }
       }
     }
   }

@@ -15,15 +15,13 @@
 
 <script>
   export default {
-    props: ['value'],
+    dependencies: ['navigator'],
     data: function () {
+      let tags = this.$route.query.q
       return {
         searchTxt: '',
-        tags: []
+        tags: tags ? tags.split(',') : []
       }
-    },
-    mounted: function () {
-      this.tags = this.value
     },
     methods: {
       onKeyDown: function (event) {
@@ -57,7 +55,7 @@
 
     watch: {
       tags: function () {
-        this.$emit('input', this.tags)
+        this.navigator.setTags(this.tags.join(','))
       }
     }
   }

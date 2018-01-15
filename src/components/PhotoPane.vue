@@ -22,7 +22,12 @@
         let photoPane = this.$refs['photoPane']
         photoPane.style.backgroundImage = 'url(' + thumbnailUrl + ')'
 
+        if (this.promise && !this.promise.isDone()) {
+          this.promise.cancel()
+        }
+
         let url = this.urlHelper.getPhotoUrl(this.photo, 1000)
+        // TODO cancel promise if existing
         this.promise = this.photoLoader.load(url).then(() => {
           this.status = 'completed'
           photoPane.style.backgroundImage = 'url(' + url + ')'

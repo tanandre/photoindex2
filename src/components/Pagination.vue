@@ -1,6 +1,5 @@
 <template>
   <div class="pagination">
-
     <md-button :class="getCssClass(idx)" v-if="shouldDisplay(idx)" v-for="idx in pageCount"
                :key="idx" @click="onClick(idx)"
                class="paginationButton md-icon-button md-raised pageButton">{{idx}}
@@ -11,7 +10,7 @@
 <script>
   export default {
     dependencies: ['navigator'],
-    props: ['value', 'pageCount'],
+    props: ['currentPage', 'pageCount'],
     data: function () {
       return {
         range: 1
@@ -32,14 +31,14 @@
         if (idx === 1) {
           return true
         }
-        if (Math.abs((idx - 1) - this.value) <= this.range) {
+        if (Math.abs((idx - 1) - this.currentPage) <= this.range) {
           return true
         }
         return false
       },
 
       getCssClass: function (idx) {
-        if ((idx - 1) === this.value) {
+        if ((idx - 1) === this.currentPage) {
           return 'md-primary'
         }
         return ''
