@@ -70,7 +70,7 @@
       },
       getImagesForCurrentPage: function () {
         let images = this.album.images
-        let begin = this.album.currentPage * this.imagesPerPage
+        let begin = (this.album.currentPage - 1) * this.imagesPerPage
         let end = Math.min(images.length, begin + this.imagesPerPage)
         return images.slice(begin, end)
       }
@@ -80,6 +80,12 @@
         this.calibrateImagesPerPage()
         this.calibratePageCount()
         this.resetCurrentPage()
+      },
+      'album.currentPage': function () {
+        console.log('currentPage changed', this.album.currentPage)
+        if (this.album.currentPage === 0) {
+          this.navigator.setPage(this.pageCount)
+        }
       },
       imagesPerPage: function () {
         this.calibratePageCount()

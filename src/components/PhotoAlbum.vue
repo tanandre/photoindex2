@@ -40,7 +40,7 @@
     },
     data () {
       return {
-        title: 'Photo Index',
+        title: 'PhotoIndex',
         album: {
           images: [],
           imageItems: [],
@@ -54,8 +54,7 @@
 
     mounted: function () {
       window.addEventListener('keydown', this.onKeyDown)
-      let tags = this.$route.query.q
-      this.retrieveImages({tag: (tags ? tags.split(',') : [])})
+      this.retrieveImages({tag: this.navigator.tagsToArray(this.$route.query.q)})
     },
 
     beforeDestroy: function () {
@@ -63,7 +62,7 @@
     },
 
     methods: {
-      onKeyDown: function (key) {
+      onKeyDown: function (event) {
         if (this.selectedImage === null) {
           this.keyHandler.handlKeyEventGallery(event, this.album)
         } else {
@@ -72,9 +71,9 @@
       },
 
       onHashChangedPage: function (page) {
-        if (page < 0) {
-          return
-        }
+//        if (page < 0) {
+//          return
+//        }
         this.album.currentPage = page
       },
 
@@ -100,7 +99,7 @@
           this.album = {
             images: images,
             imageItems: [],
-            currentPage: (Number(this.$route.params.page) - 1)
+            currentPage: (Number(this.$route.params.page))
           }
         }, err => {
           this.loading = false
@@ -110,15 +109,14 @@
     },
     watch: {
       '$route.params.page': function (value) {
-        this.onHashChangedPage(Number(value) - 1)
+        this.onHashChangedPage(Number(value))
       },
       '$route.params.photoid': function (value) {
         this.onHashChangedPhoto(Number(value))
       },
       '$route.query': function (query, old) {
         if (JSON.stringify(query) !== JSON.stringify(old)) {
-          let tags = query.q
-          this.retrieveImages({tag: (tags ? tags.split(',') : [])})
+          this.retrieveImages({tag: this.navigator.tagsToArray(query.q)})
         }
       }
     }

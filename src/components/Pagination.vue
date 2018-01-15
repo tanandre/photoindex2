@@ -31,14 +31,14 @@
         if (idx === 1) {
           return true
         }
-        if (Math.abs((idx - 1) - this.currentPage) <= this.range) {
+        if (Math.abs(idx - this.currentPage) <= this.range) {
           return true
         }
         return false
       },
 
       getCssClass: function (idx) {
-        if ((idx - 1) === this.currentPage) {
+        if (idx === this.currentPage) {
           return 'md-primary'
         }
         return ''

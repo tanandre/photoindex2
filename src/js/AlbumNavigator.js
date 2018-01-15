@@ -3,8 +3,15 @@ class AlbumNavigator {
     this.router = router
   }
 
+  tagsToArray (tags) {
+    return tags ? tags.split(',') : []
+  }
+
+  tagsToHashObject (tags) {
+    return tags.join(',')
+  }
+
   setTags (tags) {
-    console.log('setting tag:', tags)
     this.router.push({
       name: 'gallery',
       query: {
@@ -18,7 +25,6 @@ class AlbumNavigator {
   }
 
   setPhoto (photoId) {
-    console.log('set photo', photoId)
     this.router.push({
       name: 'gallery',
       params: {
@@ -29,7 +35,6 @@ class AlbumNavigator {
   }
 
   setPage (page) {
-    console.log(this.router.history.current)
     this.router.push({
       name: 'gallery',
       params: {
