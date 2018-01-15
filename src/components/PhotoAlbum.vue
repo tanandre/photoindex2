@@ -1,26 +1,19 @@
 <template>
   <div class="photoAlbum">
-    <photo-detail-view v-if="selectedImage !== null"
-                       :photo="selectedImage"></photo-detail-view>
-    <md-toolbar class="md-dense">
-      <md-button class="md-icon-button" @click="showMenu = true">
-        <md-icon>menu</md-icon>
-      </md-button>
-      <h2 class="md-title">{{ title }}</h2>
-      <small>{{album.images.length}}</small>
-      <search-input class="searchInput"></search-input>
-      <md-progress-spinner v-if="loading" :md-diameter="30" :md-stroke="3" class="md-accent"
-                           md-mode="indeterminate"></md-progress-spinner>
-      <!--
-      <pagination v-if="album.pageCount > 1" v-model="album.currentPage"
-                  :page-count="album.pageCount"></pagination>
-                  -->
-    </md-toolbar>
+    <photo-detail-view v-if="album.selectedImage !== null"
+                       :photo="album.selectedImage"></photo-detail-view>
+    <toolbar :album="album" :loading="loading" v-on:click-menu="showMenu = true"></toolbar>
     <md-drawer :md-active.sync="showMenu">
       <menu-settings></menu-settings>
     </md-drawer>
 
     <thumbnail-gallery :album="album"></thumbnail-gallery>
+
+    <md-snackbar md-position="center" :md-duration="Infinity" :md-active.sync="showSnackbar"
+                 md-persistent>
+      <span>{{error}}</span>
+      <md-button class="md-primary" @click="showSnackbar = false">Close</md-button>
+    </md-snackbar>
   </div>
 </template>
 
@@ -28,27 +21,28 @@
   import ThumbnailGallery from './ThumbnailGallery.vue'
   import PhotoDetailView from './PhotoDetailView.vue'
   import MenuSettings from './MenuSettings.vue'
-  import SearchInput from './SearchInput.vue'
+  import Toolbar from './Toolbar.vue'
 
   export default {
     dependencies: ['jsonLoader', 'urlHelper', 'navigator', 'keyHandler'],
     components: {
       ThumbnailGallery,
-      SearchInput,
       PhotoDetailView,
-      MenuSettings
+      MenuSettings,
+      Toolbar
     },
     data () {
       return {
-        title: 'PhotoIndex',
         album: {
           images: [],
           imageItems: [],
-          currentPage: 0
+          currentPage: (Number(this.$route.params.page)),
+          selectedImage: null
         },
-        selectedImage: null,
         loading: false,
-        showMenu: false
+        showMenu: false,
+        showSnackbar: false,
+        error: null
       }
     },
 
@@ -63,18 +57,15 @@
 
     methods: {
       onKeyDown: function (event) {
-        if (this.selectedImage === null) {
+        if (this.album.selectedImage === null) {
           this.keyHandler.handlKeyEventGallery(event, this.album)
         } else {
-          this.keyHandler.handlKeyEventPhoto(event, this.album, this.selectedImage)
+          this.keyHandler.handlKeyEventPhoto(event, this.album)
         }
       },
 
       onHashChangedPage: function (page) {
-//        if (page < 0) {
-//          return
-//        }
-        this.album.currentPage = page
+        this.setCurrentPage(page)
       },
 
       onHashChangedPhoto: function (photoId) {
@@ -84,27 +75,39 @@
         this.setSelectedImage(foundPhoto === undefined ? null : foundPhoto)
       },
 
+      setCurrentPage: function (page) {
+        this.album.currentPage = page
+      },
+
       setSelectedImage: function (image) {
-        this.selectedImage = image
+        this.album.selectedImage = image
+      },
+
+      setAlbum: function (album) {
+        this.album = album
       },
 
       retrieveImages: function (data) {
-        console.log('retrieve images')
-        // TODO cancel current one if still active
+        if (this.promise && !this.promise.isDone()) {
+          this.promise.cancel()
+        }
+
         this.loading = true
-        this.jsonLoader.load(this.urlHelper.getListing(), {params: data}).then(response => {
-          this.loading = false
-          let images = response
-          console.log('setting album')
-          this.album = {
-            images: images,
-            imageItems: [],
-            currentPage: (Number(this.$route.params.page))
-          }
-        }, err => {
-          this.loading = false
-          console.error(err)
-        })
+        this.promise =
+          this.jsonLoader.load(this.urlHelper.getListing(), {params: data}).then(response => {
+            this.loading = false
+            this.setAlbum({
+              images: response.body,
+              imageItems: [],
+              currentPage: this.album.currentPage,
+              selectedImage: null
+            })
+          }, err => {
+            this.loading = false
+            this.error = err
+            this.showSnackbar = true
+            console.error(err)
+          })
       }
     },
     watch: {
@@ -124,8 +127,4 @@
 </script>
 
 <style scoped>
-  .searchInput {
-    margin-left: 10px;
-  }
-
 </style>

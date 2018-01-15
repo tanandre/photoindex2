@@ -3,8 +3,8 @@ class KeyHandler {
     this.navigator = navigator
   }
 
-  handlKeyEventPhoto (key, album, selectedImage) {
-    let idx = album.images.indexOf(selectedImage)
+  handlKeyEventPhoto (key, album) {
+    let idx = album.images.indexOf(album.selectedImage)
     if (key.keyCode === 27) {
       this.navigator.clearPhoto()
     } else if (key.keyCode === 37 && !key.altKey) {
@@ -19,8 +19,7 @@ class KeyHandler {
   }
 
   handlKeyEventGallery (key, album) {
-    let page = Number(album.currentPage)
-    console.log(key.ctrlKey)
+    let page = album.currentPage
     if (key.keyCode === 36 && key.ctrlKey) { // HOME
       this.navigator.setPage(1)
     } else if (key.keyCode === 35 && key.ctrlKey) { // END
