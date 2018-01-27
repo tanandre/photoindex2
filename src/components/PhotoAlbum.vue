@@ -31,7 +31,7 @@
       MenuSettings,
       Toolbar
     },
-    data () {
+    data: function () {
       return {
         album: {
           images: [],
@@ -48,7 +48,9 @@
 
     mounted: function () {
       window.addEventListener('keydown', this.onKeyDown)
-      this.retrieveImages({tag: this.navigator.tagsToArray(this.$route.query.q)})
+      this.retrieveImages({tag: this.navigator.tagsToArray(this.$route.query.q)}).then(() => {
+        this.setSelectedImageById(Number(this.$route.params.photoid))
+      })
     },
 
     beforeDestroy: function () {
@@ -69,6 +71,10 @@
       },
 
       onHashChangedPhoto: function (photoId) {
+        this.setSelectedImageById(photoId)
+      },
+
+      setSelectedImageById: function (photoId) {
         let foundPhoto = photoId === -1 ? null : this.album.images.find(photo => {
           return photo.id === photoId
         })
@@ -80,6 +86,7 @@
       },
 
       setSelectedImage: function (image) {
+        console.log('setSelectedImage', image)
         this.album.selectedImage = image
       },
 
@@ -108,6 +115,7 @@
             this.showSnackbar = true
             console.error(err)
           })
+        return this.promise
       }
     },
     watch: {

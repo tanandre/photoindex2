@@ -6,7 +6,7 @@ Vue.use(Router)
 
 export default new Router({
   routes: [{
-    path: '*',
+    path: '/',
     redirect: '/gallery/1/photo/-1'
     // redirect: '/album/gallery/1'
   }, {

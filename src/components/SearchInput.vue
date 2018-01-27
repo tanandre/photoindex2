@@ -3,7 +3,7 @@
     <div class="inputTag">
       <md-field>
         <md-input class="searchInput" v-model="searchTxt" placeholder="Search..."
-                  @keydown="onKeyDown" v-on:keyup.enter="onEnter" autofocus></md-input>
+                  v-on:keyup.enter="onEnter" autofocus></md-input>
       </md-field>
     </div>
     <md-chip md-deletable v-for="tag in tags" v-on:click="onCloseTag(tag)" :key="tag">{{tag}}
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+  import util from '../js/util'
+
   export default {
     dependencies: ['navigator'],
     data: function () {
@@ -21,9 +23,6 @@
       }
     },
     methods: {
-      onKeyDown: function (event) {
-        event.stopPropagation()
-      },
       onEnter: function () {
         if (this.searchTxt.startsWith('/')) {
           if (this.searchTxt === '/clear') {
@@ -40,10 +39,7 @@
       },
 
       addTag: function (value) {
-        let found = this.tags.indexOf(value)
-        if (found === -1) {
-          this.tags.push(value)
-        }
+        util.addToArray(this.tags, value)
       },
 
       removeTag: function (tag) {
@@ -72,9 +68,8 @@
     display: inline-block;
   }
 
-  .selectedTags {
-    vertical-align: middle;
-    display: inline-block;
+  .searchInput {
+    /*font-family: "Lucida Console", "Courier New", monospace;*/
   }
 
 </style>

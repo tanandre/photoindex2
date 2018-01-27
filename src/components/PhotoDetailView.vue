@@ -11,12 +11,19 @@
         </md-button>
       </a>
       <div>{{getPhotoDate()}}</div>
+      <md-field>
+        <md-datepicker v-model="photoDate" :md-open-on-focus="true" v-on:keydown.stop="doNothing"/>
+      </md-field>
+      <md-button class="md-raised" @click="onUpdate" title="close">
+        save
+      </md-button>
       <div>{{photo.path}}</div>
     </div>
   </div>
 </template>
 
 <script>
+  import Vue from 'vue'
   import PhotoPane from './PhotoPane.vue'
 
   export default {
@@ -25,10 +32,19 @@
     props: ['photo'],
     data: function () {
       return {
+        photoDate: this.photo.date,
         downloadUrl: ''
       }
     },
     methods: {
+      onUpdate: function (event) {
+        Vue.http.post(this.urlHelper.getPhotoDateUrl(this.photo, this.photoDate.getTime()))
+        console.log('update')
+      },
+      doNothing: function (event) {
+        // nothing
+        console.log('donohting')
+      },
       getPhotoDate: function () {
         let date = new Date(this.photo.dateInMillis)
         return date.toDateString() + ' ' + date.toLocaleTimeString()

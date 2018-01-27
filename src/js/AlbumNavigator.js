@@ -3,14 +3,28 @@ class AlbumNavigator {
     this.router = router
   }
 
+  /**
+   * Helper function does not change the state
+   * @param tags
+   * @returns {*}
+   */
   tagsToArray (tags) {
     return tags ? tags.split(',') : []
   }
 
+  /**
+   * Helper function does not change the state
+   * @param tags
+   * @returns {*}
+   */
   tagsToHashObject (tags) {
     return tags.join(',')
   }
 
+  /**
+   * Update the route state
+   * @param tags
+   */
   setTags (tags) {
     this.router.push({
       name: 'gallery',
@@ -20,10 +34,17 @@ class AlbumNavigator {
     })
   }
 
+  /**
+   * Update the route state
+   */
   clearPhoto () {
     this.setPhoto(-1)
   }
 
+  /**
+   * Update the route state
+   * @param photoId
+   */
   setPhoto (photoId) {
     this.router.push({
       name: 'gallery',
@@ -34,6 +55,10 @@ class AlbumNavigator {
     })
   }
 
+  /**
+   * Update the route state
+   * @param page
+   */
   setPage (page) {
     this.router.push({
       name: 'gallery',
