@@ -1,8 +1,7 @@
 <template>
   <div class="thumbnailGallery">
-    <pagination v-if="pageCount > 1" :current-page="album.currentPage"
-                :page-count="pageCount"></pagination>
-    <thumbnail class="thumbnail" v-for="image in getImagesForCurrentPage()" :photo="image"
+    <pagination v-if="pageCount > 1" :page-count="pageCount"></pagination>
+    <thumbnail class="thumbnail" v-for="image in imagesForCurrentPage" :photo="image"
                :key="image.id" @click.native="onClickThumbnail(image)">
     </thumbnail>
   </div>
@@ -42,7 +41,7 @@
         this.pageCount = Math.ceil(this.album.images.length / this.imagesPerPage)
       },
       resetCurrentPage: function () {
-        if (this.album.currentPage >= this.pageCount) {
+        if (this.$store.state.page >= this.pageCount) {
           this.navigator.setPage(1)
         }
       },
@@ -67,10 +66,12 @@
         if (width >= 1280) {
           this.imagesPerPage = 7 * rows
         }
-      },
-      getImagesForCurrentPage: function () {
+      }
+    },
+    computed: {
+      imagesForCurrentPage: function () {
         let images = this.album.images
-        let begin = (this.album.currentPage - 1) * this.imagesPerPage
+        let begin = (this.$store.state.page - 1) * this.imagesPerPage
         let end = Math.min(images.length, begin + this.imagesPerPage)
         return images.slice(begin, end)
       }
@@ -81,12 +82,14 @@
         this.calibratePageCount()
         this.resetCurrentPage()
       },
+      /*
       'album.currentPage': function () {
-        console.log('currentPage changed', this.album.currentPage)
-        if (this.album.currentPage === 0) {
+        console.log('currentPage changed', this.$store.state.page)
+        if (this.$store.state.page === 0) {
           this.navigator.setPage(this.pageCount)
         }
       },
+      */
       imagesPerPage: function () {
         this.calibratePageCount()
       }

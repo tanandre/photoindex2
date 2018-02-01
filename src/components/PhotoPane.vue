@@ -44,6 +44,11 @@
       photo: function () {
         this.drawPhoto()
       }
+    },
+    beforeDestroy: function () {
+      if (this.promise) {
+        this.promise.cancel()
+      }
     }
   }
 </script>

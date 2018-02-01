@@ -22,6 +22,10 @@ class UrlHelper {
   getPhotoDateUrl (photo, dateInMillis) {
     return this.serverUrl + '/date/' + photo.id + '/' + dateInMillis
   }
+
+  getTagsUrl (photo) {
+    return this.serverUrl + '/tags/' + photo.id
+  }
 }
 
 export default UrlHelper

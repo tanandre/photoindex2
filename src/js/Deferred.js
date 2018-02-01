@@ -60,6 +60,15 @@ class Deferred {
     return this
   }
 
+  catch (onError) {
+    let listener = [undefined, onError, undefined]
+    this.listeners.push(listener)
+    if (this._isRejected) {
+      onError(this.data)
+    }
+    return this
+  }
+
   isDone () {
     return this._isResolved || this._isRejected || this._isCanceled
   }

@@ -10,10 +10,15 @@
 <script>
   export default {
     dependencies: ['navigator'],
-    props: ['currentPage', 'pageCount'],
+    props: ['pageCount'],
     data: function () {
       return {
         range: 1
+      }
+    },
+    computed: {
+      page () {
+        return this.$store.state.page
       }
     },
     methods: {
@@ -31,14 +36,14 @@
         if (idx === 1) {
           return true
         }
-        if (Math.abs(idx - this.currentPage) <= this.range) {
+        if (Math.abs(idx - this.$store.state.page) <= this.range) {
           return true
         }
         return false
       },
 
       getCssClass: function (idx) {
-        if (idx === this.currentPage) {
+        if (idx === this.$store.state.page) {
           return 'md-primary'
         }
         return ''

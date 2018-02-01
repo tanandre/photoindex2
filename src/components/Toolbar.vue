@@ -15,7 +15,7 @@
   import SearchInput from './SearchInput.vue'
 
   export default {
-    props: ['album', 'loading'],
+    props: ['loading'],
     components: {
       SearchInput
     },
@@ -24,6 +24,12 @@
         title: 'PhotoIndex'
       }
     },
+    computed: {
+      album: function () {
+        return this.$store.state.album
+      }
+    },
+
     methods: {
       onClickMenu: function () {
         this.$emit('click-menu')
