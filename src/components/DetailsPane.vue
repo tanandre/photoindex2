@@ -18,7 +18,7 @@
         save
       </md-button>
       <div class="chips">
-        <md-chip v-for="tag in tags" :key="tag">{{tag}}
+        <md-chip v-for="tag in tags" :key="tag" md-clickable @click="onClickTag(tag)">{{tag}}
         </md-chip>
       </div>
     </div>
@@ -29,7 +29,7 @@
   import Vue from 'vue'
 
   export default {
-    dependencies: ['urlHelper', 'navigator', 'tagsLoader'],
+    dependencies: ['urlHelper', 'navigator', 'dataRetriever'],
     props: ['photo'],
     data: function () {
       return {
@@ -39,6 +39,10 @@
       }
     },
     methods: {
+      onClickTag: function (tag) {
+        this.navigator.setTags(this.navigator.tagsToHashObject([tag]))
+//        this.navigator.clearPhoto()
+      },
       onUpdate: function (event) {
         Vue.http.post(this.urlHelper.getPhotoDateUrl(this.photo, this.photoDate.getTime()))
         console.log('update')
@@ -56,13 +60,8 @@
       },
       loadTags: function () {
         this.tags = []
-        let url = this.urlHelper.getTagsUrl(this.photo)
 
-        if (this.promise && !this.promise.isDone()) {
-          this.promise.cancel()
-        }
-
-        this.promise = this.tagsLoader.load(url).then(data => {
+        this.promise = this.dataRetriever.retrieveTags(this.photo).then(data => {
           this.status = 'completed'
           this.tags = data.body.tags
         }, (err) => {

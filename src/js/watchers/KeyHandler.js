@@ -1,9 +1,8 @@
 import store from '../../store.js'
 
 class KeyHandler {
-  constructor (navigator, store) {
+  constructor (navigator) {
     this.navigator = navigator
-    this.store = store
   }
 
   handlKeyEventPhoto (key) {
@@ -25,21 +24,14 @@ class KeyHandler {
     let page = store.state.page
     if (key.keyCode === 36 && key.ctrlKey) { // HOME
       this.navigator.setPage(1)
-      // this.store.commit('setPage', 1)
     } else if (key.keyCode === 35 && key.ctrlKey) { // END
       this.navigator.setPage(0)
-      // this.store.commit('setPage', 0)
-    } else if (key.keyCode === 49) { // 1
-      // this.store.commit('setPage', 1)
-      this.navigator.setPage(1)
     } else if (key.keyCode === 37 && key.ctrlKey && !key.altKey) { // arrow left
       if (page === 1) {
         return
       }
       this.navigator.setPage(page - 1)
-      // this.store.commit('setPage', page - 1)
     } else if (key.keyCode === 39 && key.ctrlKey && !key.altKey) { // arrow right
-      // this.store.commit('setPage', page + 1)
       this.navigator.setPage(page + 1)
     }
   }

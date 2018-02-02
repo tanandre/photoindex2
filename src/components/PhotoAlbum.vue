@@ -1,6 +1,7 @@
 <template>
-  <div class="photoAlbum">{{album.images.length}}
+  <div class="photoAlbum">
     <photo-detail-view v-if="photo !== null" :photo="photo"></photo-detail-view>
+
     <toolbar :loading="loading" v-on:click-menu="showMenu = true"></toolbar>
     <md-drawer :md-active.sync="showMenu">
       <menu-settings></menu-settings>

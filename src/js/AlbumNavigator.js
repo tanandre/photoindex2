@@ -9,7 +9,7 @@ class AlbumNavigator {
    * @returns {*}
    */
   tagsToArray (tags) {
-    return tags ? tags.split(',') : []
+    return tags ? tags.split(',').map(t => decodeURIComponent(t)) : []
   }
 
   /**
@@ -18,7 +18,7 @@ class AlbumNavigator {
    * @returns {*}
    */
   tagsToHashObject (tags) {
-    return tags.join(',')
+    return tags.map(t => encodeURIComponent(t)).join(',')
   }
 
   /**

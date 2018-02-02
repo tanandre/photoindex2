@@ -1,19 +1,31 @@
+/**
+ * Do a retrieve canceling the previous call. Assumes the loader is LIFO that way the last one will take precedence
+ * old calls
+ */
+function doRetrieveSerial (promiseMap, loader, url, params) {
+  let promise = promiseMap[url]
+  if (promise && !promise.isDone()) {
+    promise.cancel()
+  }
+
+  promiseMap[url] = loader.load(url, params)
+  return promiseMap[url]
+}
+
 class DataRetriever {
-  constructor (jsonLoader, urlHelper, store) {
+  constructor (jsonLoader, tagsLoader, urlHelper) {
     this.jsonLoader = jsonLoader
+    this.tagsLoader = tagsLoader
     this.urlHelper = urlHelper
-    this.store = store
+    this.promiseMap = {}
   }
 
   retrieveImages (query) {
-    if (this.promise && !this.promise.isDone()) {
-      this.promise.cancel()
-    }
+    return doRetrieveSerial(this.promiseMap, this.jsonLoader, this.urlHelper.getListing(), {params: query})
+  }
 
-    this.promise =
-      this.jsonLoader.load(this.urlHelper.getListing(), {params: query})
-
-    return this.promise
+  retrieveTags (photo) {
+    return doRetrieveSerial(this.promiseMap, this.tagsLoader, this.urlHelper.getTagsUrl(photo), {})
   }
 }
 

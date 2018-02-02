@@ -12,14 +12,16 @@
 </template>
 
 <script>
-  import util from '../js/util'
-
   export default {
     dependencies: ['navigator'],
     data: function () {
       return {
-        searchTxt: '',
-        tags: this.navigator.tagsToArray(this.$route.query.q)
+        searchTxt: ''
+      }
+    },
+    computed: {
+      tags: function () {
+        return this.navigator.tagsToArray(this.$route.query.q)
       }
     },
     methods: {
@@ -39,25 +41,22 @@
       },
 
       addTag: function (value) {
-        util.addToArray(this.tags, value)
+        this.setTags(this.tags.concat([value]))
       },
 
       removeTag: function (tag) {
         let found = this.tags.indexOf(tag)
         if (found > -1) {
           this.tags.splice(found, 1)
+          this.setTags(this.tags)
         }
       },
 
       clearTags: function () {
-        this.tags = []
-      }
-
-    },
-
-    watch: {
-      tags: function () {
-        this.navigator.setTags(this.navigator.tagsToHashObject(this.tags))
+        this.setTags([])
+      },
+      setTags: function (tags) {
+        this.navigator.setTags(this.navigator.tagsToHashObject(tags))
       }
     }
   }
