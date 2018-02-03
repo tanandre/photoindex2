@@ -11,8 +11,9 @@
         </md-button>
       </a>
       <div>{{getPhotoDate()}}</div>
+      <div>{{photo.path}}</div>
       <md-field>
-        <md-datepicker v-model="photoDate" :md-open-on-focus="true" v-on:keydown.stop="doNothing"/>
+        <md-datepicker v-model="photoDate" :md-open-on-focus="true"/>
       </md-field>
       <md-button class="md-raised" @click="onUpdate" title="close">
         save
@@ -21,16 +22,21 @@
         <md-chip v-for="tag in tags" :key="tag" md-clickable @click="onClickTag(tag)">{{tag}}
         </md-chip>
       </div>
+      <ExifDetailsPane :photo="photo"></ExifDetailsPane>
     </div>
   </div>
 </template>
 
 <script>
   import Vue from 'vue'
+  import ExifDetailsPane from './ExifDetailsPane.vue'
 
   export default {
     dependencies: ['urlHelper', 'navigator', 'dataRetriever'],
     props: ['photo'],
+    components: {
+      ExifDetailsPane
+    },
     data: function () {
       return {
         photoDate: this.photo.date,
@@ -46,10 +52,6 @@
       onUpdate: function (event) {
         Vue.http.post(this.urlHelper.getPhotoDateUrl(this.photo, this.photoDate.getTime()))
         console.log('update')
-      },
-      doNothing: function (event) {
-        // nothing
-        console.log('donohting')
       },
       getPhotoDate: function () {
         let date = new Date(this.photo.dateInMillis)

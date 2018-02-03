@@ -13,9 +13,10 @@ function doRetrieveSerial (promiseMap, loader, url, params) {
 }
 
 class DataRetriever {
-  constructor (jsonLoader, tagsLoader, urlHelper) {
+  constructor (jsonLoader, tagsLoader, exifLoader, urlHelper) {
     this.jsonLoader = jsonLoader
     this.tagsLoader = tagsLoader
+    this.exifLoader = exifLoader
     this.urlHelper = urlHelper
     this.promiseMap = {}
   }
@@ -26,6 +27,10 @@ class DataRetriever {
 
   retrieveTags (photo) {
     return doRetrieveSerial(this.promiseMap, this.tagsLoader, this.urlHelper.getTagsUrl(photo), {})
+  }
+
+  retrieveExif (photo) {
+    return doRetrieveSerial(this.promiseMap, this.exifLoader, this.urlHelper.getExifUrl(photo), {})
   }
 }
 

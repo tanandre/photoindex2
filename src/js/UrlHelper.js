@@ -26,6 +26,10 @@ class UrlHelper {
   getTagsUrl (photo) {
     return this.serverUrl + '/tags/' + photo.id
   }
+
+  getExifUrl (photo) {
+    return this.serverUrl + '/exif/' + photo.id
+  }
 }
 
 export default UrlHelper
