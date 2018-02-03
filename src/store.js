@@ -5,7 +5,7 @@ import injector from 'vue-inject'
 Vue.use(Vuex)
 
 function tagsToArray (tags) {
-  return tags ? tags.split(',') : []
+  return tags ? tags.split(',').map(t => decodeURIComponent(t)) : []
 }
 
 const store = new Vuex.Store({
