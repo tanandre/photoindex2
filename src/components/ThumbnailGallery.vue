@@ -82,14 +82,6 @@
         this.calibratePageCount()
         this.resetCurrentPage()
       },
-      /*
-      'album.currentPage': function () {
-        console.log('currentPage changed', this.$store.state.page)
-        if (this.$store.state.page === 0) {
-          this.navigator.setPage(this.pageCount)
-        }
-      },
-      */
       imagesPerPage: function () {
         this.calibratePageCount()
       }
