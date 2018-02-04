@@ -28,6 +28,9 @@ class AlbumNavigator {
   setTags (tags) {
     this.router.push({
       name: 'gallery',
+      params: {
+        page: 1
+      },
       query: {
         q: tags
       }

@@ -12,6 +12,7 @@ const store = new Vuex.Store({
   state: {
     page: 0,
     photo: null,
+    loading: false,
     album: {
       images: [],
       imageItems: []
@@ -22,6 +23,9 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
+    loading (state, loading) {
+      state.loading = loading
+    },
     page (state, newPage) {
       state.page = newPage
     },
@@ -46,11 +50,15 @@ const store = new Vuex.Store({
       commit('photo', foundPhoto === undefined ? null : foundPhoto)
     },
     query ({commit}, q) {
+      commit('loading', true)
       return injector.get('dataRetriever').retrieveImages({tag: tagsToArray(q)}).then((response) => {
         commit('album', {
           images: response.body,
           imageItems: []
         })
+        commit('loading', false)
+      }).catch(() => {
+        commit('loading', false)
       })
     }
   }

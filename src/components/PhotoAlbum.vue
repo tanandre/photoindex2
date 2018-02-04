@@ -2,13 +2,16 @@
   <div class="photoAlbum">
     <photo-detail-view v-if="photo !== null" :photo="photo"></photo-detail-view>
 
-    <toolbar :loading="loading" v-on:click-menu="showMenu = true"></toolbar>
+    <toolbar v-on:click-menu="showMenu = true"></toolbar>
     <md-drawer :md-active.sync="showMenu">
       <menu-settings></menu-settings>
     </md-drawer>
 
-    <thumbnail-gallery></thumbnail-gallery>
+    <div class="container">
+      <md-progress-bar v-if="loading" class="loadingBar" md-mode="indeterminate"></md-progress-bar>
+      <thumbnail-gallery class="gallery"></thumbnail-gallery>
 
+    </div>
     <md-snackbar md-position="center" :md-duration="Infinity" :md-active.sync="showSnackbar"
                  md-persistent>
       <span>{{error}}</span>
@@ -34,17 +37,18 @@
     computed: {
       photo: function () {
         return this.$store.state.photo
+      },
+      loading () {
+        return this.$store.state.loading
       }
     },
     data: function () {
       return {
-        loading: false,
         showMenu: false,
         showSnackbar: false,
         error: null
       }
     },
-
     mounted: function () {
       window.addEventListener('keydown', this.onKeyDown)
       this.$store.dispatch('query', this.$route.query.q).then(() => {
@@ -70,4 +74,17 @@
 </script>
 
 <style scoped>
+  .container {
+    position: relative;
+  }
+
+  .loadingBar {
+    opacity: 0.5;
+    position: absolute;
+    z-index: 6;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
 </style>

@@ -6,8 +6,6 @@
     <h2 class="md-title">{{ title }}</h2>
     <small>{{album.images.length}}</small>
     <search-input class="searchInput"></search-input>
-    <md-progress-spinner v-if="loading" :md-diameter="30" :md-stroke="3" class="md-accent"
-                         md-mode="indeterminate"></md-progress-spinner>
     <pagination></pagination>
   </md-toolbar>
 </template>
@@ -17,7 +15,6 @@
   import Pagination from './Pagination.vue'
 
   export default {
-    props: ['loading'],
     components: {
       SearchInput,
       Pagination

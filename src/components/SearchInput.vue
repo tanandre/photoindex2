@@ -55,6 +55,7 @@
       clearTags: function () {
         this.setTags([])
       },
+      
       setTags: function (tags) {
         this.navigator.setTags(this.navigator.tagsToHashObject(tags))
       }
