@@ -10,7 +10,6 @@
 <script>
   export default {
     dependencies: ['navigator'],
-    props: ['pageCount'],
     data: function () {
       return {
         range: 1
@@ -19,6 +18,9 @@
     computed: {
       page () {
         return this.$store.state.page
+      },
+      pageCount () {
+        return this.$store.state.gallery.pageCount
       }
     },
     methods: {

@@ -8,16 +8,19 @@
     <search-input class="searchInput"></search-input>
     <md-progress-spinner v-if="loading" :md-diameter="30" :md-stroke="3" class="md-accent"
                          md-mode="indeterminate"></md-progress-spinner>
+    <pagination></pagination>
   </md-toolbar>
 </template>
 
 <script>
   import SearchInput from './SearchInput.vue'
+  import Pagination from './Pagination.vue'
 
   export default {
     props: ['loading'],
     components: {
-      SearchInput
+      SearchInput,
+      Pagination
     },
     data () {
       return {

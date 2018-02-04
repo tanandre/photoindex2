@@ -6,6 +6,7 @@ import QueuedLoader from './loaders/QueuedLoader'
 import CachedLoader from './loaders/CachedLoader'
 import titleUpdater from './TitleUpdater'
 import KeyHandler from './watchers/KeyHandler'
+import GallerySizeListener from './watchers/GallerySizeListener'
 import DataRetriever from './DataRetriever'
 
 class Assembler {
@@ -25,17 +26,25 @@ class Assembler {
     let tagCache = {}
     let exifCache = {}
 
+    let gallerySizeListener = new GallerySizeListener()
     this.injector.constant('thumbnailLoader', new QueuedLoader([new ImageWorker(), new ImageWorker()], true))
     this.injector.constant('photoLoader', new QueuedLoader([new ImageWorker()], false))
     this.injector.constant('tagsLoader', new CachedLoader(tagCache, new QueuedLoader([new XhrWorker(this.http)], false)))
     this.injector.constant('exifLoader', new CachedLoader(exifCache, new QueuedLoader([new XhrWorker(this.http)], true)))
     this.injector.constant('jsonLoader', new CachedLoader(jsonCache, new QueuedLoader([new XhrWorker(this.http)], true)))
     this.injector.constant('store', this.store)
+    this.injector.constant('gallerySizeListener', gallerySizeListener)
 
     this.injector.service('dataRetriever', DataRetriever)
     this.injector.service('navigator', AlbumNavigator)
     this.injector.service('urlHelper', UrlHelper)
     this.injector.service('keyHandler', KeyHandler)
+
+    window.addEventListener('resize', gallerySizeListener.calibrateThumbnails)
+    this.store.watch(state => state.album, (album) => {
+      console.log('state changed', album)
+      gallerySizeListener.calibrateThumbnails()
+    })
   }
 }
 

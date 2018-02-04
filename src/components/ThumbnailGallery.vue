@@ -1,6 +1,5 @@
 <template>
   <div class="thumbnailGallery">
-    <pagination v-if="pageCount > 1" :page-count="pageCount"></pagination>
     <thumbnail class="thumbnail" v-for="image in imagesForCurrentPage" :photo="image"
                :key="image.id" @click.native="onClickThumbnail(image)">
     </thumbnail>
@@ -9,21 +8,28 @@
 
 <script>
   import Thumbnail from './Thumbnail.vue'
-  import Pagination from './Pagination.vue'
 
-  let rows = 10
   export default {
     dependencies: ['navigator'],
     components: {
-      Thumbnail,
-      Pagination
+      Thumbnail
     },
     props: ['album'],
-    data: function () {
-      return {
-        pageCount: 1,
-        imagesPerPage: 0
+    computed: {
+      pageCount () {
+        return this.$store.state.gallery.pageCount
+      },
+      imagesPerPage () {
+        return this.$store.state.gallery.thumbnailsPerPage
+      },
+      imagesForCurrentPage () {
+        let imagesPerPage = this.imagesPerPage
+        let images = this.$store.state.album.images
+        let begin = (this.$store.state.page - 1) * imagesPerPage
+        let end = Math.min(images.length, begin + imagesPerPage)
+        return images.slice(begin, end)
       }
+
     },
     mounted: function () {
       window.addEventListener('resize', this.calibrateImagesPerPage)
@@ -36,54 +42,6 @@
     methods: {
       onClickThumbnail: function (photo) {
         this.navigator.setPhoto(photo.id)
-      },
-      calibratePageCount: function () {
-        this.pageCount = Math.ceil(this.album.images.length / this.imagesPerPage)
-      },
-      resetCurrentPage: function () {
-        if (this.$store.state.page >= this.pageCount) {
-          this.navigator.setPage(1)
-        }
-      },
-      calibrateImagesPerPage: function () {
-        let width = window.screen.width
-        if (width < 480) {
-          this.imagesPerPage = 3 * rows
-          return
-        }
-        if (width < 650) {
-          this.imagesPerPage = 4 * rows
-          return
-        }
-        if (width < 1024) {
-          this.imagesPerPage = 5 * rows
-          return
-        }
-        if (width < 1280) {
-          this.imagesPerPage = 6 * rows
-          return
-        }
-        if (width >= 1280) {
-          this.imagesPerPage = 7 * rows
-        }
-      }
-    },
-    computed: {
-      imagesForCurrentPage: function () {
-        let images = this.album.images
-        let begin = (this.$store.state.page - 1) * this.imagesPerPage
-        let end = Math.min(images.length, begin + this.imagesPerPage)
-        return images.slice(begin, end)
-      }
-    },
-    watch: {
-      album: function () {
-        this.calibrateImagesPerPage()
-        this.calibratePageCount()
-        this.resetCurrentPage()
-      },
-      imagesPerPage: function () {
-        this.calibratePageCount()
       }
     }
   }

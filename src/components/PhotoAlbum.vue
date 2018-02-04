@@ -7,7 +7,7 @@
       <menu-settings></menu-settings>
     </md-drawer>
 
-    <thumbnail-gallery :album="album"></thumbnail-gallery>
+    <thumbnail-gallery></thumbnail-gallery>
 
     <md-snackbar md-position="center" :md-duration="Infinity" :md-active.sync="showSnackbar"
                  md-persistent>
@@ -34,9 +34,6 @@
     computed: {
       photo: function () {
         return this.$store.state.photo
-      },
-      album: function () {
-        return this.$store.state.album
       }
     },
     data: function () {
@@ -62,7 +59,7 @@
 
     methods: {
       onKeyDown: function (event) {
-        if (this.photo === null) {
+        if (this.$store.state.photo === null) {
           this.keyHandler.handlKeyEventGallery(event)
         } else {
           this.keyHandler.handlKeyEventPhoto(event)

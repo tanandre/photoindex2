@@ -15,11 +15,19 @@ const store = new Vuex.Store({
     album: {
       images: [],
       imageItems: []
+    },
+    gallery: {
+      thumbnailsPerPage: 0,
+      pageCount: 0
     }
   },
   mutations: {
     page (state, newPage) {
       state.page = newPage
+    },
+
+    gallery (state, gallery) {
+      state.gallery = gallery
     },
 
     photo (state, photo) {

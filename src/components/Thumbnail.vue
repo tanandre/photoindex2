@@ -94,6 +94,7 @@
     display: inline-block;
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     overflow: hidden;
     float: left;
     position: relative;
