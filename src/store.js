@@ -10,6 +10,7 @@ function tagsToArray (tags) {
 
 const store = new Vuex.Store({
   state: {
+    serverUrl: localStorage.getItem('serverUrl'),
     page: 0,
     photo: null,
     loading: false,
@@ -23,6 +24,9 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
+    serverUrl (state, serverUrl) {
+      state.serverUrl = serverUrl
+    },
     loading (state, loading) {
       state.loading = loading
     },
@@ -51,6 +55,7 @@ const store = new Vuex.Store({
     },
     query ({commit}, q) {
       commit('loading', true)
+      console.log('query')
       return injector.get('dataRetriever').retrieveImages({tag: tagsToArray(q)}).then((response) => {
         commit('album', {
           images: response.body,

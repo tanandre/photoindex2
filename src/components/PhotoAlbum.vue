@@ -3,6 +3,7 @@
     <photo-detail-view v-if="photo !== null" :photo="photo"></photo-detail-view>
 
     <toolbar v-on:click-menu="showMenu = true"></toolbar>
+
     <md-drawer :md-active.sync="showMenu">
       <menu-settings></menu-settings>
     </md-drawer>

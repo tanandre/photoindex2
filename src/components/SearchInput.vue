@@ -39,11 +39,9 @@
       onCloseTag: function (tag) {
         this.removeTag(tag)
       },
-
       addTag: function (value) {
         this.setTags(this.tags.concat([value]))
       },
-
       removeTag: function (tag) {
         let found = this.tags.indexOf(tag)
         if (found > -1) {
@@ -51,11 +49,9 @@
           this.setTags(this.tags)
         }
       },
-
       clearTags: function () {
         this.setTags([])
       },
-      
       setTags: function (tags) {
         this.navigator.setTags(this.navigator.tagsToHashObject(tags))
       }
@@ -66,10 +62,6 @@
 <style scoped>
   .inputTag {
     display: inline-block;
-  }
-
-  .searchInput {
-    /*font-family: "Lucida Console", "Courier New", monospace;*/
   }
 
 </style>

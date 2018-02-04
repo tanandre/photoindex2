@@ -10,7 +10,7 @@
 <script>
   export default {
     dependencies: ['navigator'],
-    data: function () {
+    data () {
       return {
         range: 1
       }
@@ -24,11 +24,11 @@
       }
     },
     methods: {
-      onClick: function (idx) {
+      onClick (idx) {
         this.navigator.setPage(idx)
       },
 
-      shouldDisplay: function (idx) {
+      shouldDisplay (idx) {
         if (this.pageCount < 20) {
           return true
         }
@@ -44,7 +44,7 @@
         return false
       },
 
-      getCssClass: function (idx) {
+      getCssClass (idx) {
         if (idx === this.$store.state.page) {
           return 'md-primary'
         }

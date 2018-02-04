@@ -57,6 +57,6 @@
 
 <style scoped>
   .exifDetailsPane {
-    padding: 10px;
+    /*padding: 10px;*/
   }
 </style>

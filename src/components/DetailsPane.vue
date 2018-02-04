@@ -11,7 +11,7 @@
         </md-button>
       </a>
       <div>{{getPhotoDate()}}</div>
-      <div>{{photo.path}}</div>
+      <div class="filePath">{{photo.path}}</div>
       <md-field>
         <md-datepicker v-model="photoDate" :md-open-on-focus="true"/>
       </md-field>
@@ -64,6 +64,10 @@
 </script>
 
 <style scoped>
+  .sideBar {
+    padding: 0 10px;
+  }
+
   .photoDetailsPane {
     background-color: #111;
     position: absolute;
@@ -73,5 +77,10 @@
     overflow: auto;
     font-size: 11px;
     padding: 0;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.9);
+  }
+
+  .filePath {
+    word-break: break-all;
   }
 </style>

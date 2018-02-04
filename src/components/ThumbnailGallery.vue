@@ -14,7 +14,6 @@
     components: {
       Thumbnail
     },
-    props: ['album'],
     computed: {
       pageCount () {
         return this.$store.state.gallery.pageCount
@@ -31,16 +30,8 @@
       }
 
     },
-    mounted: function () {
-      window.addEventListener('resize', this.calibrateImagesPerPage)
-    },
-
-    beforeDestroy: function () {
-      window.removeEventListener('resize', this.calibrateImagesPerPage)
-    },
-
     methods: {
-      onClickThumbnail: function (photo) {
+      onClickThumbnail (photo) {
         this.navigator.setPhoto(photo.id)
       }
     }
