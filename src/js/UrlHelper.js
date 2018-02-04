@@ -1,14 +1,15 @@
 class UrlHelper {
-  constructor (serverUrl) {
-    this.serverUrl = serverUrl
+  constructor (store) {
+    this.store = store
   }
 
   getListing () {
-    return this.serverUrl + '/listing'
+    console.log('serverUrl', this.store.state.serverUrl)
+    return this.store.state.serverUrl + '/listing'
   }
 
   getStats () {
-    return this.serverUrl + '/stats'
+    return this.store.state.serverUrl + '/stats'
   }
 
   getThumbnailUrl (photo) {
@@ -16,19 +17,19 @@ class UrlHelper {
   }
 
   getPhotoUrl (photo, width) {
-    return this.serverUrl + '/photo/' + photo.id + (width === undefined ? '' : '/' + width)
+    return this.store.state.serverUrl + '/photo/' + photo.id + (width === undefined ? '' : '/' + width)
   }
 
   getPhotoDateUrl (photo, dateInMillis) {
-    return this.serverUrl + '/date/' + photo.id + '/' + dateInMillis
+    return this.store.state.serverUrl + '/date/' + photo.id + '/' + dateInMillis
   }
 
   getTagsUrl (photo) {
-    return this.serverUrl + '/tags/' + photo.id
+    return this.store.state.serverUrl + '/tags/' + photo.id
   }
 
   getExifUrl (photo) {
-    return this.serverUrl + '/exif/' + photo.id
+    return this.store.state.serverUrl + '/exif/' + photo.id
   }
 }
 

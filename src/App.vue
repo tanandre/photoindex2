@@ -12,8 +12,7 @@
   export default {
     name: 'PhotoIndex',
     beforeCreate: function () {
-      let serverUrl = localStorage.getItem('serverUrl')
-      new Assembler(injector, Vue.http, this.$router, this.$store).assemble(serverUrl === null ? 'http://kanji:1337' : serverUrl)
+      new Assembler(injector, Vue.http, this.$router, this.$store).assemble()
     }
   }
 </script>

@@ -17,12 +17,12 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.params.page !== from.params.page) {
-    store.commit('page', Number(to.params.page))
-  } else if (to.params.photoid !== from.params.photoid) {
+  if (to.params.photoid !== from.params.photoid) {
     store.dispatch('photo', Number(to.params.photoid))
   } else if (to.query.q !== from.query.q) {
     store.dispatch('query', to.query.q)
+  } else if (to.params.page !== from.params.page) {
+    store.commit('page', Number(to.params.page))
   }
 
   next()

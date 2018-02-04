@@ -17,10 +17,9 @@ class Assembler {
     this.store = store
   }
 
-  assemble (serverUrl) {
+  assemble () {
     this.router.beforeEach(titleUpdater)
 
-    this.injector.constant('serverUrl', serverUrl)
     this.injector.constant('router', this.router)
     let jsonCache = {}
     let tagCache = {}

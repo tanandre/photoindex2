@@ -8,26 +8,34 @@
         <md-icon>perm_media</md-icon>
         <md-field>
           <label>Server URL:</label>
-          <md-input v-model="serverUrl"></md-input>
+          <md-input @change="updateServerUrl" v-model="serverUrl"></md-input>
+        </md-field>
+      </md-list-item>
+      <md-list-item>
+        <md-icon>photo_camera</md-icon>
+        <md-field>
+          <label for="tags">Device</label>
+          <md-select v-model="selectedTags" name="tags" id="tags" multiple>
+            <md-option v-for="tag in stats.tags" :key="tag.name" :value="tag.name">{{tag.name}}</md-option>
+          </md-select>
         </md-field>
       </md-list-item>
     </md-list>
-    <md-button class="md-raised md-primary" @click="storeSettings()">Save</md-button>
     <md-card>
       <span>Photo count: {{stats.photo[0].photoCount}}</span>
-      <md-chip v-for="tag in stats.tags" :key="tag.name" md-clickable @click="onClickTag(tag)">{{tag.name}}</md-chip>
     </md-card>
   </div>
 </template>
 
 <script>
-  import Vue from 'vue'
+//  import Vue from 'vue'
 
   export default {
     dependencies: ['urlHelper', 'navigator'],
     props: ['showMenu'],
     data: () => {
       return {
+        selectedTags: [],
         stats: {
           photo: [{
             photoCount: 0
@@ -38,17 +46,23 @@
       }
     },
     mounted: function () {
-      Vue.http.get(this.urlHelper.getStats()).then(data => {
-        this.stats = data.body
-      })
+//      Vue.http.get(this.urlHelper.getStats()).then(data => {
+//        this.stats = data.body
+//      })
     },
     methods: {
       onClickTag: function (tag) {
         this.navigator.setTags(this.navigator.tagsToHashObject([tag.name]))
       },
 
-      storeSettings: function () {
+      updateServerUrl () {
+        this.$store.commit('serverUrl', this.serverUrl)
         localStorage.setItem('serverUrl', this.serverUrl)
+      }
+    },
+    watch: {
+      'selectedTags' () {
+        this.navigator.setTags(this.navigator.tagsToHashObject(this.selectedTags))
       }
     }
   }
