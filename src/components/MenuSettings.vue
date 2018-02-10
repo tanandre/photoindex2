@@ -1,6 +1,9 @@
 <template>
   <div>
     <md-toolbar class="md-transparent" md-elevation="0">
+      <md-button class="md-icon-button" @click="onClose" title="close">
+        <md-icon>arrow_back</md-icon>
+      </md-button>
       <span class="md-title">Menu</span>
     </md-toolbar>
     <md-list>
@@ -28,7 +31,7 @@
 </template>
 
 <script>
-//  import Vue from 'vue'
+  import Vue from 'vue'
 
   export default {
     dependencies: ['urlHelper', 'navigator'],
@@ -46,11 +49,14 @@
       }
     },
     mounted: function () {
-//      Vue.http.get(this.urlHelper.getStats()).then(data => {
-//        this.stats = data.body
-//      })
+      Vue.http.get(this.urlHelper.getStats()).then(data => {
+        this.stats = data.body
+      })
     },
     methods: {
+      onClose () {
+        this.$emit('close')
+      },
       onClickTag: function (tag) {
         this.navigator.setTags(this.navigator.tagsToHashObject([tag.name]))
       },
