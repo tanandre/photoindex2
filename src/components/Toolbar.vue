@@ -25,13 +25,13 @@
       }
     },
     computed: {
-      album: function () {
+      album () {
         return this.$store.state.album
       }
     },
 
     methods: {
-      onClickMenu: function () {
+      onClickMenu () {
         this.$emit('click-menu')
       }
     }

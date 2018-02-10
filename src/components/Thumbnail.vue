@@ -19,7 +19,7 @@
   export default {
     dependencies: ['urlHelper', 'thumbnailLoader'],
     props: ['photo'],
-    data: function () {
+    data () {
       return {
         status: 'idle',
         isDone: false,
@@ -32,14 +32,14 @@
       }
     },
 
-    mounted: function () {
+    mounted () {
       ['DOMContentLoaded', 'load', 'scroll', 'resize'].forEach((event) => {
         window.addEventListener(event, this.loadThumbnailIfInViewport)
       })
       this.loadThumbnailIfInViewport()
     },
 
-    beforeDestroy: function () {
+    beforeDestroy () {
       ['DOMContentLoaded', 'load', 'scroll', 'resize'].forEach((event) => {
         window.removeEventListener(event, this.loadThumbnailIfInViewport)
       })
@@ -50,12 +50,12 @@
       }
     },
 
-    updated: function () {
+    updated () {
       this.loadThumbnailIfInViewport()
     },
 
     methods: {
-      loadThumbnailIfInViewport: function () {
+      loadThumbnailIfInViewport () {
         if (this.isDone) {
           return
         }

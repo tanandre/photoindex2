@@ -9,17 +9,17 @@
   export default {
     dependencies: ['navigator', 'dataRetriever'],
     props: ['photo'],
-    data: function () {
+    data () {
       return {
         tags: []
       }
     },
     methods: {
-      onClickTag: function (tag) {
+      onClickTag (tag) {
         this.navigator.setTags(this.navigator.tagsToHashObject([tag]))
         this.navigator.clearPhoto()
       },
-      loadTags: function () {
+      loadTags () {
         this.tags = []
 
         this.dataRetriever.retrieveTags(this.photo).then(data => {
@@ -34,11 +34,11 @@
         })
       }
     },
-    mounted: function () {
+    mounted () {
       this.loadTags()
     },
     watch: {
-      'photo': function () {
+      'photo' () {
         if (!this.photo) {
           this.tags = []
           return

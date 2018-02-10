@@ -14,18 +14,18 @@
 <script>
   export default {
     dependencies: ['navigator'],
-    data: function () {
+    data () {
       return {
         searchTxt: ''
       }
     },
     computed: {
-      tags: function () {
+      tags () {
         return this.navigator.tagsToArray(this.$route.query.q)
       }
     },
     methods: {
-      onEnter: function () {
+      onEnter () {
         if (this.searchTxt.startsWith('/')) {
           if (this.searchTxt === '/clear') {
             this.clearTags()
@@ -36,23 +36,23 @@
         this.searchTxt = ''
       },
 
-      onCloseTag: function (tag) {
+      onCloseTag (tag) {
         this.removeTag(tag)
       },
-      addTag: function (value) {
+      addTag (value) {
         this.setTags(this.tags.concat([value]))
       },
-      removeTag: function (tag) {
+      removeTag (tag) {
         let found = this.tags.indexOf(tag)
         if (found > -1) {
           this.tags.splice(found, 1)
           this.setTags(this.tags)
         }
       },
-      clearTags: function () {
+      clearTags () {
         this.setTags([])
       },
-      setTags: function (tags) {
+      setTags (tags) {
         this.navigator.setTags(this.navigator.tagsToHashObject(tags))
       }
     }

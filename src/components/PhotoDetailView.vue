@@ -12,10 +12,10 @@
   export default {
     components: {PhotoPane, DetailsPane},
     props: ['photo'],
-    mounted: function () {
+    mounted () {
       document.body.classList.add('noScroll')
     },
-    beforeDestroy: function () {
+    beforeDestroy () {
       document.body.classList.remove('noScroll')
     }
   }

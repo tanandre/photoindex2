@@ -36,21 +36,21 @@
       Toolbar
     },
     computed: {
-      photo: function () {
+      photo () {
         return this.$store.state.photo
       },
       loading () {
         return this.$store.state.loading
       }
     },
-    data: function () {
+    data () {
       return {
         showMenu: false,
         showSnackbar: false,
         error: null
       }
     },
-    mounted: function () {
+    mounted () {
       window.addEventListener('keydown', this.onKeyDown)
       this.$store.dispatch('query', this.$route.query.q).then(() => {
         this.$store.commit('page', Number(this.$route.params.page))
@@ -58,12 +58,12 @@
       })
     },
 
-    beforeDestroy: function () {
+    beforeDestroy () {
       window.removeEventListener('keydown', this.onKeyDown)
     },
 
     methods: {
-      onKeyDown: function (event) {
+      onKeyDown (event) {
         if (this.$store.state.photo === null) {
           this.keyHandler.handlKeyEventGallery(event)
         } else {

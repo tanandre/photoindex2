@@ -11,7 +11,7 @@
 
   export default {
     name: 'PhotoIndex',
-    beforeCreate: function () {
+    beforeCreate () {
       new Assembler(injector, Vue.http, this.$router, this.$store).assemble()
     }
   }

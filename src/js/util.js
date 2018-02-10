@@ -4,21 +4,21 @@ export default {
    * @param value
    * @returns {*}
    */
-  asArray: function (value) {
+  asArray (value) {
     if (Array.isArray(value)) {
       return value
     }
     return value ? [value] : []
   },
 
-  addToArray: function (arr, value) {
+  addToArray (arr, value) {
     let found = arr.indexOf(value)
     if (found === -1) {
       arr.push(value)
     }
   },
 
-  removeFromArray: function (arr, value) {
+  removeFromArray (arr, value) {
     let found = arr.indexOf(value)
     if (found > -1) {
       arr.splice(found, 1)

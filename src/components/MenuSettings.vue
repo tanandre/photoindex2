@@ -48,7 +48,7 @@
         serverUrl: localStorage.getItem('serverUrl')
       }
     },
-    mounted: function () {
+    mounted () {
       Vue.http.get(this.urlHelper.getStats()).then(data => {
         this.stats = data.body
       })
@@ -57,7 +57,7 @@
       onClose () {
         this.$emit('close')
       },
-      onClickTag: function (tag) {
+      onClickTag (tag) {
         this.navigator.setTags(this.navigator.tagsToHashObject([tag.name]))
       },
 

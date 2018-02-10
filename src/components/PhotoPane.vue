@@ -9,16 +9,16 @@
   export default {
     dependencies: ['urlHelper', 'photoLoader'],
     props: ['photo'],
-    data: function () {
+    data () {
       return {
         status: 'idle'
       }
     },
-    mounted: function () {
+    mounted () {
       this.drawPhoto()
     },
     methods: {
-      drawPhoto: function () {
+      drawPhoto () {
         let thumbnailUrl = this.urlHelper.getThumbnailUrl(this.photo)
         let photoPane = this.$refs['photoPane']
         photoPane.style.backgroundImage = 'url(' + thumbnailUrl + ')'
@@ -42,11 +42,11 @@
       }
     },
     watch: {
-      photo: function () {
+      photo () {
         this.drawPhoto()
       }
     },
-    beforeDestroy: function () {
+    beforeDestroy () {
       if (this.promise) {
         this.promise.cancel()
       }

@@ -33,27 +33,27 @@
       ExifDetailsPane,
       TagDetailsPane
     },
-    data: function () {
+    data () {
       return {
         photoDate: this.photo.date,
         status: 'idle'
       }
     },
     methods: {
-      onUpdate: function (event) {
+      onUpdate (event) {
         Vue.http.post(this.urlHelper.getPhotoDateUrl(this.photo, this.photoDate.getTime()))
         console.log('update')
       },
-      getPhotoDate: function () {
+      getPhotoDate () {
         let date = new Date(this.photo.dateInMillis)
         return date.toDateString() + ' ' + date.toLocaleTimeString()
       },
-      onClose: function () {
+      onClose () {
         this.navigator.clearPhoto()
       }
     },
     computed: {
-      downloadUrl: function () {
+      downloadUrl () {
         this.urlHelper.getPhotoUrl(this.photo)
       }
     }
