@@ -1,6 +1,7 @@
 <template>
   <div class="photoPane" ref="photoPane">
     <md-progress-bar v-if="status == 'loading'" md-mode="indeterminate"></md-progress-bar>
+    <mdIcon class="md-size-2x errorPane" v-if="status === 'error'">not_interested</mdIcon>
   </div>
 </template>
 
@@ -58,5 +59,11 @@
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+  }
+
+  .errorPane {
+    position: absolute;
+    top: 50%;
+    left: 50%;
   }
 </style>

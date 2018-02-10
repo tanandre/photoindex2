@@ -2,7 +2,8 @@
   <div ref="thumbnail" class="thumbnail highlightable">
     <md-progress-bar v-if="status == 'loading'" md-mode="indeterminate"></md-progress-bar>
     <md-tooltip md-direction="bottom">{{photo.date}}</md-tooltip>
-    <span v-if="status === 'error'">error</span>
+    <mdIcon v-if="isVideo">videocam</mdIcon>
+    <mdIcon class="errorIcon" v-if="status === 'error'">not_interested</mdIcon>
     <slot></slot>
   </div>
 </template>
@@ -23,6 +24,11 @@
         status: 'idle',
         isDone: false,
         promise: null
+      }
+    },
+    computed: {
+      isVideo () {
+        return this.photo.path.endsWith('.mp4')
       }
     },
 
@@ -93,12 +99,22 @@
   .thumbnail {
     display: inline-block;
     background-size: cover;
+    background-color: #222;
     background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
     float: left;
     position: relative;
     cursor: pointer;
+    border: 2px solid #222;
+  }
+
+  .errorIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -12px;
+    margin-top: -12px;
   }
 
   .highlightable:hover {

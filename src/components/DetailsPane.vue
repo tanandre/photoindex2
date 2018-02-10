@@ -15,9 +15,6 @@
       <md-field>
         <md-datepicker v-model="photoDate" :md-open-on-focus="true"/>
       </md-field>
-      <md-button class="md-raised" @click="onUpdate" title="close">
-        save
-      </md-button>
       <TagDetailsPane :photo="photo"></TagDetailsPane>
       <ExifDetailsPane :photo="photo"></ExifDetailsPane>
     </div>
@@ -69,7 +66,7 @@
   }
 
   .photoDetailsPane {
-    background-color: #111;
+    background-color: #333;
     position: absolute;
     right: 0;
     width: 20%;

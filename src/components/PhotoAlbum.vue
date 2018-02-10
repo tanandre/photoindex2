@@ -5,7 +5,7 @@
     <toolbar v-on:click-menu="showMenu = true"></toolbar>
 
     <md-drawer :md-active.sync="showMenu">
-      <menu-settings></menu-settings>
+      <menu-settings v-on:close="showMenu = false"></menu-settings>
     </md-drawer>
 
     <div class="container">
