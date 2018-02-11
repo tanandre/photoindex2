@@ -1,7 +1,10 @@
 <template>
   <div class="photoPane" ref="photoPane">
     <md-progress-bar v-if="status == 'loading'" md-mode="indeterminate"></md-progress-bar>
-    <mdIcon class="md-size-2x errorPane" v-if="status === 'error'">not_interested</mdIcon>
+    <div class="errorPane">
+      <mdIcon class="md-size-2x" v-if="status === 'error'">not_interested</mdIcon>
+      <div>{{errorMsg}}</div>
+    </div>
   </div>
 </template>
 
@@ -11,7 +14,8 @@
     props: ['photo'],
     data () {
       return {
-        status: 'idle'
+        status: 'idle',
+        errorMsg: ''
       }
     },
     mounted () {
@@ -35,6 +39,7 @@
         }, (err) => {
           console.error(err)
           this.status = 'error'
+          this.errorMsg = 'error loading: ' + err
           this.isDone = true
         }, () => {
           this.status = 'loading'
@@ -65,5 +70,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
   }
 </style>

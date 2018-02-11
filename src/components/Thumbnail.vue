@@ -1,6 +1,6 @@
 <template>
   <div ref="thumbnail" class="thumbnail highlightable">
-    <md-progress-bar v-if="status == 'loading'" md-mode="indeterminate"></md-progress-bar>
+    <md-progress-bar v-if="status == 'loading'" class="loadingBar" md-mode="indeterminate"></md-progress-bar>
     <md-tooltip md-direction="bottom">{{photo.date}}</md-tooltip>
     <mdIcon v-if="isVideo">videocam</mdIcon>
     <mdIcon class="errorIcon" v-if="status === 'error'">not_interested</mdIcon>
@@ -9,6 +9,8 @@
 </template>
 
 <script>
+  import util from '../js/util'
+
   function isElementInViewport (el) {
     let rect = el.getBoundingClientRect()
     return rect.bottom > 0 && rect.right > 0 && rect.top <
@@ -28,7 +30,7 @@
     },
     computed: {
       isVideo () {
-        return this.photo.path.endsWith('.mp4')
+        return util.isVideo(this.photo)
       }
     },
 
@@ -132,6 +134,12 @@
     -webkit-transition: opacity .3s ease-out;
     -o-transition: opacity .3s ease-out;
     transition: all .3s ease-out;
+  }
+
+  .loadingBar {
+    position: absolute;
+    width: 100%;
+    top: 0;
   }
 
 </style>

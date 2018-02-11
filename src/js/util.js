@@ -1,4 +1,8 @@
 export default {
+  isVideo (photo) {
+    return ['.avi', '.mp4'].some(value => photo.path.toLowerCase().endsWith(value))
+  },
+
   /**
    * make sure the return value is an array if the input is not an array otherwise returns the input
    * @param value
