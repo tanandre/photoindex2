@@ -1,7 +1,7 @@
 <template>
   <div class="photoDetailView">
+    <details-pane class="photoDetailsPane" :photo="photo"></details-pane>
     <photo-pane class="photoPane" :photo="photo"></photo-pane>
-    <details-pane :photo="photo"></details-pane>
   </div>
 </template>
 
@@ -23,11 +23,19 @@
 
 <style scoped>
   .photoDetailView {
-    background-color: #000;
-    position: fixed;
+    background: linear-gradient(to right, #111 , #222);
     width: 100%;
     height: 100%;
     z-index: 1000;
+    position: fixed;
+  }
+
+  .photoDetailsPane {
+    position: absolute;
+    right: 0;
+    width: 20%;
+    height: 100%;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.9);
   }
 
   .photoPane {

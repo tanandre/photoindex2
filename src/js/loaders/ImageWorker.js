@@ -19,12 +19,12 @@ class ImageWorker {
     let deferred = new Deferred()
     this._isAvailable = false
     let _this = this
-    this.img.onload = function () {
+    this.img.onload = () => {
       _this._isAvailable = true
       // console.log('ImageWorker onload', url);
       deferred.resolve(url)
     }
-    this.img.onerror = function () {
+    this.img.onerror = () => {
       _this._isAvailable = true
       deferred.reject(url)
     }

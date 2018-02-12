@@ -1,23 +1,15 @@
 <template>
   <div class="photoAlbum">
     <photo-detail-view v-if="photo !== null" :photo="photo"></photo-detail-view>
-
     <toolbar v-on:click-menu="showMenu = true"></toolbar>
-
     <md-drawer :md-active.sync="showMenu">
-      <menu-settings v-on:close="showMenu = false"></menu-settings>
+      <MenuSettings v-on:close="showMenu = false"></MenuSettings>
     </md-drawer>
-
     <div class="container">
       <md-progress-bar v-if="loading" class="loadingBar" md-mode="indeterminate"></md-progress-bar>
       <thumbnail-gallery class="gallery"></thumbnail-gallery>
-
     </div>
-    <md-snackbar md-position="center" :md-duration="Infinity" :md-active.sync="showSnackbar"
-                 md-persistent>
-      <span>{{error}}</span>
-      <md-button class="md-primary" @click="showSnackbar = false">Close</md-button>
-    </md-snackbar>
+    <ErrorToaster></ErrorToaster>
   </div>
 </template>
 
@@ -26,6 +18,7 @@
   import PhotoDetailView from './PhotoDetailView.vue'
   import MenuSettings from './MenuSettings.vue'
   import Toolbar from './Toolbar.vue'
+  import ErrorToaster from './ErrorToaster.vue'
 
   export default {
     dependencies: ['keyHandler', 'dataRetriever'],
@@ -33,7 +26,8 @@
       ThumbnailGallery,
       PhotoDetailView,
       MenuSettings,
-      Toolbar
+      Toolbar,
+      ErrorToaster
     },
     computed: {
       photo () {
@@ -45,9 +39,7 @@
     },
     data () {
       return {
-        showMenu: false,
-        showSnackbar: false,
-        error: null
+        showMenu: false
       }
     },
     mounted () {

@@ -108,7 +108,7 @@
     float: left;
     position: relative;
     cursor: pointer;
-    border: 2px solid #222;
+    border: 1px solid #222;
   }
 
   .errorIcon {

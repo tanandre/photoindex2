@@ -14,6 +14,7 @@ const store = new Vuex.Store({
     page: 0,
     photo: null,
     loading: false,
+    errors: [],
     album: {
       images: [],
       imageItems: []
@@ -24,6 +25,12 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
+    error (state, error) {
+      state.errors.push(error)
+    },
+    errors (state, errors) {
+      state.errors = errors
+    },
     serverUrl (state, serverUrl) {
       state.serverUrl = serverUrl
     },
@@ -62,7 +69,8 @@ const store = new Vuex.Store({
           imageItems: []
         })
         commit('loading', false)
-      }).catch(() => {
+      }).catch(err => {
+        commit('error', 'Error retrieving images: ' + err.status + ' ' + err.statusText + ' (query=' + q + ')')
         commit('loading', false)
       })
     }

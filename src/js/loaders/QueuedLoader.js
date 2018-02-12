@@ -59,7 +59,7 @@ class QueuedLoader {
         })
       }
 
-      this.workers.filter((worker) => worker.isAvailable()).forEach((worker) => {
+      this.workers.filter(worker => worker.isAvailable()).forEach((worker) => {
         loadNext(worker)
       })
     })

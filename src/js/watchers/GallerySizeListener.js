@@ -22,10 +22,14 @@ function getThumbnailsPerPage () {
 class GallerySizeListener {
   calibrateThumbnails () {
     let thumbnailsPerPage = getThumbnailsPerPage()
+    let pageCount = Math.ceil(store.state.album.images.length / thumbnailsPerPage);
     store.commit('gallery', {
       thumbnailsPerPage: thumbnailsPerPage,
-      pageCount: Math.ceil(store.state.album.images.length / thumbnailsPerPage)
+      pageCount: pageCount
     })
+    if (pageCount < store.state.page) {
+      store.commit('page', 1)
+    }
   }
 }
 

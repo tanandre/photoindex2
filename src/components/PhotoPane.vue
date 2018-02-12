@@ -1,8 +1,8 @@
 <template>
   <div class="photoPane" ref="photoPane">
-    <md-progress-bar v-if="status == 'loading'" md-mode="indeterminate"></md-progress-bar>
+    <md-progress-bar class="loadingBar" v-if="status == 'loading'" md-mode="indeterminate"></md-progress-bar>
     <div class="errorPane">
-      <mdIcon class="md-size-2x" v-if="status === 'error'">not_interested</mdIcon>
+      <mdIcon class="md-size-2x" v-if="status === 'error'">error_outline</mdIcon>
       <div>{{errorMsg}}</div>
     </div>
   </div>
@@ -39,6 +39,7 @@
         }, (err) => {
           console.error(err)
           this.status = 'error'
+          console.error(err)
           this.errorMsg = 'error loading: ' + err
           this.isDone = true
         }, () => {
@@ -72,5 +73,11 @@
     left: 50%;
     text-align: center;
     transform: translate(-50%, -50%);
+  }
+
+  .loadingBar {
+    position: absolute;
+    width: 100%;
+    top: 0;
   }
 </style>
