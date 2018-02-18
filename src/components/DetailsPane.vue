@@ -11,7 +11,7 @@
     </a>
     <MdContent class="sideBar">
       <MdList>
-        <MdListItem>
+        <MdListItem class="test">
           <md-button class="md-icon-button" @click="onClickDate" title="search by date">
             <mdIcon>event</mdIcon>
           </md-button>
@@ -61,12 +61,10 @@
         return this.photo.path.substring(index + 1)
       },
       photoDate () {
-        let date = new Date(this.photo.dateInMillis)
-        return date.toDateString()
+        return this.photo.date.substring(0, 11)
       },
       photoDateTime () {
-        let date = new Date(this.photo.dateInMillis)
-        return date.toTimeString()
+        return this.photo.date.substring(11)
       },
       isVideo () {
         return util.isVideo(this.photo)
@@ -83,7 +81,6 @@
       },
       onUpdate (event) {
         Vue.http.post(this.urlHelper.getPhotoDateUrl(this.photo, this.photoDate.getTime()))
-        console.log('update')
       },
       onClose () {
         this.navigator.clearPhoto()
@@ -115,7 +112,9 @@
     font-size: 0.7em;
   }
 
-  .md-list-item-content {
-    padding: 0;
+  .loadingBar {
+    position: absolute;
+    width: 100%;
+    top: 0;
   }
 </style>

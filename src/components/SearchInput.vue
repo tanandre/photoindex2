@@ -6,12 +6,18 @@
                   v-on:keyup.enter="onEnter" autofocus></md-input>
       </md-field>
     </div>
+    <md-chip md-deletable v-for="tag in dateTags" v-on:click="onCloseTag(tag)" :key="tag">{{tag}}
+    </md-chip>
     <md-chip md-deletable v-for="tag in tags" v-on:click="onCloseTag(tag)" :key="tag">{{tag}}
     </md-chip>
   </div>
 </template>
 
 <script>
+  function isDate (value) {
+    return /^\d{4,8}$/.test(value)
+  }
+
   export default {
     dependencies: ['navigator'],
     data () {
@@ -22,6 +28,9 @@
     computed: {
       tags () {
         return this.navigator.tagsToArray(this.$route.query.q)
+      },
+      dateTags () {
+        return this.navigator.tagsToArray(this.$route.query.d)
       }
     },
     methods: {
@@ -37,10 +46,18 @@
       },
 
       onCloseTag (tag) {
-        this.removeTag(tag)
+        if (isDate(tag)) {
+          this.removeDateTag(tag)
+        } else {
+          this.removeTag(tag)
+        }
       },
       addTag (value) {
-        this.setTags(this.tags.concat([value]))
+        if (isDate(value)) {
+          this.setDateTags(this.dateTags.concat([value]))
+        } else {
+          this.setTags(this.tags.concat([value]))
+        }
       },
       removeTag (tag) {
         let found = this.tags.indexOf(tag)
@@ -49,11 +66,24 @@
           this.setTags(this.tags)
         }
       },
+      removeDateTag (tag) {
+        let foundD = this.dateTags.indexOf(tag)
+        if (foundD > -1) {
+          this.dateTags.splice(foundD, 1)
+          this.setDateTags(this.dateTags)
+        }
+      },
       clearTags () {
-        this.setTags([])
+        this.setBothTags([], [])
       },
       setTags (tags) {
-        this.navigator.setTags(this.navigator.tagsToHashObject(tags))
+        this.setBothTags(tags, this.dateTags)
+      },
+      setDateTags (dateTags) {
+        this.setBothTags(this.tags, dateTags)
+      },
+      setBothTags (tags, dateTags) {
+        this.navigator.setDateTags(this.navigator.tagsToHashObject(dateTags), this.navigator.tagsToHashObject(tags))
       }
     }
   }

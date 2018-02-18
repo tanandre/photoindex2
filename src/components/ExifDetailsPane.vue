@@ -29,19 +29,11 @@
 
         this.dataRetriever.retrieveExif(this.photo).then(data => {
           this.exif = data.body
-        }, (err) => {
-          console.error(err)
         })
       }
-
     },
     mounted () {
       this.loadExif()
-    },
-    computed: {
-      downloadUrl () {
-        this.urlHelper.getPhotoUrl(this.photo)
-      }
     },
     watch: {
       'photo' () {
@@ -56,7 +48,4 @@
 </script>
 
 <style scoped>
-  .exifDetailsPane {
-    /*padding: 10px;*/
-  }
 </style>

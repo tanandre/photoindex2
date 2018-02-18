@@ -4,8 +4,8 @@ class UrlHelper {
   }
 
   getListing () {
-    console.log('serverUrl', this.store.state.serverUrl)
-    return this.store.state.serverUrl + '/listing'
+    // return this.store.state.serverUrl + '/listing'
+    return '/photoindex' + '/php/listing.php'
   }
 
   getStats () {

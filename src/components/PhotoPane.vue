@@ -23,6 +23,7 @@
     },
     methods: {
       drawPhoto () {
+        this.errorMsg = ''
         let thumbnailUrl = this.urlHelper.getThumbnailUrl(this.photo)
         let photoPane = this.$refs['photoPane']
         photoPane.style.backgroundImage = 'url(' + thumbnailUrl + ')'
@@ -68,6 +69,8 @@
   }
 
   .errorPane {
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.2);
     position: absolute;
     top: 50%;
     left: 50%;

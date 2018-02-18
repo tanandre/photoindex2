@@ -28,11 +28,22 @@ class AlbumNavigator {
   setTags (tags) {
     this.router.push({
       name: 'gallery',
-      // params: {
-      //   page: 1
-      // },
       query: {
         q: tags
+      }
+    })
+  }
+
+  /**
+   * Update the route state
+   * @param tags
+   */
+  setDateTags (dates, tags) {
+    this.router.push({
+      name: 'gallery',
+      query: {
+        q: tags,
+        d: dates
       }
     })
   }

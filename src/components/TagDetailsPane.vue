@@ -25,8 +25,7 @@
         this.dataRetriever.retrieveTags(this.photo).then(data => {
           this.status = 'completed'
           this.tags = data.body.tags
-        }, (err) => {
-          console.error(err)
+        }, () => {
           this.status = 'error'
           this.isDone = true
         }, () => {

@@ -1,6 +1,7 @@
 <template>
   <div class="photoAlbum">
     <photo-detail-view v-if="photo !== null" :photo="photo"></photo-detail-view>
+
     <toolbar v-on:click-menu="showMenu = true"></toolbar>
     <md-drawer :md-active.sync="showMenu">
       <MenuSettings v-on:close="showMenu = false"></MenuSettings>
@@ -45,6 +46,7 @@
     mounted () {
       window.addEventListener('keydown', this.onKeyDown)
       this.$store.dispatch('query', this.$route.query.q).then(() => {
+        this.$store.dispatch('filter', this.$route.query.d)
         this.$store.commit('page', Number(this.$route.params.page))
         this.$store.dispatch('photo', Number(this.$route.params.photoid))
       })

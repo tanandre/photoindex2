@@ -17,6 +17,10 @@ module.exports = {
         pathRewrite: {
           '^/kanji\\d*': ''
         }
+      },
+      '/photoindex': {
+        target: 'http://kanji/',
+        changeOrigin: true
       }
     },
 

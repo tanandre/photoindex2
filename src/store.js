@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import injector from 'vue-inject'
+import util from './js/util'
 
 Vue.use(Vuex)
 
-function tagsToArray (tags) {
-  return tags ? tags.split(',').map(t => decodeURIComponent(t)) : []
+function isPhotoInDateRange (photo, dates) {
+  return dates.some(d => photo.date.replace(/[^\d]/g, '').startsWith(d))
 }
 
 const store = new Vuex.Store({
@@ -17,12 +18,14 @@ const store = new Vuex.Store({
     errors: [],
     album: {
       images: [],
-      imageItems: []
+      imageItems: [],
+      all: []
     },
     gallery: {
       thumbnailsPerPage: 0,
       pageCount: 0
     }
+    // allImages: []
   },
   mutations: {
     error (state, error) {
@@ -44,6 +47,9 @@ const store = new Vuex.Store({
     gallery (state, gallery) {
       state.gallery = gallery
     },
+    // allImages (state, allImages) {
+    //   state.allImages = allImages
+    // },
 
     photo (state, photo) {
       state.photo = photo
@@ -56,18 +62,42 @@ const store = new Vuex.Store({
   actions: {
     photo ({commit, state}, photoId) {
       let foundPhoto = photoId === -1 ? null : state.album.images.find(photo => {
-        return photo.id === photoId
+        return Number(photo.id) === photoId
       })
+      if (foundPhoto === undefined && photoId !== -1) {
+        throw new Error('could not find photo with photoId: ' + photoId)
+      }
       commit('photo', foundPhoto === undefined ? null : foundPhoto)
     },
+
+    filter ({commit, state}, dates) {
+      let datesArray = util.tagsToArray(dates);
+      if (datesArray.length === 0) {
+        commit('album', {
+          images: state.album.all,
+          all: state.album.all
+        })
+        return
+      }
+      let filteredImages = state.album.all.filter(img => isPhotoInDateRange(img, datesArray))
+      console.log('filteredImages', filteredImages.length)
+      commit('album', {
+        images: filteredImages,
+        all: state.album.all
+      })
+    },
+
     query ({commit}, q) {
+      // when querying blank use parameter currentDate and add cache headers
       commit('loading', true)
-      console.log('query')
-      return injector.get('dataRetriever').retrieveImages({tag: tagsToArray(q)}).then((response) => {
+      console.log('query', q)
+      return injector.get('dataRetriever').retrieveImages({tag: util.tagsToArray(q)}).then((response) => {
         commit('album', {
           images: response.body,
+          all: response.body,
           imageItems: []
         })
+        // commit('allImages', response.body)
         commit('loading', false)
       }).catch(err => {
         commit('error', 'Error retrieving images: ' + err.status + ' ' + err.statusText + ' (query=' + q + ')')
