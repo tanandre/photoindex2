@@ -13,11 +13,16 @@ class UrlHelper {
   }
 
   getThumbnailUrl (photo) {
-    return this.getPhotoUrl(photo, 300)
+    return this.getPhotoUrl(photo, 1)
+  }
+
+  getAllTags () {
+    return '/photoindex/php/tags.php'
   }
 
   getPhotoUrl (photo, width) {
-    return this.store.state.serverUrl + '/photo/' + photo.id + (width === undefined ? '' : '/' + width)
+    // return this.store.state.serverUrl + '/photo/' + photo.id + (width === undefined ? '' : '/' + width)
+    return '/photoindex/php/photo.php?id=' + photo.id + (width === undefined ? '' : '&q=' + width)
   }
 
   getPhotoDateUrl (photo, dateInMillis) {

@@ -14,9 +14,7 @@
 </template>
 
 <script>
-  function isDate (value) {
-    return /^\d{4,8}$/.test(value)
-  }
+  import util from '../js/util'
 
   export default {
     dependencies: ['navigator'],
@@ -27,10 +25,10 @@
     },
     computed: {
       tags () {
-        return this.navigator.tagsToArray(this.$route.query.q)
+        return util.tagsToArray(this.$route.query.q)
       },
       dateTags () {
-        return this.navigator.tagsToArray(this.$route.query.d)
+        return util.tagsToArray(this.$route.query.d)
       }
     },
     methods: {
@@ -46,14 +44,14 @@
       },
 
       onCloseTag (tag) {
-        if (isDate(tag)) {
+        if (util.isDate(tag)) {
           this.removeDateTag(tag)
         } else {
           this.removeTag(tag)
         }
       },
       addTag (value) {
-        if (isDate(value)) {
+        if (util.isDate(value)) {
           this.setDateTags(this.dateTags.concat([value]))
         } else {
           this.setTags(this.tags.concat([value]))
@@ -83,7 +81,7 @@
         this.setBothTags(this.tags, dateTags)
       },
       setBothTags (tags, dateTags) {
-        this.navigator.setDateTags(this.navigator.tagsToHashObject(dateTags), this.navigator.tagsToHashObject(tags))
+        this.navigator.setDateTags(util.tagsToHashObject(dateTags), util.tagsToHashObject(tags))
       }
     }
   }

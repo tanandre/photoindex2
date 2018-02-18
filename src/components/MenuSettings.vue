@@ -32,6 +32,7 @@
 
 <script>
   import Vue from 'vue'
+  import util from '../js/util'
 
   export default {
     dependencies: ['urlHelper', 'navigator'],
@@ -49,18 +50,14 @@
       }
     },
     mounted () {
-      Vue.http.get(this.urlHelper.getStats()).then(data => {
-        this.stats = data.body
+      Vue.http.get(this.urlHelper.getAllTags()).then(data => {
+        this.stats.tags = data.body
       })
     },
     methods: {
       onClose () {
         this.$emit('close')
       },
-      onClickTag (tag) {
-        this.navigator.setTags(this.navigator.tagsToHashObject([tag.name]))
-      },
-
       updateServerUrl () {
         this.$store.commit('serverUrl', this.serverUrl)
         localStorage.setItem('serverUrl', this.serverUrl)
@@ -68,7 +65,7 @@
     },
     watch: {
       'selectedTags' () {
-        this.navigator.setTags(this.navigator.tagsToHashObject(this.selectedTags))
+        this.navigator.setDateTags(this.$route.query.d, util.tagsToHashObject(this.selectedTags))
       }
     }
   }

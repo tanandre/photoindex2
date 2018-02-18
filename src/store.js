@@ -25,7 +25,6 @@ const store = new Vuex.Store({
       thumbnailsPerPage: 0,
       pageCount: 0
     }
-    // allImages: []
   },
   mutations: {
     error (state, error) {
@@ -47,9 +46,6 @@ const store = new Vuex.Store({
     gallery (state, gallery) {
       state.gallery = gallery
     },
-    // allImages (state, allImages) {
-    //   state.allImages = allImages
-    // },
 
     photo (state, photo) {
       state.photo = photo
@@ -71,8 +67,9 @@ const store = new Vuex.Store({
     },
 
     filter ({commit, state}, dates) {
-      let datesArray = util.tagsToArray(dates);
+      let datesArray = util.tagsToArray(dates)
       if (datesArray.length === 0) {
+        console.log('dates empty setting all')
         commit('album', {
           images: state.album.all,
           all: state.album.all
@@ -80,7 +77,7 @@ const store = new Vuex.Store({
         return
       }
       let filteredImages = state.album.all.filter(img => isPhotoInDateRange(img, datesArray))
-      console.log('filteredImages', filteredImages.length)
+      console.log('filter')
       commit('album', {
         images: filteredImages,
         all: state.album.all
@@ -88,7 +85,7 @@ const store = new Vuex.Store({
     },
 
     query ({commit}, q) {
-      // when querying blank use parameter currentDate and add cache headers
+      // TODO when querying blank use parameter currentDate and add cache headers
       commit('loading', true)
       console.log('query', q)
       return injector.get('dataRetriever').retrieveImages({tag: util.tagsToArray(q)}).then((response) => {
@@ -97,7 +94,6 @@ const store = new Vuex.Store({
           all: response.body,
           imageItems: []
         })
-        // commit('allImages', response.body)
         commit('loading', false)
       }).catch(err => {
         commit('error', 'Error retrieving images: ' + err.status + ' ' + err.statusText + ' (query=' + q + ')')

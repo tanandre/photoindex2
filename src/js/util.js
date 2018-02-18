@@ -7,6 +7,14 @@ export default {
     return tags ? tags.split(',').map(t => decodeURIComponent(t)) : []
   },
 
+  tagsToHashObject (tags) {
+    return tags.map(encodeURIComponent).join(',')
+  },
+
+  isDate (value) {
+    return /^\d{4,8}$/.test(value)
+  },
+
   /**
    * make sure the return value is an array if the input is not an array otherwise returns the input
    * @param value

@@ -1,7 +1,7 @@
 <template>
   <div class="photoPane" ref="photoPane">
     <md-progress-bar class="loadingBar" v-if="status == 'loading'" md-mode="indeterminate"></md-progress-bar>
-    <div class="errorPane">
+    <div class="errorPane" v-if="errorMsg">
       <mdIcon class="md-size-2x" v-if="status === 'error'">error_outline</mdIcon>
       <div>{{errorMsg}}</div>
     </div>
@@ -32,7 +32,7 @@
           this.promise.cancel()
         }
 
-        let url = this.urlHelper.getPhotoUrl(this.photo, 1000)
+        let url = this.urlHelper.getPhotoUrl(this.photo, 2)
         // TODO cancel promise if existing
         this.promise = this.photoLoader.load(url).then(() => {
           this.status = 'completed'
