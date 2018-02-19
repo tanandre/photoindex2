@@ -18,7 +18,6 @@ const store = new Vuex.Store({
     errors: [],
     album: {
       images: [],
-      imageItems: [],
       all: []
     },
     gallery: {

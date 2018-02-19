@@ -16,8 +16,14 @@
             <mdIcon>event</mdIcon>
           </md-button>
           <div class="md-list-item-text">
-            <span>{{photoDate}}</span>
+            <!--
+            <span v-if="!editDate">{{photoDate}}</span>
+            <md-field v-if="editDate">
+              <MdInput v-model="photoDate" @blur="onBlur"></MdInput>
+            </md-field>
             <span class="small" :title="photoDateTime">{{photoDateTime}}</span>
+            -->
+            <PhotoDateInput :photo="photo"></PhotoDateInput>
           </div>
         </MdListItem>
         <MdListItem>
@@ -38,9 +44,9 @@
 </template>
 
 <script>
-  import Vue from 'vue'
   import ExifDetailsPane from './ExifDetailsPane.vue'
   import TagDetailsPane from './TagDetailsPane.vue'
+  import PhotoDateInput from './PhotoDateInput.vue'
   import util from '../js/util'
 
   export default {
@@ -48,11 +54,13 @@
     props: ['photo'],
     components: {
       ExifDetailsPane,
-      TagDetailsPane
+      TagDetailsPane,
+      PhotoDateInput
     },
     data () {
       return {
-        status: 'idle'
+        status: 'idle',
+        editDate: false
       }
     },
     computed: {
@@ -60,9 +68,17 @@
         let index = this.photo.path.lastIndexOf('/')
         return this.photo.path.substring(index + 1)
       },
-      photoDate () {
-        return this.photo.date.substring(0, 11)
+      photoDate: {
+        get () {
+          return this.photo.date.substring(0, 11)
+        },
+        set (value) {
+          // ignore
+          console.log('set the date', value)
+        }
       },
+//      photoDate () {
+//      },
       photoDateTime () {
         return this.photo.date.substring(11)
       },
@@ -74,13 +90,13 @@
       }
     },
     methods: {
+      onBlur () {
+        console.log('onBlur')
+      },
       onClickDate () {
         let date = this.photo.date.substring(0, 10).replace(/-/g, '')
-        this.navigator.setTags(date)
+        this.navigator.setDateTags(util.tagsToHashObject([date]), this.$route.query.q)
         this.navigator.clearPhoto()
-      },
-      onUpdate (event) {
-        Vue.http.post(this.urlHelper.getPhotoDateUrl(this.photo, this.photoDate.getTime()))
       },
       onClose () {
         this.navigator.clearPhoto()

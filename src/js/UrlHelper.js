@@ -5,7 +5,12 @@ class UrlHelper {
 
   getListing () {
     // return this.store.state.serverUrl + '/listing'
-    return '/photoindex' + '/php/listing.php'
+    return '/photoindex/php/listing.php'
+  }
+
+  getPhotoUpdateUrl () {
+//    http://kanji/photoindex/php/update.php?id[]=20&id[]=19&date=2014-01-01%2012:00:42
+    return '/photoindex/php/update.php'
   }
 
   getStats () {
@@ -25,16 +30,14 @@ class UrlHelper {
     return '/photoindex/php/photo.php?id=' + photo.id + (width === undefined ? '' : '&q=' + width)
   }
 
-  getPhotoDateUrl (photo, dateInMillis) {
-    return this.store.state.serverUrl + '/date/' + photo.id + '/' + dateInMillis
-  }
-
   getTagsUrl (photo) {
-    return this.store.state.serverUrl + '/tags/' + photo.id
+    return '/photoindex/php/tags.php?id=' + photo.id
+//    return this.store.state.serverUrl + '/tags/' + photo.id
   }
 
   getExifUrl (photo) {
-    return this.store.state.serverUrl + '/exif/' + photo.id
+    // return this.store.state.serverUrl + '/exif/' + photo.id
+    return '/photoindex/php/exif.php?id=' + photo.id
   }
 }
 
