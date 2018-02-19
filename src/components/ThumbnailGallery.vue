@@ -1,13 +1,15 @@
 <template>
   <div class="thumbnailGallery">
-    <thumbnail class="thumbnail" v-for="image in imagesForCurrentPage" :photo="image"
-               :key="image.id" @click.native="onClickThumbnail(image)">
+    <thumbnail class="thumbnail" :class="{ selected: isSelected(image) }" v-for="image in imagesForCurrentPage"
+               :photo="image"
+               :key="image.id" @click.native="onClickThumbnail(image, $event)">
     </thumbnail>
   </div>
 </template>
 
 <script>
   import Thumbnail from './Thumbnail.vue'
+  import util from '../js/util'
 
   export default {
     dependencies: ['navigator'],
@@ -31,8 +33,24 @@
 
     },
     methods: {
-      onClickThumbnail (photo) {
-        this.navigator.setPhoto(photo.id)
+      isSelected (photo) {
+        return util.arrayContains(this.$store.state.selectedPhotos, photo)
+      },
+
+      updatePhotoSelection (photo) {
+        if (this.isSelected(photo)) {
+          this.$store.commit('deselectPhoto', photo)
+        } else {
+          this.$store.commit('selectPhoto', photo)
+        }
+      },
+
+      onClickThumbnail (photo, event) {
+        if (event.shiftKey) {
+          this.updatePhotoSelection(photo)
+        } else {
+          this.navigator.setPhoto(photo.id)
+        }
       }
     }
   }
@@ -41,6 +59,10 @@
 <style scoped>
   .thumbnail {
     height: 200px;
+  }
+
+  .thumbnailGallery .thumbnail.selected {
+    border: 1px solid aqua;
   }
 
   @media only screen and (max-width: 480px) {

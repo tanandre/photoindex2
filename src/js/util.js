@@ -15,6 +15,10 @@ export default {
     return /^\d{4,8}$/.test(value)
   },
 
+  arrayContains (arr, item) {
+    return arr.indexOf(item) !== -1
+  },
+
   /**
    * make sure the return value is an array if the input is not an array otherwise returns the input
    * @param value

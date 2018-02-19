@@ -23,7 +23,8 @@ const store = new Vuex.Store({
     gallery: {
       thumbnailsPerPage: 0,
       pageCount: 0
-    }
+    },
+    selectedPhotos: []
   },
   mutations: {
     error (state, error) {
@@ -52,6 +53,17 @@ const store = new Vuex.Store({
 
     album (state, album) {
       state.album = album
+    },
+    selectedPhotos (state, photos) {
+      state.selectedPhotos = photos
+    },
+
+    selectPhoto (state, photo) {
+      state.selectedPhotos.push(photo)
+    },
+
+    deselectPhoto (state, photo) {
+      util.removeFromArray(state.selectedPhotos, photo)
     }
   },
   actions: {
