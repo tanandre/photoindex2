@@ -1,6 +1,5 @@
 <template>
   <md-toolbar class="md-dense" :class="{ 'md-primary': selectedPhotos.length > 0 }">
-    <PhotoUpdateDialog v-if="showUpdateDates" v-on:close="showUpdateDates = false"></PhotoUpdateDialog>
     <div class="md-toolbar-section-start">
       <md-button class="md-icon-button" @click="onClickMenu">
         <md-icon>menu</md-icon>
@@ -23,7 +22,7 @@
         </md-button>
 
         <md-menu-content class="editMenu">
-          <md-menu-item @click="showUpdateDates = true">
+          <md-menu-item @click="onClickEditDates()">
             <md-icon>event</md-icon>
             <span>Edit Dates</span>
           </md-menu-item>
@@ -38,7 +37,6 @@
         </md-menu-content>
       </md-menu>
 
-
     </div>
   </md-toolbar>
 </template>
@@ -46,18 +44,15 @@
 <script>
   import SearchInput from './SearchInput.vue'
   import Pagination from './Pagination.vue'
-  import PhotoUpdateDialog from './PhotoUpdateDialog.vue'
 
   export default {
     components: {
       SearchInput,
-      Pagination,
-      PhotoUpdateDialog
+      Pagination
     },
     data () {
       return {
-        title: 'PhotoIndex',
-        showUpdateDates: false
+        title: 'PhotoIndex'
       }
     },
     computed: {
@@ -76,8 +71,7 @@
 
     methods: {
       onClickEditDates () {
-        this.showUpdateDates = true
-        console.log('this.showUpdateDates', this.showUpdateDates)
+        this.$store.commit('showEditDate', true)
       },
       onClickMenu () {
         this.$emit('click-menu')
