@@ -7,14 +7,14 @@
       <span class="md-title">Menu</span>
     </md-toolbar>
     <md-list>
-      <md-list-item>
+      <md-list-item class="md-dense">
         <md-icon>perm_media</md-icon>
         <md-field>
           <label>Server URL:</label>
-          <md-input @change="updateServerUrl" v-model="serverUrl"></md-input>
+          <md-input @change="updateServerUrl" class="md-dense" v-model="serverUrl"></md-input>
         </md-field>
       </md-list-item>
-      <md-list-item>
+      <md-list-item class="md-dense">
         <md-icon>photo_camera</md-icon>
         <md-field>
           <label for="tags">Device</label>
@@ -39,7 +39,6 @@
     props: ['showMenu'],
     data: () => {
       return {
-        selectedTags: [],
         stats: {
           photo: [{
             photoCount: 0
@@ -47,6 +46,16 @@
           tags: []
         },
         serverUrl: localStorage.getItem('serverUrl')
+      }
+    },
+    computed: {
+      selectedTags: {
+        get () {
+          return util.tagsToArray(this.$route.query.q)
+        },
+        set (values) {
+          this.navigator.setDateTags(this.$route.query.d, util.tagsToHashObject(values))
+        }
       }
     },
     mounted () {
@@ -64,9 +73,6 @@
       }
     },
     watch: {
-      'selectedTags' () {
-        this.navigator.setDateTags(this.$route.query.d, util.tagsToHashObject(this.selectedTags))
-      }
     }
   }
 </script>
