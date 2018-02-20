@@ -1,23 +1,17 @@
 <template>
   <md-dialog md-active>
-    <md-dialog-title>Update date & time</md-dialog-title>
+    <md-dialog-title>Change date & time ({{selectedPhotos.length}})</md-dialog-title>
     <MdContent class="dialogContent">
-      <div>Updating date and time of {{selectedPhotos.length}} photos</div>
-      <md-list>
-        <md-list-item>
-          <MdIcon>event</MdIcon>
-          <md-field>
-            <input class="inputStyle" type="date" v-model="date"/>
-          </md-field>
-        </md-list-item>
-        <md-list-item>
-          <MdIcon>query_builder</MdIcon>
-          <md-field>
-            <input class="inputStyle" v-model="time"/>
-          </md-field>
-        </md-list-item>
-      </md-list>
-
+      <div class="item">
+        <MdIcon>event</MdIcon>
+        <input class="inputStyle" type="date" v-model="date"/>
+      </div>
+      <div class="item">
+        <MdIcon>query_builder</MdIcon>
+        <input class="inputStyle" v-model="time"/>
+      </div>
+      <div v-if="response">{{response.rowCount}} photos updated</div>
+      <md-progress-bar class="loadingBar" md-mode="indeterminate" v-if="loading"></md-progress-bar>
     </MdContent>
     <md-dialog-actions>
       <md-button class="md-primary" @click="onClose">Close</md-button>
@@ -33,6 +27,8 @@
     dependencies: ['urlHelper'],
     data () {
       return {
+        loading: false,
+        response: null,
         date: this.$store.state.selectedPhotos[0].date.substring(0, 10),
         time: this.$store.state.selectedPhotos[0].date.substring(11)
       }
@@ -47,6 +43,7 @@
         this.$emit('close')
       },
       saveDate () {
+        this.loading = true
         let ids = this.$store.state.selectedPhotos.map(p => p.id)
         let datetime = (this.date.trim() + ' ' + this.time.trim())
         Vue.http.post(this.urlHelper.getPhotoUpdateUrl(), {
@@ -55,8 +52,11 @@
         }, {
           emulateJSON: true
         }).then(resp => {
+          this.loading = false
+          this.response = resp.body
           console.log('success', resp.body)
         }).catch(err => {
+          this.loading = false
           console.error('error', err)
         })
       }
@@ -74,5 +74,9 @@
 
   .dialogContent {
     padding: 0 10px;
+  }
+
+  .item {
+    padding: 10px;
   }
 </style>

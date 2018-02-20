@@ -40,8 +40,25 @@
       updatePhotoSelection (photo) {
         if (this.isSelected(photo)) {
           this.$store.commit('deselectPhoto', photo)
-        } else {
+          return
+        }
+
+        let selectedPhotos = this.$store.state.selectedPhotos
+        if (selectedPhotos.length === 0) {
           this.$store.commit('selectPhoto', photo)
+          return
+        }
+        let images = this.$store.state.album.images
+        let lastIndex = images.indexOf(selectedPhotos[selectedPhotos.length - 1])
+        let currentIndex = images.indexOf(photo)
+        if (currentIndex > lastIndex) {
+          for (let index = lastIndex + 1; index <= currentIndex; index++) {
+            this.$store.commit('selectPhoto', images[index])
+          }
+        } else {
+          for (let index = currentIndex; index < lastIndex; index++) {
+            this.$store.commit('selectPhoto', images[index])
+          }
         }
       },
 
