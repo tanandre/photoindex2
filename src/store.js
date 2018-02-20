@@ -9,6 +9,18 @@ function isPhotoInDateRange (photo, dates) {
   return dates.some(d => photo.date.replace(/[^\d]/g, '').startsWith(d))
 }
 
+const actionModule = {
+  state: {
+    showEditDate: false
+  },
+  mutations: {
+    showEditDate (state, showEditDate) {
+      console.log('showEditDate')
+      state.showEditDate = showEditDate
+    }
+  }
+}
+
 const selectionModule = {
   state: {
     selectedPhotos: []
@@ -30,7 +42,8 @@ const selectionModule = {
 
 const store = new Vuex.Store({
   modules: {
-    selection: selectionModule
+    selection: selectionModule,
+    action: actionModule
   },
   state: {
     serverUrl: localStorage.getItem('serverUrl'),
@@ -51,15 +64,19 @@ const store = new Vuex.Store({
     error (state, error) {
       state.errors.push(error)
     },
+
     errors (state, errors) {
       state.errors = errors
     },
+
     serverUrl (state, serverUrl) {
       state.serverUrl = serverUrl
     },
+
     loading (state, loading) {
       state.loading = loading
     },
+
     page (state, newPage) {
       state.page = newPage
     },
@@ -84,6 +101,7 @@ const store = new Vuex.Store({
       if (foundPhoto === undefined && photoId !== -1) {
         throw new Error('could not find photo with photoId: ' + photoId)
       }
+      console.log('committing photo')
       commit('photo', foundPhoto === undefined ? null : foundPhoto)
     },
 

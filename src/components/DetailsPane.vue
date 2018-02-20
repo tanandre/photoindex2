@@ -16,15 +16,12 @@
             <mdIcon>event</mdIcon>
           </md-button>
           <div class="md-list-item-text">
-            <!--
-            <span v-if="!editDate">{{photoDate}}</span>
-            <md-field v-if="editDate">
-              <MdInput v-model="photoDate" @blur="onBlur"></MdInput>
-            </md-field>
+            <span>{{photoDate}}</span>
             <span class="small" :title="photoDateTime">{{photoDateTime}}</span>
-            -->
-            <PhotoDateInput :photo="photo"></PhotoDateInput>
           </div>
+          <md-button class="md-icon-button" @click="editDate()" title="edit date">
+            <mdIcon>edit</mdIcon>
+          </md-button>
         </MdListItem>
         <MdListItem>
           <md-button class="md-icon-button">
@@ -46,7 +43,6 @@
 <script>
   import ExifDetailsPane from './ExifDetailsPane.vue'
   import TagDetailsPane from './TagDetailsPane.vue'
-  import PhotoDateInput from './PhotoDateInput.vue'
   import util from '../js/util'
 
   export default {
@@ -54,13 +50,11 @@
     props: ['photo'],
     components: {
       ExifDetailsPane,
-      TagDetailsPane,
-      PhotoDateInput
+      TagDetailsPane
     },
     data () {
       return {
-        status: 'idle',
-        editDate: false
+        status: 'idle'
       }
     },
     computed: {
@@ -77,8 +71,6 @@
           console.log('set the date', value)
         }
       },
-//      photoDate () {
-//      },
       photoDateTime () {
         return this.photo.date.substring(11)
       },
@@ -90,8 +82,9 @@
       }
     },
     methods: {
-      onBlur () {
-        console.log('onBlur')
+      editDate () {
+        this.$store.commit('selectedPhotos', [this.photo])
+        this.$store.commit('showEditDate', true)
       },
       onClickDate () {
         let date = this.photo.date.substring(0, 10).replace(/-/g, '')

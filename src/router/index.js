@@ -21,6 +21,7 @@ router.beforeEach((to, from, next) => {
     // this branch is hit when opening directly on photo
     if (store.state.album.images.length > 0) {
       store.dispatch('photo', Number(to.params.photoid))
+      store.commit('showEditDate', false)
     }
   } else if (to.query.d !== from.query.d) {
     store.dispatch('filter', to.query.d)

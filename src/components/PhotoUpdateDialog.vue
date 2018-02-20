@@ -1,5 +1,5 @@
 <template>
-  <md-dialog md-active>
+  <md-dialog md-active v-if="showEditDate">
     <md-dialog-title>Change date & time</md-dialog-title>
     <MdContent class="dialogContent">
       <div class="item">
@@ -15,7 +15,9 @@
     </MdContent>
     <md-dialog-actions>
       <md-button class="md-primary" @click="onClose" title="close dialog">Close</md-button>
-      <md-button class="md-primary" @click="saveDate" title="update images with date">Update ({{selectedPhotos.length}})</md-button>
+      <md-button class="md-primary" @click="saveDate" title="update images with date">
+        Update ({{selectedPhotos.length}})
+      </md-button>
     </md-dialog-actions>
   </md-dialog>
 </template>
@@ -28,19 +30,29 @@
     data () {
       return {
         loading: false,
-        response: null,
-        date: this.$store.state.selection.selectedPhotos[0].date.substring(0, 10),
-        time: this.$store.state.selection.selectedPhotos[0].date.substring(11)
+        response: null
       }
     },
     computed: {
+      date () {
+        return this.selectedPhotos.length === 0 ? '' : this.selectedPhotos[0].date.substring(0, 10)
+      },
+
+      time () {
+        return this.selectedPhotos.length === 0 ? '' : this.selectedPhotos[0].date.substring(11)
+      },
+
       selectedPhotos () {
         return this.$store.state.selection.selectedPhotos
+      },
+
+      showEditDate () {
+        return this.$store.state.action.showEditDate
       }
     },
     methods: {
       onClose () {
-        this.$emit('close')
+        this.$store.commit('showEditDate', false)
       },
       saveDate () {
         this.loading = true
@@ -73,6 +85,7 @@
     font-family: inherit;
     background-color: #555;
     padding: 5px 10px;
+    margin: 0 10px;
     width: 80%;
   }
 

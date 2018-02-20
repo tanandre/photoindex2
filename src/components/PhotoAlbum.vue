@@ -1,6 +1,7 @@
 <template>
   <div class="photoAlbum">
     <photo-detail-view v-if="photo !== null" :photo="photo"></photo-detail-view>
+    <PhotoUpdateDialog></PhotoUpdateDialog>
 
     <toolbar v-on:click-menu="showMenu = true"></toolbar>
     <md-drawer :md-active.sync="showMenu">
@@ -20,6 +21,7 @@
   import MenuSettings from './MenuSettings.vue'
   import Toolbar from './Toolbar.vue'
   import ErrorToaster from './ErrorToaster.vue'
+  import PhotoUpdateDialog from './PhotoUpdateDialog.vue'
 
   export default {
     dependencies: ['keyHandler', 'dataRetriever'],
@@ -28,7 +30,8 @@
       PhotoDetailView,
       MenuSettings,
       Toolbar,
-      ErrorToaster
+      ErrorToaster,
+      PhotoUpdateDialog
     },
     computed: {
       photo () {
@@ -76,7 +79,7 @@
   .loadingBar {
     opacity: 0.5;
     position: absolute;
-    z-index: 6;
+    z-index: 2;
     top: 0;
     left: 0;
     width: 100%;
