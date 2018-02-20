@@ -2,6 +2,7 @@
   <div>
     <div class="inputTag">
       <md-field>
+        <MdIcon>search</MdIcon>
         <md-input class="searchInput" v-model="searchTxt" placeholder="Search..."
                   v-on:keyup.enter="onEnter" autofocus></md-input>
       </md-field>

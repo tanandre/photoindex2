@@ -1,14 +1,14 @@
 <template>
-  <md-toolbar class="md-dense">
+  <md-toolbar class="md-dense" :class="{ 'md-primary': selectedPhotos.length > 0 }">
     <PhotoUpdateDialog v-if="showUpdateDates" v-on:close="showUpdateDates = false"></PhotoUpdateDialog>
     <div class="md-toolbar-section-start">
       <md-button class="md-icon-button" @click="onClickMenu">
         <md-icon>menu</md-icon>
       </md-button>
       <h2 class="md-title">{{ title }}</h2>
-      <small>{{album.images.length}}</small>
       <search-input class="searchInput"></search-input>
       <pagination></pagination>
+      <span>{{album.images.length}} photos</span>
     </div>
     <div class="md-toolbar-section-end" v-if="selectedPhotos.length > 0">
       <md-button class="md-icon-button" @click="selectedPhotos = []">
@@ -66,7 +66,7 @@
       },
       selectedPhotos: {
         get () {
-          return this.$store.state.selectedPhotos
+          return this.$store.state.selection.selectedPhotos
         },
         set (value) {
           this.$store.commit('selectedPhotos', value)

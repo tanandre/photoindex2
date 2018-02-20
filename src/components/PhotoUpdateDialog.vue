@@ -1,6 +1,6 @@
 <template>
   <md-dialog md-active>
-    <md-dialog-title>Change date & time ({{selectedPhotos.length}})</md-dialog-title>
+    <md-dialog-title>Change date & time</md-dialog-title>
     <MdContent class="dialogContent">
       <div class="item">
         <MdIcon>event</MdIcon>
@@ -14,8 +14,8 @@
       <md-progress-bar class="loadingBar" md-mode="indeterminate" v-if="loading"></md-progress-bar>
     </MdContent>
     <md-dialog-actions>
-      <md-button class="md-primary" @click="onClose">Close</md-button>
-      <md-button class="md-primary" @click="saveDate">Save</md-button>
+      <md-button class="md-primary" @click="onClose" title="close dialog">Close</md-button>
+      <md-button class="md-primary" @click="saveDate" title="update images with date">Update ({{selectedPhotos.length}})</md-button>
     </md-dialog-actions>
   </md-dialog>
 </template>
@@ -29,13 +29,13 @@
       return {
         loading: false,
         response: null,
-        date: this.$store.state.selectedPhotos[0].date.substring(0, 10),
-        time: this.$store.state.selectedPhotos[0].date.substring(11)
+        date: this.$store.state.selection.selectedPhotos[0].date.substring(0, 10),
+        time: this.$store.state.selection.selectedPhotos[0].date.substring(11)
       }
     },
     computed: {
       selectedPhotos () {
-        return this.$store.state.selectedPhotos
+        return this.$store.state.selection.selectedPhotos
       }
     },
     methods: {
@@ -44,7 +44,7 @@
       },
       saveDate () {
         this.loading = true
-        let ids = this.$store.state.selectedPhotos.map(p => p.id)
+        let ids = this.selectedPhotos.map(p => p.id)
         let datetime = (this.date.trim() + ' ' + this.time.trim())
         Vue.http.post(this.urlHelper.getPhotoUpdateUrl(), {
           date: datetime,
@@ -66,10 +66,14 @@
 
 <style scoped>
   .inputStyle {
+    font-size: 1.2em;
     border: none;
     background-color: transparent;
     color: inherit;
     font-family: inherit;
+    background-color: #555;
+    padding: 5px 10px;
+    width: 80%;
   }
 
   .dialogContent {

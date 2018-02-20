@@ -34,7 +34,7 @@
     },
     methods: {
       isSelected (photo) {
-        return util.arrayContains(this.$store.state.selectedPhotos, photo)
+        return util.arrayContains(this.$store.state.selection.selectedPhotos, photo)
       },
 
       updatePhotoSelection (photo) {
@@ -43,7 +43,7 @@
           return
         }
 
-        let selectedPhotos = this.$store.state.selectedPhotos
+        let selectedPhotos = this.$store.state.selection.selectedPhotos
         if (selectedPhotos.length === 0) {
           this.$store.commit('selectPhoto', photo)
           return
