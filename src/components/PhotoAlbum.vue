@@ -2,7 +2,7 @@
   <div class="photoAlbum">
     <photo-detail-view v-if="photo !== null" :photo="photo"></photo-detail-view>
     <EditTagsDialog></EditTagsDialog>
-    <PhotoUpdateDialog></PhotoUpdateDialog>
+    <EditDatesDialog></EditDatesDialog>
     <toolbar v-on:click-menu="showMenu = true"></toolbar>
     <md-drawer :md-active.sync="showMenu">
       <MenuSettings v-on:close="showMenu = false"></MenuSettings>
@@ -21,7 +21,7 @@
   import MenuSettings from './MenuSettings.vue'
   import Toolbar from './Toolbar.vue'
   import ErrorToaster from './ErrorToaster.vue'
-  import PhotoUpdateDialog from './PhotoUpdateDialog.vue'
+  import EditDatesDialog from './EditDatesDialog.vue'
   import EditTagsDialog from './EditTagsDialog.vue'
 
   export default {
@@ -32,7 +32,7 @@
       MenuSettings,
       Toolbar,
       ErrorToaster,
-      PhotoUpdateDialog,
+      EditDatesDialog,
       EditTagsDialog
     },
     computed: {
