@@ -1,5 +1,5 @@
 <template>
-  <div ref="thumbnail" class="thumbnail highlightable">
+  <div ref="thumbnail" class="thumbnail highlightable" v-on:mouseover="mouseOver">
     <md-progress-bar v-if="status == 'loading'" class="loadingBar" md-mode="indeterminate"></md-progress-bar>
     <md-tooltip md-direction="bottom">{{photo.date}}</md-tooltip>
     <mdIcon v-if="isVideo">videocam</mdIcon>
@@ -57,6 +57,9 @@
     },
 
     methods: {
+      mouseOver () {
+//        console.log('mouseOver2')
+      },
       loadThumbnailIfInViewport () {
         if (this.isDone) {
           return
@@ -123,7 +126,7 @@
     opacity: 1;
     box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.9);
     transform: scale(1.05);
-    z-index: 10;
+    z-index: 2;
   }
 
   .highlightable {

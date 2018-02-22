@@ -11,12 +11,15 @@ function isPhotoInDateRange (photo, dates) {
 
 const actionModule = {
   state: {
-    showEditDate: false
+    showEditDate: false,
+    showEditTags: false
   },
   mutations: {
     showEditDate (state, showEditDate) {
-      console.log('showEditDate')
       state.showEditDate = showEditDate
+    },
+    showEditTags (state, showEditTags) {
+      state.showEditTags = showEditTags
     }
   }
 }

@@ -1,8 +1,8 @@
 <template>
   <div class="photoAlbum">
     <photo-detail-view v-if="photo !== null" :photo="photo"></photo-detail-view>
+    <EditTagsDialog></EditTagsDialog>
     <PhotoUpdateDialog></PhotoUpdateDialog>
-
     <toolbar v-on:click-menu="showMenu = true"></toolbar>
     <md-drawer :md-active.sync="showMenu">
       <MenuSettings v-on:close="showMenu = false"></MenuSettings>
@@ -22,6 +22,7 @@
   import Toolbar from './Toolbar.vue'
   import ErrorToaster from './ErrorToaster.vue'
   import PhotoUpdateDialog from './PhotoUpdateDialog.vue'
+  import EditTagsDialog from './EditTagsDialog.vue'
 
   export default {
     dependencies: ['keyHandler', 'dataRetriever'],
@@ -31,7 +32,8 @@
       MenuSettings,
       Toolbar,
       ErrorToaster,
-      PhotoUpdateDialog
+      PhotoUpdateDialog,
+      EditTagsDialog
     },
     computed: {
       photo () {

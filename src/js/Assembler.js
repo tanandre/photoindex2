@@ -26,7 +26,7 @@ class Assembler {
     let exifCache = {}
 
     let gallerySizeListener = new GallerySizeListener()
-    this.injector.constant('thumbnailLoader', new QueuedLoader([new ImageWorker(), new ImageWorker()], true))
+    this.injector.constant('thumbnailLoader', new QueuedLoader([new ImageWorker(), new ImageWorker(), new ImageWorker(), new ImageWorker()], true))
     this.injector.constant('photoLoader', new QueuedLoader([new ImageWorker()], false))
     this.injector.constant('tagsLoader', new CachedLoader(tagCache, new QueuedLoader([new XhrWorker(this.http)], false)))
     this.injector.constant('exifLoader', new CachedLoader(exifCache, new QueuedLoader([new XhrWorker(this.http)], true)))

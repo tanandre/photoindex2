@@ -11,12 +11,16 @@ class PhpUrlHelper {
     return '/photoindex/php/update.php'
   }
 
+  getEditTagsUrl () {
+    return '/photoindex/php/edittags.php'
+  }
+
   getAllTags () {
     return '/photoindex/php/tags.php'
   }
 
-  getPhotoUrl (photo, width) {
-    return '/photoindex/php/photo.php?id=' + photo.id + (width === undefined ? '' : '&q=' + width)
+  getPhotoUrl (photo, quality) {
+    return '/photoindex/php/photo.php?id=' + photo.id + (quality === undefined ? '' : '&q=' + quality)
   }
 
   getTagsUrl (photo) {

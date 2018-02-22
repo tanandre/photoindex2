@@ -29,7 +29,7 @@
       },
 
       shouldDisplay (idx) {
-        if (this.pageCount < 20) {
+        if (this.pageCount < 6) {
           return true
         }
         if (idx === this.pageCount) {

@@ -1,14 +1,15 @@
 <template>
-  <md-dialog md-active md-close-on-esc v-if="showEditDate">
-    <md-dialog-title>Change date & time</md-dialog-title>
+  <md-dialog md-active md-close-on-esc v-if="showEditTags">
+    <md-dialog-title>
+      <span>Edit Tags</span></md-dialog-title>
     <MdContent class="dialogContent">
       <div class="item">
-        <MdIcon>event</MdIcon>
-        <input class="inputStyle" type="date" v-model="date"/>
+        <MdIcon>add_circle</MdIcon>
+        <input class="inputStyle" v-model="tag"/>
       </div>
       <div class="item">
-        <MdIcon>query_builder</MdIcon>
-        <input class="inputStyle" v-model="time"/>
+        <MdIcon>remove_circle</MdIcon>
+        <input class="inputStyle" v-model="tag"/>
       </div>
       <div v-if="response">{{response.rowCount}} photos updated</div>
       <md-progress-bar class="loadingBar" md-mode="indeterminate" v-if="loading"></md-progress-bar>
@@ -30,35 +31,29 @@
     data () {
       return {
         loading: false,
-        response: null
+        response: null,
+        tag: '',
+        tags: []
       }
     },
     computed: {
-      date () {
-        return this.selectedPhotos.length === 0 ? '' : this.selectedPhotos[0].date.substring(0, 10)
-      },
-
-      time () {
-        return this.selectedPhotos.length === 0 ? '' : this.selectedPhotos[0].date.substring(11)
-      },
-
       selectedPhotos () {
         return this.$store.state.selection.selectedPhotos
       },
 
-      showEditDate () {
-        return this.$store.state.action.showEditDate
+      showEditTags () {
+        return this.$store.state.action.showEditTags
       }
     },
     methods: {
       onClose () {
-        this.$store.commit('showEditDate', false)
+        this.$store.commit('showEditTags', false)
       },
       saveDate () {
         this.loading = true
         let ids = this.selectedPhotos.map(p => p.id)
         let datetime = (this.date.trim() + ' ' + this.time.trim())
-        Vue.http.post(this.urlHelper.getPhotoUpdateUrl(), {
+        Vue.http.post(this.urlHelper.getEditTagsUrl(), {
           date: datetime,
           id: ids
         }, {
@@ -71,11 +66,6 @@
           this.loading = false
           console.error('error', err)
         })
-      }
-    },
-    watch: {
-      '$store.state.action.showEditDate' () {
-        this.response = null
       }
     }
   }

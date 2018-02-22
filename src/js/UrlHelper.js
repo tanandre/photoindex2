@@ -25,9 +25,9 @@ class UrlHelper {
     return '/photoindex/php/tags.php'
   }
 
-  getPhotoUrl (photo, width) {
+  getPhotoUrl (photo, quality) {
     // return this.store.state.serverUrl + '/photo/' + photo.id + (width === undefined ? '' : '/' + width)
-    return '/photoindex/php/photo.php?id=' + photo.id + (width === undefined ? '' : '&q=' + width)
+    return '/photoindex/php/photo.php?id=' + photo.id + (quality === undefined ? '' : '&q=' + quality)
   }
 
   getTagsUrl (photo) {
