@@ -1,21 +1,37 @@
 <template>
   <md-dialog md-active md-close-on-esc v-if="showEditDate">
-    <md-dialog-title>Change date & time</md-dialog-title>
+    <md-dialog-title>Edit date & time</md-dialog-title>
     <MdContent class="dialogContent">
-      <div class="item">
-        <MdIcon>event</MdIcon>
-        <input class="inputStyle" type="date" v-model="date"/>
-      </div>
-      <div class="item">
-        <MdIcon>query_builder</MdIcon>
-        <input class="inputStyle" v-model="time"/>
-      </div>
+      <md-list class="md-double-line">
+        <md-list-item>
+          <MdIcon>event</MdIcon>
+          <div class="md-list-item-text">
+            <input class="inputStyle" type="date" v-model="date"/>
+            <div>
+              <span class="originalValue">{{referenceDate}}</span>
+              <span class="offsetValue" v-if="isOffset"> ({{daysOffset}} days)</span>
+            </div>
+          </div>
+        </md-list-item>
+        <md-list-item>
+          <MdIcon>query_builder</MdIcon>
+          <div class="md-list-item-text">
+            <input class="inputStyle" v-model="time"/>
+            <div>
+              <span class="originalValue">{{referenceTime}}</span>
+              <span class="offsetValue" v-if="isOffset"> ({{timeOffset}})</span>
+            </div>
+          </div>
+        </md-list-item>
+      </md-list>
+      <md-checkbox v-if="selectedPhotos.length > 1" v-model="isOffset" class="offsetCheckbox md-primary">Update Offset
+      </md-checkbox>
       <div v-if="response">{{response.rowCount}} photos updated</div>
       <md-progress-bar class="loadingBar" md-mode="indeterminate" v-if="loading"></md-progress-bar>
     </MdContent>
     <md-dialog-actions>
       <md-button class="md-primary" @click="onClose" title="close dialog">Close</md-button>
-      <md-button class="md-primary" @click="saveDate" title="update images with date">
+      <md-button class="md-primary" @click="save" title="update images with date">
         Update ({{selectedPhotos.length}})
       </md-button>
     </md-dialog-actions>
@@ -23,25 +39,33 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-
   export default {
-    dependencies: ['urlHelper'],
+    dependencies: ['dataUpdater'],
     data () {
       return {
         loading: false,
-        response: null
+        response: null,
+        isOffset: false,
+        date: '',
+        time: ''
       }
     },
     computed: {
-      date () {
+      referenceDate () {
         return this.selectedPhotos.length === 0 ? '' : this.selectedPhotos[0].date.substring(0, 10)
       },
-
-      time () {
+      referenceTime () {
         return this.selectedPhotos.length === 0 ? '' : this.selectedPhotos[0].date.substring(11)
       },
-
+      daysOffset () {
+        let date1 = new Date(this.referenceDate)
+        let date2 = new Date(this.date)
+        let timeDiff = date2.getTime() - date1.getTime()
+        return Math.ceil(timeDiff / (1000 * 3600 * 24))
+      },
+      timeOffset () {
+        return '00:00'
+      },
       selectedPhotos () {
         return this.$store.state.selection.selectedPhotos
       },
@@ -54,28 +78,39 @@
       onClose () {
         this.$store.commit('showEditDate', false)
       },
-      saveDate () {
+
+      save () {
         this.loading = true
-        let ids = this.selectedPhotos.map(p => p.id)
-        let datetime = (this.date.trim() + ' ' + this.time.trim())
-        Vue.http.post(this.urlHelper.getPhotoUpdateUrl(), {
-          date: datetime,
-          id: ids
-        }, {
-          emulateJSON: true
-        }).then(resp => {
+        let promise = this.isOffset ? this.saveDateOffset() : this.saveDate()
+        promise.then(resp => {
           this.loading = false
           this.response = resp.body
-          console.log('success', resp.body)
         }).catch(err => {
           this.loading = false
-          console.error('error', err)
+          console.error(err)
         })
+      },
+
+      saveDate () {
+        let ids = this.selectedPhotos.map(p => p.id)
+        let datetime = (this.date.trim() + ' ' + this.time.trim())
+
+        return this.dataUpdater.updatePhotoDate(ids, datetime)
+      },
+      saveDateOffset () {
+        let ids = this.selectedPhotos.map(p => p.id)
+        let offset = this.daysOffset + ' ' + this.timeOffset
+        return this.dataUpdater.updatePhotoDateOffset(ids, offset)
       }
     },
     watch: {
       '$store.state.action.showEditDate' () {
         this.response = null
+        this.false = false
+        this.isOffset = false
+        let selectedPhotos = this.$store.state.selection.selectedPhotos
+        this.date = selectedPhotos.length === 0 ? '' : selectedPhotos[0].date.substring(0, 10)
+        this.time = selectedPhotos.length === 0 ? '' : selectedPhotos[0].date.substring(11)
       }
     }
   }
@@ -83,6 +118,7 @@
 
 <style scoped>
   .inputStyle {
+    margin: 0;
     font-size: 1.2em;
     border: none;
     background-color: transparent;
@@ -90,15 +126,22 @@
     font-family: inherit;
     background-color: #555;
     padding: 5px 10px;
-    margin: 0 10px;
-    width: 80%;
   }
 
   .dialogContent {
     padding: 0 10px;
   }
 
-  .item {
-    padding: 10px;
+  .offsetCheckbox {
+    margin-left: 17px;
+  }
+
+  .originalValue {
+    display: inline-block;
+    width: auto;
+  }
+
+  .offsetValue {
+    display: inline-block;
   }
 </style>

@@ -8,6 +8,7 @@ import titleUpdater from './TitleUpdater'
 import KeyHandler from './watchers/KeyHandler'
 import GallerySizeListener from './watchers/GallerySizeListener'
 import DataRetriever from './DataRetriever'
+import DataUpdater from './DataUpdater'
 
 class Assembler {
   constructor (injector, http, router, store) {
@@ -32,9 +33,11 @@ class Assembler {
     this.injector.constant('exifLoader', new CachedLoader(exifCache, new QueuedLoader([new XhrWorker(this.http)], true)))
     this.injector.constant('jsonLoader', new CachedLoader(jsonCache, new QueuedLoader([new XhrWorker(this.http)], true)))
     this.injector.constant('store', this.store)
+    this.injector.constant('httpClient', this.http)
     this.injector.constant('gallerySizeListener', gallerySizeListener)
 
     this.injector.service('dataRetriever', DataRetriever)
+    this.injector.service('dataUpdater', DataUpdater)
     this.injector.service('navigator', AlbumNavigator)
     this.injector.service('urlHelper', PhpUrlHelper)
     this.injector.service('keyHandler', KeyHandler)

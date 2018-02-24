@@ -3,7 +3,7 @@
     <thumbnail class="thumbnail" :class="{ selected: isSelected(image) }" v-for="image in imagesForCurrentPage"
                :photo="image"
                :key="image.id" @click.native="onClickThumbnail(image, $event)">
-      <MdIcon v-if="isSelected(image)">check_circle</MdIcon>
+      <MdIcon class="selectedIcon" v-if="isSelected(image)">check_circle</MdIcon>
     </thumbnail>
   </div>
 </template>
@@ -80,10 +80,13 @@
   }
 
   .thumbnailGallery .thumbnail.selected {
-    /*margin: 5px;*/
     border: 1px solid yellow;
     opacity: 1;
-    /*margin: 1px;*/
+  }
+
+  .selectedIcon {
+    float: right;
+    background-color: rgba(55, 55, 55, 0.3);
   }
 
   @media only screen and (max-width: 480px) {

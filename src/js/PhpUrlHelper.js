@@ -11,6 +11,10 @@ class PhpUrlHelper {
     return '/photoindex/php/update.php'
   }
 
+  getPhotoEditDateUrl () {
+    return '/photoindex/php/editdate.php'
+  }
+
   getEditTagsUrl () {
     return '/photoindex/php/edittags.php'
   }
