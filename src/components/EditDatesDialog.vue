@@ -2,6 +2,8 @@
   <md-dialog md-active md-close-on-esc v-if="showEditDate">
     <md-dialog-title>Edit date & time</md-dialog-title>
     <MdContent class="dialogContent">
+      <MdChip v-for="date in suggestedDates" :key="date" md-clickable @click="onClickSuggestedDate(date)">{{date}}
+      </MdChip>
       <md-list class="md-double-line">
         <md-list-item>
           <MdIcon>event</MdIcon>
@@ -24,7 +26,7 @@
           </div>
         </md-list-item>
       </md-list>
-      <md-checkbox v-if="selectedPhotos.length > 1" v-model="isOffset" class="offsetCheckbox md-primary">Update Offset
+      <md-checkbox v-model="isOffset" class="offsetCheckbox md-primary">Update Offset
       </md-checkbox>
       <div v-if="response">{{response.rowCount}} photos updated</div>
       <md-progress-bar class="loadingBar" md-mode="indeterminate" v-if="loading"></md-progress-bar>
@@ -39,10 +41,13 @@
 </template>
 
 <script>
+  import dateUtil from '../js/DateUtil'
+
   export default {
     dependencies: ['dataUpdater'],
     data () {
       return {
+        suggestedDates: [],
         loading: false,
         response: null,
         isOffset: false,
@@ -67,7 +72,7 @@
         return '00:00'
       },
       selectedPhotos () {
-        return this.$store.state.selection.selectedPhotos
+        return this.$store.state.photo ? [this.$store.state.photo] : this.$store.state.selection.selectedPhotos
       },
 
       showEditDate () {
@@ -77,6 +82,10 @@
     methods: {
       onClose () {
         this.$store.commit('showEditDate', false)
+      },
+
+      onClickSuggestedDate (date) {
+        this.date = date
       },
 
       save () {
@@ -104,11 +113,16 @@
       }
     },
     watch: {
-      '$store.state.action.showEditDate' () {
+      '$store.state.action.showEditDate' (showEditDate) {
         this.response = null
-        this.false = false
         this.isOffset = false
-        let selectedPhotos = this.$store.state.selection.selectedPhotos
+        let selectedPhotos = this.selectedPhotos
+        if (showEditDate && selectedPhotos.length > 0) {
+          let suggestedDate = dateUtil.getDateTimeFromFileName(selectedPhotos[0].path)
+          this.suggestedDates = suggestedDate ? [suggestedDate] : []
+        } else {
+          this.suggestedDates = []
+        }
         this.date = selectedPhotos.length === 0 ? '' : selectedPhotos[0].date.substring(0, 10)
         this.time = selectedPhotos.length === 0 ? '' : selectedPhotos[0].date.substring(11)
       }

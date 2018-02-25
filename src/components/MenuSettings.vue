@@ -6,46 +6,36 @@
       </md-button>
       <span class="md-title">Menu</span>
     </md-toolbar>
-    <md-list>
-      <md-list-item class="md-dense">
-        <md-icon>perm_media</md-icon>
-        <md-field>
-          <label>Server URL:</label>
-          <md-input @change="updateServerUrl" class="md-dense" v-model="serverUrl"></md-input>
-        </md-field>
-      </md-list-item>
-      <md-list-item class="md-dense">
-        <md-icon>photo_camera</md-icon>
-        <md-field>
-          <label for="tags">Device</label>
-          <md-select v-model="selectedTags" name="tags" id="tags" multiple>
-            <md-option v-for="tag in stats.tags" :key="tag.name" :value="tag.name">{{tag.name}}</md-option>
-          </md-select>
-        </md-field>
-      </md-list-item>
-    </md-list>
-    <md-card>
-      <span>Photo count: {{stats.photo[0].photoCount}}</span>
-    </md-card>
+    <MdCard>
+      <MdSwitch v-model="isSortDesc">sort</MdSwitch>
+    </MdCard>
+    <MdCard>
+      <md-list>
+        <md-list-item class="md-dense" v-for="tagGroup in tagGroups" :key="tagGroup.group">
+          <md-icon>local_offer</md-icon>
+          <!--<md-icon>photo_camera</md-icon>-->
+          <md-field>
+            <label for="tags">{{tagGroup.group}}</label>
+            <md-select v-model="selectedTags" name="tags" id="tags" multiple>
+              <md-option v-for="tag in tagGroup.tags" :key="tag.name" :value="tag.name">{{tag.name}}</md-option>
+            </md-select>
+          </md-field>
+        </md-list-item>
+      </md-list>
+    </MdCard>
   </div>
 </template>
 
 <script>
-  import Vue from 'vue'
   import util from '../js/util'
 
   export default {
-    dependencies: ['urlHelper', 'navigator'],
+    dependencies: ['urlHelper', 'navigator', 'dataRetriever'],
     props: ['showMenu'],
     data: () => {
       return {
-        stats: {
-          photo: [{
-            photoCount: 0
-          }],
-          tags: []
-        },
-        serverUrl: localStorage.getItem('serverUrl')
+        tagGroups: [],
+        isSortDesc: true
       }
     },
     computed: {
@@ -59,8 +49,17 @@
       }
     },
     mounted () {
-      Vue.http.get(this.urlHelper.getAllTags()).then(data => {
-        this.stats.tags = data.body
+      this.dataRetriever.retrieveAllTags().then(data => {
+        let response = data.body
+        let groups = response.map(tagItem => tagItem.groupName)
+        let responseMap = util.removeDuplicates(groups).map(group => {
+          return {
+            'group': group,
+            'tags': response.filter(tagItem => tagItem.groupName === group)
+          }
+        })
+        console.log(responseMap)
+        this.tagGroups = responseMap
       })
     },
     methods: {
@@ -72,8 +71,7 @@
         localStorage.setItem('serverUrl', this.serverUrl)
       }
     },
-    watch: {
-    }
+    watch: {}
   }
 </script>
 

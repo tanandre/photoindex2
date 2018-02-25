@@ -1,7 +1,7 @@
 <template>
   <div class="photoDetailView">
-    <details-pane class="photoDetailsPane" :photo="photo"></details-pane>
-    <photo-pane class="photoPane" :photo="photo"></photo-pane>
+    <DetailsPane class="photoDetailsPane" :photo="photo"></DetailsPane>
+    <PhotoPane class="photoPane" :photo="photo"></PhotoPane>
   </div>
 </template>
 

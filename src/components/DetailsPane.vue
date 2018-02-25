@@ -9,6 +9,8 @@
         <md-icon>get_app</md-icon>
       </md-button>
     </a>
+
+    <ActionMenu @click.native="onClickAction"></ActionMenu>
     <MdContent class="sideBar">
       <MdList>
         <MdListItem class="test">
@@ -43,6 +45,7 @@
 <script>
   import ExifDetailsPane from './ExifDetailsPane.vue'
   import TagDetailsPane from './TagDetailsPane.vue'
+  import ActionMenu from './ActionMenu.vue'
   import util from '../js/util'
 
   export default {
@@ -50,7 +53,8 @@
     props: ['photo'],
     components: {
       ExifDetailsPane,
-      TagDetailsPane
+      TagDetailsPane,
+      ActionMenu
     },
     data () {
       return {
@@ -82,6 +86,9 @@
       }
     },
     methods: {
+      onClickAction() {
+        console.log('onclikc')
+      },
       editDate () {
         this.$store.commit('selectedPhotos', [this.photo])
         this.$store.commit('showEditDate', true)

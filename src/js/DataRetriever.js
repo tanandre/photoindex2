@@ -29,6 +29,10 @@ class DataRetriever {
     return doRetrieveSerial(this.promiseMap, this.tagsLoader, this.urlHelper.getTagsUrl(photo), {})
   }
 
+  retrieveAllTags () {
+    return doRetrieveSerial(this.promiseMap, this.tagsLoader, this.urlHelper.getAllTags(), {})
+  }
+
   retrieveExif (photo) {
     return doRetrieveSerial(this.promiseMap, this.exifLoader, this.urlHelper.getExifUrl(photo), {})
   }

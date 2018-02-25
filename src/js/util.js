@@ -19,6 +19,10 @@ export default {
     return arr.indexOf(item) !== -1
   },
 
+  removeDuplicates (arr) {
+    return Array.from(new Set(arr))
+  },
+
   /**
    * make sure the return value is an array if the input is not an array otherwise returns the input
    * @param value
