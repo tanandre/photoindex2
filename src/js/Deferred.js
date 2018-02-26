@@ -1,6 +1,7 @@
 /**
  * TODO add promise api that allows a limited api
  */
+
 class Deferred {
   static createResolved (data) {
     let deferred = new Deferred()
@@ -53,9 +54,9 @@ class Deferred {
     this.listeners.push(listener)
 
     if (this._isResolved) {
-      onOk(this.data)
+      this.data = onOk(this.data)
     } else if (this._isRejected) {
-      onError(this.data)
+      this.data = onError(this.data)
     }
     return this
   }
@@ -87,7 +88,8 @@ class Deferred {
     }
     this._isResolved = true
     this.data = data
-    this.signalListeners(data, 0)
+    let dataChained = this.signalListeners(data, 0)
+    this.data = dataChained
   }
 
   reject (data) {
@@ -101,7 +103,7 @@ class Deferred {
     }
     this._isRejected = true
     this.data = data
-    this.signalListeners(data, 1)
+    this.data = this.signalListeners(data, 1)
   }
 
   cancel () {
@@ -110,7 +112,7 @@ class Deferred {
 
   signalListeners (data, index) {
     if (this._isCanceled) {
-      return
+      return data
     }
 
     let dataChained = data
@@ -123,6 +125,7 @@ class Deferred {
         }
       }
     })
+    return dataChained
   }
 
   /**
