@@ -1,16 +1,19 @@
 <template>
   <MdContent class="photoDetailsPane md-scrollbar">
     <md-progress-bar class="loadingBar" v-if="status == 'loading'" md-mode="indeterminate"></md-progress-bar>
-    <md-button class="md-icon-button" @click="onClose" title="close">
-      <md-icon>clear</md-icon>
-    </md-button>
-    <a :href="downloadUrl" download>
-      <md-button class="md-icon-button" title="download">
-        <md-icon>get_app</md-icon>
-      </md-button>
-    </a>
-
-    <ActionMenu @click.native="onClickAction"></ActionMenu>
+    <md-toolbar class="md-transparent md-dense" md-elevation="0">
+      <ActionMenu @click.native="onClickAction"></ActionMenu>
+      <a :href="downloadUrl" download>
+        <md-button class="md-icon-button" title="download">
+          <md-icon>get_app</md-icon>
+        </md-button>
+      </a>
+      <div class="md-toolbar-section-end">
+        <md-button class="md-raised md-icon-button" @click="onClose" title="close">
+          <md-icon>clear</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
     <MdContent class="sideBar">
       <MdList>
         <MdListItem class="test">
@@ -21,9 +24,6 @@
             <span>{{photoDate}}</span>
             <span class="small" :title="photoDateTime">{{photoDateTime}}</span>
           </div>
-          <md-button class="md-icon-button" @click="editDate()" title="edit date">
-            <mdIcon>edit</mdIcon>
-          </md-button>
         </MdListItem>
         <MdListItem>
           <md-button class="md-icon-button">
@@ -66,14 +66,8 @@
         let index = this.photo.path.lastIndexOf('/')
         return this.photo.path.substring(index + 1)
       },
-      photoDate: {
-        get () {
-          return this.photo.date.substring(0, 11)
-        },
-        set (value) {
-          // ignore
-          console.log('set the date', value)
-        }
+      photoDate () {
+        return this.photo.date.substring(0, 11)
       },
       photoDateTime () {
         return this.photo.date.substring(11)
@@ -86,12 +80,8 @@
       }
     },
     methods: {
-      onClickAction() {
+      onClickAction () {
         console.log('onclikc')
-      },
-      editDate () {
-        this.$store.commit('selectedPhotos', [this.photo])
-        this.$store.commit('showEditDate', true)
       },
       onClickDate () {
         let date = this.photo.date.substring(0, 10).replace(/-/g, '')

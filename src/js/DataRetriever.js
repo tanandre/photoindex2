@@ -1,3 +1,5 @@
+import util from './util'
+
 /**
  * Do a retrieve canceling the previous call. Assumes the loader is LIFO that way the last one will take precedence
  * old calls
@@ -30,7 +32,19 @@ class DataRetriever {
   }
 
   retrieveAllTags () {
-    return doRetrieveSerial(this.promiseMap, this.tagsLoader, this.urlHelper.getAllTags(), {})
+    return doRetrieveSerial(this.promiseMap, this.tagsLoader, this.urlHelper.getAllTags(), {}).then(data => {
+      let response = data.body
+      let groups = response.map(tagItem => tagItem.groupName)
+      let responseMap = util.removeDuplicates(groups).map(group => {
+        return {
+          'name': group,
+          'id': response.find(tagItem => tagItem.groupName === group).groupId,
+          'tags': response.filter(tagItem => tagItem.groupName === group)
+        }
+      })
+      console.log('responseMap', responseMap)
+      return responseMap
+    })
   }
 
   retrieveExif (photo) {

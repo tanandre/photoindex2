@@ -10,40 +10,6 @@
     <div v-if="selectedPhotos.length > 0" class="md-toolbar-section-end">
       <ToolbarSelection class="toolbarEnd"></ToolbarSelection>
     </div>
-    <!--<div>
-
-      <md-button class="md-icon-button" @click="selectedPhotos = []">
-        <md-icon>clear</md-icon>
-      </md-button>
-      <h2 class="md-title">{{selectedPhotos.length}} selected</h2>
-      <md-menu md-size="medium" md-align-trigger>
-        <md-button class="md-icon-button" md-menu-trigger>
-          <md-icon>more_vert</md-icon>
-        </md-button>
-
-        <md-menu-content class="editMenu">
-          <md-menu-item @click="onClickEditDates()">
-            <md-icon>event</md-icon>
-            <span>Edit Dates</span>
-          </md-menu-item>
-          <md-menu-item>
-            <md-icon>label</md-icon>
-            <span>Edit Tags</span>
-          </md-menu-item>
-          <md-menu-item>
-            <md-icon>favorite</md-icon>
-            <span>Favorite</span>
-          </md-menu-item>
-          <md-divider></md-divider>
-          <md-menu-item>
-            <md-icon>delete</md-icon>
-            <span>Delete</span>
-          </md-menu-item>
-        </md-menu-content>
-      </md-menu>
-    -->
-
-    <!--</div>-->
   </md-toolbar>
 </template>
 

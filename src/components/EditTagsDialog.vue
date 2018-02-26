@@ -3,20 +3,29 @@
     <md-dialog-title>
       <span>Edit Tags</span></md-dialog-title>
     <MdContent class="dialogContent">
+      <TagSelector v-model="toAddTags"></TagSelector>
       <div class="item">
-        <MdIcon>add_circle</MdIcon>
-        <input class="inputStyle" v-model="tag"/>
+        <MdIcon>local_offer</MdIcon>
+        <MdChip class="md-primary" md-deletable v-for="tag in currentTags" :key="tag.name" md-clickable
+                @click="removeTag(tag)">{{tag.name}}
+        </MdChip>
+
+        <MdChip class="md-accent" md-deletable v-for="tag in toAddTags" :key="tag.name" md-clickable
+                @click="removeTag(tag)">{{tag}}
+        </MdChip>
       </div>
       <div class="item">
         <MdIcon>remove_circle</MdIcon>
-        <input class="inputStyle" v-model="tag"/>
+        <MdChip md-deletable v-for="tag in toRemoveTags" :key="tag.name" md-clickable @click="unremoveTag(tag)">
+          {{tag.name}}
+        </MdChip>
       </div>
       <div v-if="response">{{response.rowCount}} photos updated</div>
       <md-progress-bar class="loadingBar" md-mode="indeterminate" v-if="loading"></md-progress-bar>
     </MdContent>
     <md-dialog-actions>
       <md-button class="md-primary" @click="onClose" title="close dialog">Close</md-button>
-      <md-button class="md-primary" @click="saveDate" title="update images with date">
+      <md-button class="md-primary" @click="saveTags" title="update images with date">
         Update ({{selectedPhotos.length}})
       </md-button>
     </md-dialog-actions>
@@ -24,21 +33,27 @@
 </template>
 
 <script>
-  import Vue from 'vue'
+  import util from '../js/util'
+  import TagSelector from './TagSelector.vue'
 
   export default {
-    dependencies: ['urlHelper'],
+    dependencies: ['dataRetriever'],
+
+    components: {
+      TagSelector
+    },
     data () {
       return {
         loading: false,
         response: null,
-        tag: '',
-        tags: []
+        currentTags: [],
+        toRemoveTags: [],
+        toAddTags: []
       }
     },
     computed: {
       selectedPhotos () {
-        return this.$store.state.selection.selectedPhotos
+        return this.$store.state.photo ? [this.$store.state.photo] : this.$store.state.selection.selectedPhotos
       },
 
       showEditTags () {
@@ -49,23 +64,39 @@
       onClose () {
         this.$store.commit('showEditTags', false)
       },
-      saveDate () {
-        this.loading = true
-        let ids = this.selectedPhotos.map(p => p.id)
-        let datetime = (this.date.trim() + ' ' + this.time.trim())
-        Vue.http.post(this.urlHelper.getEditTagsUrl(), {
-          date: datetime,
-          id: ids
-        }, {
-          emulateJSON: true
-        }).then(resp => {
-          this.loading = false
-          this.response = resp.body
-          console.log('success', resp.body)
-        }).catch(err => {
-          this.loading = false
-          console.error('error', err)
+      removeTag (tag) {
+        util.removeFromArray(this.currentTags, tag)
+        this.toRemoveTags.push(tag)
+      },
+      unremoveTag (tag) {
+        util.removeFromArray(this.toRemoveTags, tag)
+        this.currentTags.push(tag)
+      },
+      saveTags () {
+
+      },
+      loadTags () {
+        if (this.selectedPhotos.length === 0) {
+          return
+        }
+
+        this.currentTags = []
+        // TODO support for more photos
+        this.dataRetriever.retrieveTags(this.selectedPhotos[0]).then(data => {
+          this.currentTags = data.body
         })
+      }
+
+    },
+    watch: {
+      '$store.state.action.showEditTags' (showEditTags) {
+        this.currentTags = []
+        this.toRemoveTags = []
+        if (showEditTags) {
+          this.loadTags()
+        } else {
+
+        }
       }
     }
   }
@@ -91,4 +122,5 @@
   .item {
     padding: 10px;
   }
+
 </style>
