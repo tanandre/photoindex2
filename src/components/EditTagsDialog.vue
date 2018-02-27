@@ -10,8 +10,8 @@
                 @click="removeTag(tag)">{{tag.name}}
         </MdChip>
 
-        <MdChip class="md-accent" md-deletable v-for="tag in toAddTags" :key="tag.name" md-clickable
-                @click="removeTag(tag)">{{tag}}
+        <MdChip class="md-accent" md-deletable v-for="tag in toAddTags" :key="tag" md-clickable
+                @click="removeAddedTag(tag)">{{tag}}
         </MdChip>
       </div>
       <div class="item">
@@ -63,6 +63,9 @@
     methods: {
       onClose () {
         this.$store.commit('showEditTags', false)
+      },
+      removeAddedTag (tag) {
+        util.removeFromArray(this.toAddTags, tag)
       },
       removeTag (tag) {
         util.removeFromArray(this.currentTags, tag)

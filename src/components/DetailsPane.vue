@@ -17,6 +17,12 @@
     <MdContent class="sideBar">
       <MdList>
         <MdListItem class="test">
+          <mdIcon>star</mdIcon>
+          <div class="md-list-item-text">
+            <span>{{photo.rating}}</span>
+          </div>
+        </MdListItem>
+        <MdListItem class="test">
           <md-button class="md-icon-button" @click="onClickDate" title="search by date">
             <mdIcon>event</mdIcon>
           </md-button>

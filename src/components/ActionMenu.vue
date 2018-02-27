@@ -4,13 +4,17 @@
       <md-icon>more_vert</md-icon>
     </md-button>
     <md-menu-content class="editMenu">
-      <md-menu-item @click="onClickEditDates">
+      <md-menu-item @click="showEditDialog('showEditDate')">
         <md-icon>event</md-icon>
         <span>Edit Dates</span>
       </md-menu-item>
-      <md-menu-item @click="onClickEditTags">
+      <md-menu-item @click="showEditDialog('showEditTags')">
         <md-icon>local_offer</md-icon>
         <span>Edit Tags</span>
+      </md-menu-item>
+      <md-menu-item @click="showEditDialog('showEditRating')">
+        <md-icon>star</md-icon>
+        <span>Edit Rating</span>
       </md-menu-item>
       <md-menu-item>
         <md-icon>favorite</md-icon>
@@ -32,11 +36,8 @@
 <script>
   export default {
     methods: {
-      onClickEditDates () {
-        this.$store.commit('showEditDate', true)
-      },
-      onClickEditTags () {
-        this.$store.commit('showEditTags', true)
+      showEditDialog (value) {
+        this.$store.commit(value, true)
       }
     }
   }

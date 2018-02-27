@@ -90,6 +90,7 @@
 
       save () {
         this.loading = true
+        this.response = null
         let promise = this.isOffset ? this.saveDateOffset() : this.saveDate()
         promise.then(resp => {
           this.loading = false

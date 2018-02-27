@@ -21,6 +21,15 @@ class DataUpdater {
       emulateJSON: true
     })
   }
+
+  updatePhotosRating (ids, rating) {
+    return this.httpClient.post(this.urlHelper.getPhotoEditRatingUrl(), {
+      rating: rating,
+      id: ids
+    }, {
+      emulateJSON: true
+    })
+  }
 }
 
 export default DataUpdater

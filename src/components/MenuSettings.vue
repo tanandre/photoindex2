@@ -36,7 +36,7 @@
           return util.tagsToArray(this.$route.query.q)
         },
         set (values) {
-          this.navigator.setDateTags(this.$route.query.d, util.tagsToHashObject(values.map(t => t.name)))
+          this.navigator.setDateTags(this.$route.query.d, util.tagsToHashObject(values))
         }
       }
     },
