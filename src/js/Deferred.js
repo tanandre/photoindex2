@@ -54,9 +54,9 @@ class Deferred {
     this.listeners.push(listener)
 
     if (this._isResolved) {
-      this.data = onOk(this.data)
+      this.data = this.signalListeners(this.data, 0)
     } else if (this._isRejected) {
-      this.data = onError(this.data)
+      this.data = this.signalListeners(this.data, 1)
     }
     return this
   }

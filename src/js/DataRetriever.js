@@ -15,24 +15,25 @@ function doRetrieveSerial (promiseMap, loader, url, params) {
 }
 
 class DataRetriever {
-  constructor (jsonLoader, tagsLoader, exifLoader, urlHelper) {
+  constructor (jsonLoader, tagsLoader, exifLoader, urlHelper, applicationState) {
     this.jsonLoader = jsonLoader
     this.tagsLoader = tagsLoader
     this.exifLoader = exifLoader
     this.urlHelper = urlHelper
     this.promiseMap = {}
+    this.applicationState = applicationState
   }
 
   retrieveImages (query) {
-    return doRetrieveSerial(this.promiseMap, this.jsonLoader, this.urlHelper.getListing(), {params: query})
+    return doRetrieveSerial(this.promiseMap, this.jsonLoader, this.urlHelper.getListing() + this.applicationState.getListingUpdateTime(), {params: query})
   }
 
   retrieveTags (photo) {
-    return doRetrieveSerial(this.promiseMap, this.tagsLoader, this.urlHelper.getTagsUrl(photo), {})
+    return doRetrieveSerial(this.promiseMap, this.tagsLoader, this.urlHelper.getTagsUrl(photo) + this.applicationState.getTagsUpdateTime(), {})
   }
 
   retrieveAllTags () {
-    return doRetrieveSerial(this.promiseMap, this.tagsLoader, this.urlHelper.getAllTags(), {}).then(data => {
+    return doRetrieveSerial(this.promiseMap, this.tagsLoader, this.urlHelper.getAllTags() + this.applicationState.getTagsUpdateTime(), {}).then(data => {
       let response = data.body
       let groups = response.map(tagItem => tagItem.groupName)
       let responseMap = util.removeDuplicates(groups).map(group => {

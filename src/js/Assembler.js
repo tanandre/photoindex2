@@ -9,6 +9,7 @@ import KeyHandler from './watchers/KeyHandler'
 import GallerySizeListener from './watchers/GallerySizeListener'
 import DataRetriever from './DataRetriever'
 import DataUpdater from './DataUpdater'
+import ApplicationState from './ApplicationState'
 
 class Assembler {
   constructor (injector, http, router, store) {
@@ -33,6 +34,7 @@ class Assembler {
     this.injector.constant('exifLoader', new CachedLoader(exifCache, new QueuedLoader([new XhrWorker(this.http)], true)))
     this.injector.constant('jsonLoader', new CachedLoader(jsonCache, new QueuedLoader([new XhrWorker(this.http)], true)))
     this.injector.constant('store', this.store)
+    this.injector.constant('applicationState', new ApplicationState())
     this.injector.constant('httpClient', this.http)
     this.injector.constant('gallerySizeListener', gallerySizeListener)
 

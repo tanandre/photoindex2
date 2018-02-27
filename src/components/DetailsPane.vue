@@ -17,10 +17,8 @@
     <MdContent class="sideBar">
       <MdList>
         <MdListItem class="test">
-          <mdIcon>star</mdIcon>
-          <div class="md-list-item-text">
-            <span>{{photo.rating}}</span>
-          </div>
+          <Rating :rating="photo.rating"></Rating>
+          {{photo.rating}}
         </MdListItem>
         <MdListItem class="test">
           <md-button class="md-icon-button" @click="onClickDate" title="search by date">
@@ -52,6 +50,7 @@
   import ExifDetailsPane from './ExifDetailsPane.vue'
   import TagDetailsPane from './TagDetailsPane.vue'
   import ActionMenu from './ActionMenu.vue'
+  import Rating from './Rating.vue'
   import util from '../js/util'
 
   export default {
@@ -60,7 +59,8 @@
     components: {
       ExifDetailsPane,
       TagDetailsPane,
-      ActionMenu
+      ActionMenu,
+      Rating
     },
     data () {
       return {

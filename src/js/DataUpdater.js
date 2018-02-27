@@ -1,7 +1,8 @@
 class DataUpdater {
-  constructor (httpClient, urlHelper) {
+  constructor (httpClient, urlHelper, applicationState) {
     this.urlHelper = urlHelper
     this.httpClient = httpClient
+    this.applicationState = applicationState
   }
 
   updatePhotoDate (ids, datetime) {
@@ -10,6 +11,9 @@ class DataUpdater {
       id: ids
     }, {
       emulateJSON: true
+    }).then((resp) => {
+      this.applicationState.setListingUpdateTime(new Date().getTime())
+      return resp
     })
   }
 
@@ -19,6 +23,9 @@ class DataUpdater {
       id: ids
     }, {
       emulateJSON: true
+    }).then((resp) => {
+      this.applicationState.setListingUpdateTime(new Date().getTime())
+      return resp
     })
   }
 
@@ -28,6 +35,9 @@ class DataUpdater {
       id: ids
     }, {
       emulateJSON: true
+    }).then((resp) => {
+      this.applicationState.setListingUpdateTime(new Date().getTime())
+      return resp
     })
   }
 }

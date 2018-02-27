@@ -16,11 +16,11 @@
         <md-icon>star</md-icon>
         <span>Edit Rating</span>
       </md-menu-item>
-      <md-menu-item>
+      <md-menu-item @click="updatePhotosRating(6)">
         <md-icon>favorite</md-icon>
         <span>Favorite</span>
       </md-menu-item>
-      <md-menu-item>
+      <md-menu-item @click="updatePhotosRating(0)">
         <md-icon>archive</md-icon>
         <span>Archive</span>
       </md-menu-item>
@@ -35,9 +35,27 @@
 
 <script>
   export default {
+    dependencies: ['dataUpdater'],
+    computed: {
+      selectedPhotos () {
+        return this.$store.state.photo ? [this.$store.state.photo] : this.$store.state.selection.selectedPhotos
+      }
+    },
     methods: {
       showEditDialog (value) {
         this.$store.commit(value, true)
+      },
+      updatePhotosRating (value) {
+        this.$store.commit('loading', true)
+        let ids = this.selectedPhotos.map(p => p.id)
+        return this.dataUpdater.updatePhotosRating(ids, value).then(resp => {
+          this.$store.commit('loading', false)
+          this.response = resp.body
+        }).catch(err => {
+          this.$store.commit('loading', false)
+          this.loading = false
+          console.error(err)
+        })
       }
     }
   }

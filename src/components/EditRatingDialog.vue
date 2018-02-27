@@ -2,11 +2,7 @@
   <md-dialog md-active md-close-on-esc v-if="showEditRating">
     <md-dialog-title>Edit rating</md-dialog-title>
     <MdContent class="dialogContent">
-      <MdButton class="md-icon-button" v-for='idx in 5' :key="idx" @click="rating = idx" :title="'rate ' + idx">
-        <MdIcon v-if="idx <= rating">star</MdIcon>
-        <MdIcon v-if="idx > rating">star_border</MdIcon>
-      </MdButton>
-      <MdIcon>favorite</MdIcon>
+      <RatingInput v-model="rating"></RatingInput>
       <div v-if="response">{{response.rowCount}} photos updated</div>
       <md-progress-bar class="loadingBar" md-mode="indeterminate" v-if="loading"></md-progress-bar>
     </MdContent>
@@ -20,13 +16,18 @@
 </template>
 
 <script>
+  import RatingInput from './RatingInput.vue'
+
   export default {
     dependencies: ['dataUpdater'],
+    components: {
+      RatingInput
+    },
     data () {
       return {
         loading: false,
         response: null,
-        rating: 0
+        rating: 1
       }
     },
     computed: {
@@ -53,7 +54,6 @@
           this.loading = false
           console.error(err)
         })
-
       }
     },
     watch: {
