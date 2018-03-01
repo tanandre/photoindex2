@@ -8,6 +8,16 @@
     </md-toolbar>
     <MdCard>
       <MdSwitch v-model="isSortDesc">sort</MdSwitch>
+      <md-list-item class="md-dense">
+        <md-icon>star</md-icon>
+        <md-field>
+          <label for="rating">Rating</label>
+          <md-select v-model="selectedRating" name="rating" id="rating">
+            <md-option v-for="idx in 5" :key="idx" :value="idx">{{idx}}</md-option>
+          </md-select>
+        </md-field>
+      </md-list-item>
+
     </MdCard>
     <MdCard>
       <TagSelector v-model="selectedTags"></TagSelector>
@@ -27,7 +37,8 @@
     props: ['showMenu'],
     data: () => {
       return {
-        isSortDesc: true
+        isSortDesc: true,
+        selectedRating: 3
       }
     },
     computed: {
@@ -36,7 +47,7 @@
           return util.tagsToArray(this.$route.query.q)
         },
         set (values) {
-          this.navigator.setDateTags(this.$route.query.d, util.tagsToHashObject(values))
+          this.navigator.setTagsAndDates(util.tagsToHashObject(values), this.$route.query.d)
         }
       }
     },

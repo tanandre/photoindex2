@@ -91,7 +91,7 @@
       },
       onClickDate () {
         let date = this.photo.date.substring(0, 10).replace(/-/g, '')
-        this.navigator.setDateTags(util.tagsToHashObject([date]), this.$route.query.q)
+        this.navigator.setTagsAndDates(this.$route.query.q, util.tagsToHashObject([date]))
         this.navigator.clearPhoto()
       },
       onClose () {

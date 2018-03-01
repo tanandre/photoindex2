@@ -82,7 +82,7 @@
         this.setBothTags(this.tags, dateTags)
       },
       setBothTags (tags, dateTags) {
-        this.navigator.setDateTags(util.tagsToHashObject(dateTags), util.tagsToHashObject(tags))
+        this.navigator.setTagsAndDates(util.tagsToHashObject(tags), util.tagsToHashObject(dateTags))
       }
     }
   }
