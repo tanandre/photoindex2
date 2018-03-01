@@ -3,7 +3,6 @@
     <photo-detail-view v-if="photo !== null" :photo="photo"></photo-detail-view>
     <EditTagsDialog></EditTagsDialog>
     <EditDatesDialog></EditDatesDialog>
-
     <EditRatingDialog></EditRatingDialog>
     <toolbar v-on:click-menu="showMenu = true"></toolbar>
     <md-drawer :md-active.sync="showMenu">

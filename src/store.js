@@ -58,6 +58,7 @@ const store = new Vuex.Store({
     photo: null,
     loading: false,
     errors: [],
+    rating: 3,
     album: {
       images: [],
       all: []
@@ -68,6 +69,9 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
+    rating (state, rating) {
+      state.rating = rating
+    },
     error (state, error) {
       state.errors.push(error)
     },
@@ -112,17 +116,19 @@ const store = new Vuex.Store({
       commit('photo', foundPhoto === undefined ? null : foundPhoto)
     },
 
-    filter ({commit, state}, dates) {
+    filter ({commit, state}, query) {
+      let dates = query.d
+      let rating = query.r
       let datesArray = util.tagsToArray(dates)
+      console.log('filter', query)
       if (datesArray.length === 0) {
-        console.log('dates empty setting all')
         commit('album', {
-          images: state.album.all,
+          images: state.album.all.filter(img => rating ? img.rating >= rating : true),
           all: state.album.all
         })
         return
       }
-      let filteredImages = state.album.all.filter(img => isPhotoInDateRange(img, datesArray))
+      let filteredImages = state.album.all.filter(img => img.rating >= rating).filter(img => isPhotoInDateRange(img, datesArray))
       console.log('filter')
       commit('album', {
         images: filteredImages,

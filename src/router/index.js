@@ -23,11 +23,11 @@ router.beforeEach((to, from, next) => {
       store.dispatch('photo', Number(to.params.photoid))
       store.commit('showEditDate', false)
     }
-  } else if (to.query.d !== from.query.d) {
-    store.dispatch('filter', to.query.d)
+  } else if (to.query.d !== from.query.d || to.query.r !== from.query.r) {
+    store.dispatch('filter', to.query)
   } else if (to.query.q !== from.query.q) {
     store.dispatch('query', to.query.q).then(() => {
-      store.dispatch('filter', to.query.d)
+      store.dispatch('filter', to.query)
     })
   } else if (to.params.page !== from.params.page) {
     store.commit('page', Number(to.params.page))

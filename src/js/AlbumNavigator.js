@@ -3,34 +3,35 @@ class AlbumNavigator {
     this.router = router
   }
 
-  /**
-   * Helper function does not change the state
-   * @param tags
-   * @returns {*}
-   */
-  tagsToArray (tags) {
-    return tags ? tags.split(',').map(t => decodeURIComponent(t)) : []
+  setRating (rating, route) {
+    this.router.push({
+      name: 'gallery',
+      query: {
+        q: route.query.q,
+        d: route.query.d,
+        r: rating
+      }
+    })
   }
 
-  /**
-   * Helper function does not change the state
-   * @param tags
-   * @returns {*}
-   */
-  tagsToHashObject (tags) {
-    return tags.map(t => encodeURIComponent(t)).join(',')
-  }
-
-  /**
-   * Update the route state
-   * @param tags
-   */
-  setTagsAndDates (tags, dates) {
+  setTags (tags, route) {
     this.router.push({
       name: 'gallery',
       query: {
         q: tags,
-        d: dates
+        d: route.query.d,
+        r: route.query.r
+      }
+    })
+  }
+
+  setDates (dates, route) {
+    this.router.push({
+      name: 'gallery',
+      query: {
+        q: route.query.q,
+        d: dates,
+        r: route.query.r
       }
     })
   }

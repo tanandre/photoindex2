@@ -35,10 +35,10 @@
       TagSelector
     },
     props: ['showMenu'],
-    data: () => {
+    data () {
       return {
         isSortDesc: true,
-        selectedRating: 3
+        selectedRating: this.$route.query.r ? Number(this.$route.query.r) : 1
       }
     },
     computed: {
@@ -47,7 +47,7 @@
           return util.tagsToArray(this.$route.query.q)
         },
         set (values) {
-          this.navigator.setTagsAndDates(util.tagsToHashObject(values), this.$route.query.d)
+          this.navigator.setTags(util.tagsToHashObject(values), this.$route)
         }
       }
     },
@@ -58,6 +58,11 @@
       updateServerUrl () {
         this.$store.commit('serverUrl', this.serverUrl)
         localStorage.setItem('serverUrl', this.serverUrl)
+      }
+    },
+    watch: {
+      'selectedRating' (selectedRating) {
+        this.navigator.setRating(selectedRating, this.$route)
       }
     }
   }

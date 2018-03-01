@@ -18,7 +18,7 @@
     },
     methods: {
       onClickTag (tag) {
-        this.navigator.setTagsAndDates(util.tagsToHashObject([tag.name]), this.$route.query.d)
+        this.navigator.setTags(util.tagsToHashObject([tag.name]), this.$route)
         this.navigator.clearPhoto()
       },
       loadTags () {

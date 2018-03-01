@@ -75,14 +75,13 @@
       clearTags () {
         this.setBothTags([], [])
       },
+
       setTags (tags) {
-        this.setBothTags(tags, this.dateTags)
+        this.navigator.setTags(util.tagsToHashObject(tags), this.$route)
       },
+
       setDateTags (dateTags) {
-        this.setBothTags(this.tags, dateTags)
-      },
-      setBothTags (tags, dateTags) {
-        this.navigator.setTagsAndDates(util.tagsToHashObject(tags), util.tagsToHashObject(dateTags))
+        this.navigator.setDates(util.tagsToHashObject(dateTags), this.$route)
       }
     }
   }
