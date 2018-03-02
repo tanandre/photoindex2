@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import PhotoAlbum from '@/components/PhotoAlbum'
 import store from '../store.js'
 import RetrieveListingAction from '../js/action/RetrieveListingAction'
+import FilterListingAction from '../js/action/FilterListingAction'
 
 Vue.use(Router)
 
@@ -25,7 +26,8 @@ router.beforeEach((to, from, next) => {
       store.commit('showEditDate', false)
     }
   } else if (to.query.d !== from.query.d || to.query.r !== from.query.r) {
-    store.dispatch('filter', to.query)
+    new FilterListingAction(store).execute(to)
+    // store.dispatch('filter', to.query)
   } else if (to.query.q !== from.query.q) {
     new RetrieveListingAction(store).execute(to)
   } else if (to.params.page !== from.params.page) {

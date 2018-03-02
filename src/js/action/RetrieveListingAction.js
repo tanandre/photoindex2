@@ -1,3 +1,5 @@
+import FilterListingAction from './FilterListingAction'
+
 class RetrieveListingAction {
   constructor (store) {
     this.store = store
@@ -5,7 +7,7 @@ class RetrieveListingAction {
 
   execute (route) {
     return this.store.dispatch('query', route.query.q).then(() => {
-      this.store.dispatch('filter', route.query)
+      new FilterListingAction(this.store).execute(route)
     })
   }
 }

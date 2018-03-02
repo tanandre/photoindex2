@@ -8,10 +8,6 @@ import galleryModule from './store/galleryModule'
 
 Vue.use(Vuex)
 
-function isPhotoInDateRange (photo, dates) {
-  return dates.some(d => photo.date.replace(/[^\d]/g, '').startsWith(d))
-}
-
 const store = new Vuex.Store({
   modules: {
     selection: selectionModule,
@@ -23,15 +19,15 @@ const store = new Vuex.Store({
     photo: null,
     loading: false,
     errors: [],
-    rating: 3,
+    query: {},
     album: {
       images: [],
       all: []
     }
   },
   mutations: {
-    rating (state, rating) {
-      state.rating = rating
+    query (state, query) {
+      state.query = query
     },
     error (state, error) {
       state.errors.push(error)
@@ -66,24 +62,7 @@ const store = new Vuex.Store({
         throw new Error('could not find photo with photoId: ' + photoId)
       }
       commit('photo', foundPhoto === undefined ? null : foundPhoto)
-    },
-
-    filter ({commit, state}, query) {
-      let dates = query.d
-      let rating = query.r
-      let datesArray = util.tagsToArray(dates)
-      if (datesArray.length === 0) {
-        commit('album', {
-          images: state.album.all.filter(img => rating ? img.rating >= rating : true),
-          all: state.album.all
-        })
-        return
-      }
-      let filteredImages = state.album.all.filter(img => img.rating >= rating).filter(img => isPhotoInDateRange(img, datesArray))
-      commit('album', {
-        images: filteredImages,
-        all: state.album.all
-      })
+      return Promise.resolve()
     },
 
     query ({commit}, q) {
