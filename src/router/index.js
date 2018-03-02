@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import PhotoAlbum from '@/components/PhotoAlbum'
 import store from '../store.js'
+import RetrieveListingAction from '../js/RetrieveListingAction'
 
 Vue.use(Router)
 
@@ -26,9 +27,7 @@ router.beforeEach((to, from, next) => {
   } else if (to.query.d !== from.query.d || to.query.r !== from.query.r) {
     store.dispatch('filter', to.query)
   } else if (to.query.q !== from.query.q) {
-    store.dispatch('query', to.query.q).then(() => {
-      store.dispatch('filter', to.query)
-    })
+    new RetrieveListingAction(store).execute(to)
   } else if (to.params.page !== from.params.page) {
     store.commit('page', Number(to.params.page))
   }

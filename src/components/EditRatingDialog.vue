@@ -17,6 +17,7 @@
 
 <script>
   import RatingInput from './RatingInput.vue'
+  import RetrieveListingAction from '../js/RetrieveListingAction'
 
   export default {
     dependencies: ['dataUpdater'],
@@ -50,6 +51,7 @@
         return this.dataUpdater.updatePhotosRating(ids, this.rating).then(resp => {
           this.loading = false
           this.response = resp.body
+          new RetrieveListingAction(this.$store).execute(this.$route)
         }).catch(err => {
           this.loading = false
           console.error(err)

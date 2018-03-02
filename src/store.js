@@ -129,7 +129,6 @@ const store = new Vuex.Store({
         return
       }
       let filteredImages = state.album.all.filter(img => img.rating >= rating).filter(img => isPhotoInDateRange(img, datesArray))
-      console.log('filter')
       commit('album', {
         images: filteredImages,
         all: state.album.all
@@ -137,9 +136,7 @@ const store = new Vuex.Store({
     },
 
     query ({commit}, q) {
-      // TODO when querying blank use parameter currentDate and add cache headers
       commit('loading', true)
-      console.log('query', q)
       return injector.get('dataRetriever').retrieveImages({tag: util.tagsToArray(q)}).then((response) => {
         commit('album', {
           images: response.body,

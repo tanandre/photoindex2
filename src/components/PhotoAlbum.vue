@@ -9,7 +9,7 @@
       <MenuSettings v-on:close="showMenu = false"></MenuSettings>
     </md-drawer>
     <div class="container">
-      <md-progress-bar v-if="loading" class="loadingBar" md-mode="indeterminate"></md-progress-bar>
+      <md-progress-bar v-if="loading" class="md-accent loadingBar" md-mode="indeterminate"></md-progress-bar>
       <thumbnail-gallery class="gallery"></thumbnail-gallery>
     </div>
     <ErrorToaster></ErrorToaster>
@@ -25,6 +25,7 @@
   import EditDatesDialog from './EditDatesDialog.vue'
   import EditTagsDialog from './EditTagsDialog.vue'
   import EditRatingDialog from './EditRatingDialog.vue'
+  import RetrieveListingAction from '../js/RetrieveListingAction'
 
   export default {
     dependencies: ['keyHandler', 'dataRetriever'],
@@ -53,8 +54,7 @@
     },
     mounted () {
       window.addEventListener('keydown', this.onKeyDown)
-      this.$store.dispatch('query', this.$route.query.q).then(() => {
-        this.$store.dispatch('filter', this.$route.query.d)
+      new RetrieveListingAction(this.$store).execute(this.$route).then(() => {
         this.$store.commit('page', Number(this.$route.params.page))
         this.$store.dispatch('photo', Number(this.$route.params.photoid))
       })
@@ -82,7 +82,6 @@
   }
 
   .loadingBar {
-    opacity: 0.5;
     position: absolute;
     z-index: 2;
     top: 0;

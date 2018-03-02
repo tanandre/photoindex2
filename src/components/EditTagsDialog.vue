@@ -35,6 +35,7 @@
 <script>
   import util from '../js/util'
   import TagSelector from './TagSelector.vue'
+  import RetrieveListingAction from '../js/RetrieveListingAction'
 
   export default {
     dependencies: ['dataRetriever'],

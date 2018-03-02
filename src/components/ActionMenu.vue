@@ -34,6 +34,8 @@
 </template>
 
 <script>
+  import RetrieveListingAction from '../js/RetrieveListingAction'
+
   export default {
     dependencies: ['dataUpdater'],
     computed: {
@@ -51,6 +53,8 @@
         return this.dataUpdater.updatePhotosRating(ids, value).then(resp => {
           this.$store.commit('loading', false)
           this.response = resp.body
+
+          new RetrieveListingAction(this.$store).execute(this.$route)
         }).catch(err => {
           this.$store.commit('loading', false)
           this.loading = false

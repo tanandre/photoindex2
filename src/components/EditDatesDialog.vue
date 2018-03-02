@@ -42,6 +42,7 @@
 
 <script>
   import dateUtil from '../js/DateUtil'
+  import RetrieveListingAction from '../js/RetrieveListingAction'
 
   export default {
     dependencies: ['dataUpdater'],
@@ -95,6 +96,7 @@
         promise.then(resp => {
           this.loading = false
           this.response = resp.body
+          new RetrieveListingAction(this.$store).execute(this.$route)
         }).catch(err => {
           this.loading = false
           console.error(err)
