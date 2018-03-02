@@ -4,6 +4,7 @@ import injector from 'vue-inject'
 import util from './js/util'
 import actionModule from './store/actionModule'
 import selectionModule from './store/selectionModule'
+import galleryModule from './store/galleryModule'
 
 Vue.use(Vuex)
 
@@ -14,11 +15,11 @@ function isPhotoInDateRange (photo, dates) {
 const store = new Vuex.Store({
   modules: {
     selection: selectionModule,
-    action: actionModule
+    action: actionModule,
+    gallery: galleryModule
   },
   state: {
     serverUrl: localStorage.getItem('serverUrl'),
-    page: 0,
     photo: null,
     loading: false,
     errors: [],
@@ -26,10 +27,6 @@ const store = new Vuex.Store({
     album: {
       images: [],
       all: []
-    },
-    gallery: {
-      thumbnailsPerPage: 0,
-      pageCount: 0
     }
   },
   mutations: {
@@ -50,14 +47,6 @@ const store = new Vuex.Store({
 
     loading (state, loading) {
       state.loading = loading
-    },
-
-    page (state, newPage) {
-      state.page = newPage
-    },
-
-    gallery (state, gallery) {
-      state.gallery = gallery
     },
 
     photo (state, photo) {

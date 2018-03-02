@@ -17,7 +17,7 @@
     },
     computed: {
       page () {
-        return this.$store.state.page
+        return this.$store.state.gallery.page
       },
       pageCount () {
         return this.$store.state.gallery.pageCount
@@ -38,14 +38,14 @@
         if (idx === 1) {
           return true
         }
-        if (Math.abs(idx - this.$store.state.page) <= this.range) {
+        if (Math.abs(idx - this.page) <= this.range) {
           return true
         }
         return false
       },
 
       getCssClass (idx) {
-        if (idx === this.$store.state.page) {
+        if (idx === this.page) {
           return 'md-primary'
         }
         return ''

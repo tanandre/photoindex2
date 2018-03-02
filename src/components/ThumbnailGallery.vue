@@ -27,7 +27,7 @@
       imagesForCurrentPage () {
         let imagesPerPage = this.imagesPerPage
         let images = this.$store.state.album.images
-        let begin = (this.$store.state.page - 1) * imagesPerPage
+        let begin = (this.$store.state.gallery.page - 1) * imagesPerPage
         let end = Math.min(images.length, begin + imagesPerPage)
         return images.slice(begin, end)
       }

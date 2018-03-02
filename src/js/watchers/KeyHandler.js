@@ -21,11 +21,11 @@ class KeyHandler {
   }
 
   handlKeyEventGallery (key) {
-    let page = store.state.page
+    let page = store.state.gallery.page
     if (key.keyCode === 36 && key.ctrlKey) { // HOME
       this.navigator.setPage(1)
     } else if (key.keyCode === 35 && key.ctrlKey) { // END
-      this.navigator.setPage(0)
+      this.navigator.setPage(store.state.gallery.pageCount)
     } else if (key.keyCode === 37 && key.ctrlKey && !key.altKey) { // arrow left
       if (page === 1) {
         return
