@@ -2,49 +2,13 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import injector from 'vue-inject'
 import util from './js/util'
+import actionModule from './store/actionModule'
+import selectionModule from './store/selectionModule'
 
 Vue.use(Vuex)
 
 function isPhotoInDateRange (photo, dates) {
   return dates.some(d => photo.date.replace(/[^\d]/g, '').startsWith(d))
-}
-
-const actionModule = {
-  state: {
-    showEditDate: false,
-    showEditTags: false,
-    showEditRating: false
-  },
-  mutations: {
-    showEditDate (state, showEditDate) {
-      state.showEditDate = showEditDate
-    },
-    showEditRating (state, showEditRating) {
-      state.showEditRating = showEditRating
-    },
-    showEditTags (state, showEditTags) {
-      state.showEditTags = showEditTags
-    }
-  }
-}
-
-const selectionModule = {
-  state: {
-    selectedPhotos: []
-  },
-  mutations: {
-    selectedPhotos (state, photos) {
-      state.selectedPhotos = photos
-    },
-
-    selectPhoto (state, photo) {
-      state.selectedPhotos.push(photo)
-    },
-
-    deselectPhoto (state, photo) {
-      util.removeFromArray(state.selectedPhotos, photo)
-    }
-  }
 }
 
 const store = new Vuex.Store({
