@@ -1,5 +1,5 @@
 /**
- * TODO add promise api that allows a limited api
+ * TODO add promise api that returns a less exposed api
  */
 
 class Deferred {
@@ -21,6 +21,7 @@ class Deferred {
     this._isCanceled = false
     this._hasProgress = false
     this.listeners = []
+    this.chainedPromises = []
     let _parent = this
     this.promise = {
       then: _parent.then.bind(_parent),
@@ -49,34 +50,42 @@ class Deferred {
     return this._hasProgress
   }
 
+  isDone () {
+    return this._isResolved || this._isRejected || this._isCanceled
+  }
+
   then (onOk, onError, onProgress) {
     let listener = [onOk, onError, onProgress]
     this.listeners.push(listener)
 
+    let d = new Deferred()
+    this.chainedPromises.push(d)
     if (this._isResolved) {
       this.data = this.signalListeners(this.data, 0)
+      d.resolve(this.data)
     } else if (this._isRejected) {
       this.data = this.signalListeners(this.data, 1)
+      d.reject(this.data)
     }
-    return this
+    return d
   }
 
   catch (onError) {
     let listener = [undefined, onError, undefined]
     this.listeners.push(listener)
+    let d = new Deferred()
+    this.chainedPromises.push(d)
     if (this._isRejected) {
-      onError(this.data)
+      this.data = this.signalListeners(this.data, 1)
+      d.reject(this.data)
     }
-    return this
-  }
-
-  isDone () {
-    return this._isResolved || this._isRejected || this._isCanceled
+    return d
   }
 
   progress (data) {
     this._hasProgress = true
     this.signalListeners(data, 2)
+    this.signalChain('progress', this.data)
   }
 
   resolve (data) {
@@ -90,6 +99,7 @@ class Deferred {
     this.data = data
     let dataChained = this.signalListeners(data, 0)
     this.data = dataChained
+    this.signalChain('resolve', this.data)
   }
 
   reject (data) {
@@ -104,10 +114,19 @@ class Deferred {
     this._isRejected = true
     this.data = data
     this.data = this.signalListeners(data, 1)
+    this.signalChain('reject', this.data)
   }
 
   cancel () {
     this._isCanceled = true
+    this.signalChain('cancel')
+  }
+
+  signalChain (fnc, arg) {
+    let data = arg
+    this.chainedPromises.forEach(d => {
+      data = d[fnc](data)
+    })
   }
 
   signalListeners (data, index) {
@@ -132,7 +151,7 @@ class Deferred {
    * wait for all promises to complete.
    * TODO add progress update for each deferred that is complete.
    * @param deferredList
-   * @returns {Deferred.constructor}
+   * @returns {Deferred}
    */
   static all (deferredList) {
     let globalDeferred = new Deferred()
