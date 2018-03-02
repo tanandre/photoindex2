@@ -45,7 +45,7 @@ class Assembler {
     this.injector.service('keyHandler', KeyHandler)
 
     window.addEventListener('resize', gallerySizeListener.calibrateThumbnails)
-    this.store.watch(state => state.album, () => {
+    this.store.watch(state => state.album.images, () => {
       gallerySizeListener.calibrateThumbnails()
     })
   }
