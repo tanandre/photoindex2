@@ -14,7 +14,6 @@ class ApplicationState {
   getListingUpdateTime () {
     return this.listingUpdateTime ? '?' + this.listingUpdateTime : ''
   }
-
 }
 
 export default ApplicationState
