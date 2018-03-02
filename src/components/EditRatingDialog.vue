@@ -17,7 +17,7 @@
 
 <script>
   import RatingInput from './RatingInput.vue'
-  import RetrieveListingAction from '../js/RetrieveListingAction'
+  import RetrieveListingAction from '../js/action/RetrieveListingAction'
 
   export default {
     dependencies: ['dataUpdater'],

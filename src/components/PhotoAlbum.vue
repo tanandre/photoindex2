@@ -25,7 +25,7 @@
   import EditDatesDialog from './EditDatesDialog.vue'
   import EditTagsDialog from './EditTagsDialog.vue'
   import EditRatingDialog from './EditRatingDialog.vue'
-  import RetrieveListingAction from '../js/RetrieveListingAction'
+  import RetrieveListingAction from '../js/action/RetrieveListingAction'
 
   export default {
     dependencies: ['keyHandler', 'dataRetriever'],

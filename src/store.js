@@ -112,7 +112,6 @@ const store = new Vuex.Store({
       if (foundPhoto === undefined && photoId !== -1) {
         throw new Error('could not find photo with photoId: ' + photoId)
       }
-      console.log('committing photo')
       commit('photo', foundPhoto === undefined ? null : foundPhoto)
     },
 
@@ -120,7 +119,6 @@ const store = new Vuex.Store({
       let dates = query.d
       let rating = query.r
       let datesArray = util.tagsToArray(dates)
-      console.log('filter', query)
       if (datesArray.length === 0) {
         commit('album', {
           images: state.album.all.filter(img => rating ? img.rating >= rating : true),
@@ -140,8 +138,7 @@ const store = new Vuex.Store({
       return injector.get('dataRetriever').retrieveImages({tag: util.tagsToArray(q)}).then((response) => {
         commit('album', {
           images: response.body,
-          all: response.body,
-          imageItems: []
+          all: response.body
         })
         commit('loading', false)
       }).catch(err => {

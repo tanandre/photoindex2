@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import PhotoAlbum from '@/components/PhotoAlbum'
 import store from '../store.js'
-import RetrieveListingAction from '../js/RetrieveListingAction'
+import RetrieveListingAction from '../js/action/RetrieveListingAction'
 
 Vue.use(Router)
 
