@@ -2,10 +2,10 @@
   <div ref="thumbnail" class="thumbnail highlightable" v-on:mouseover="mouseOver">
     <md-progress-bar v-if="status == 'loading'" class="loadingBar" md-mode="indeterminate"></md-progress-bar>
     <md-tooltip md-direction="bottom">{{photo.date}}</md-tooltip>
-    <MdIcon v-if="status == 'inQueue'" class="center md-size-2x">image</MdIcon>
+    <MdIcon v-if="status == 'inQueue' || status == 'loading'" class="center">crop_original</MdIcon>
     <div class="overlay">
-      <MdIcon v-if="isFavorite">favorite</MdIcon>
-      <MdIcon v-if="isVideo">videocam</MdIcon>
+      <MdIcon v-if="isFavorite && status == 'completed'">favorite</MdIcon>
+      <MdIcon v-if="isVideo && status == 'completed'">videocam</MdIcon>
       <MdIcon class="errorIcon" v-if="status === 'error'">not_interested</MdIcon>
       <slot></slot>
     </div>
@@ -117,7 +117,7 @@
   .thumbnail {
     display: inline-block;
     background-size: cover;
-    background-color: #222;
+    background-color: #444;
     background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
