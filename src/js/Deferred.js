@@ -34,6 +34,10 @@ class Deferred {
     }
   }
 
+  setParent (p) {
+    this._parentCancel = p
+  }
+
   isResolved () {
     return this._isResolved
   }
@@ -59,6 +63,7 @@ class Deferred {
     this.listeners.push(listener)
 
     let d = new Deferred()
+    d.setParent(this)
     this.chainedPromises.push(d)
     if (this._isResolved) {
       this.data = this.signalListeners(this.data, 0)
@@ -74,6 +79,7 @@ class Deferred {
     let listener = [undefined, onError, undefined]
     this.listeners.push(listener)
     let d = new Deferred()
+    d.setParent(this)
     this.chainedPromises.push(d)
     if (this._isRejected) {
       this.data = this.signalListeners(this.data, 1)
@@ -118,8 +124,14 @@ class Deferred {
   }
 
   cancel () {
+    if (this._isCanceled) {
+      return
+    }
     this._isCanceled = true
     this.signalChain('cancel')
+    if (this._parentCancel) {
+      this._parentCancel.cancel()
+    }
   }
 
   signalChain (fnc, arg) {
