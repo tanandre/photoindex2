@@ -54,7 +54,9 @@
           this.$store.commit('loading', false)
           this.response = resp.body
 
-          new RetrieveListingAction(this.$store).execute(this.$route)
+          new RetrieveListingAction(this.$store).execute(this.$route).then(() => {
+            this.$store.commit('selectedPhotos', [])
+          })
         }).catch(err => {
           this.$store.commit('loading', false)
           this.loading = false

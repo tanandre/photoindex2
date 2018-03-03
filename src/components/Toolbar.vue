@@ -5,7 +5,8 @@
     </md-button>
     <h2 class="md-title">{{ title }}</h2>
     <search-input class="searchInput"></search-input>
-    <span>{{album.images.length}} photos</span>
+    <span>{{photoCountLabel}}</span>
+    <span> photos</span>
     <pagination></pagination>
     <div v-if="selectedPhotos.length > 0" class="md-toolbar-section-end">
       <ToolbarSelection class="toolbarEnd"></ToolbarSelection>
@@ -30,6 +31,10 @@
       }
     },
     computed: {
+      photoCountLabel () {
+        let count = this.album.images.length
+        return (count > 1000) ? Math.round(count / 1000) + 'k' : count
+      },
       album () {
         return this.$store.state.album
       },

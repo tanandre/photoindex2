@@ -2,9 +2,13 @@
   <div ref="thumbnail" class="thumbnail highlightable" v-on:mouseover="mouseOver">
     <md-progress-bar v-if="status == 'loading'" class="loadingBar" md-mode="indeterminate"></md-progress-bar>
     <md-tooltip md-direction="bottom">{{photo.date}}</md-tooltip>
-    <mdIcon v-if="isVideo">videocam</mdIcon>
-    <mdIcon class="errorIcon" v-if="status === 'error'">not_interested</mdIcon>
-    <slot></slot>
+    <MdIcon v-if="status == 'inQueue'" class="center md-size-2x">image</MdIcon>
+    <div class="overlay">
+      <MdIcon v-if="isFavorite">favorite</MdIcon>
+      <MdIcon v-if="isVideo">videocam</MdIcon>
+      <MdIcon class="errorIcon" v-if="status === 'error'">not_interested</MdIcon>
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -31,6 +35,9 @@
     computed: {
       isVideo () {
         return util.isVideo(this.photo)
+      },
+      isFavorite () {
+        return this.photo.rating === 6
       }
     },
 
@@ -81,7 +88,7 @@
           return
         }
 
-        this.status = 'in queue'
+        this.status = 'inQueue'
         let thumbnail = this.$refs['thumbnail']
 
         let url = this.urlHelper.getThumbnailUrl(this.photo)
@@ -101,6 +108,12 @@
 </script>
 
 <style scoped>
+  .overlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
   .thumbnail {
     display: inline-block;
     background-size: cover;
@@ -143,6 +156,13 @@
     position: absolute;
     width: 100%;
     top: 0;
+  }
+
+  .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
 </style>

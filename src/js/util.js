@@ -1,6 +1,6 @@
 export default {
   isVideo (photo) {
-    return ['.avi', '.mp4'].some(value => photo.path.toLowerCase().endsWith(value))
+    return ['.avi', '.mp4', '.mov'].some(value => photo.path.toLowerCase().endsWith(value))
   },
 
   tagsToArray (tags) {

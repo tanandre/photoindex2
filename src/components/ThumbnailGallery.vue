@@ -64,7 +64,13 @@
       },
 
       onClickThumbnail (photo, event) {
-        if (event.shiftKey) {
+        if (event.ctrlKey) {
+          if (this.isSelected(photo)) {
+            this.$store.commit('deselectPhoto', photo)
+          } else {
+            this.$store.commit('selectPhoto', photo)
+          }
+        } else if (event.shiftKey) {
           this.updatePhotoSelection(photo)
         } else {
           this.navigator.setPhoto(photo.id)
