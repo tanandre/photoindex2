@@ -85,6 +85,10 @@
     height: 200px;
   }
 
+  .thumbnailGallery {
+    overflow: hidden;
+  }
+
   .thumbnailGallery .thumbnail.selected {
     border: 1px solid yellow;
     opacity: 1;

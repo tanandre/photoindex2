@@ -1,5 +1,5 @@
 <template>
-  <md-toolbar class="md-dense" :class="{ 'md-primary': selectedPhotos.length > 0 }">
+  <md-toolbar class="md-dense toolbar" :class="{ 'md-primary': selectedPhotos.length > 0 }">
     <md-button class="md-icon-button" @click="onClickMenu">
       <md-icon>menu</md-icon>
     </md-button>
@@ -60,6 +60,12 @@
 </script>
 
 <style scoped>
+  .toolbar {
+    top: 0;
+    position: fixed;
+    z-index: 3;
+  }
+
   .searchInput {
     margin-left: 10px;
   }

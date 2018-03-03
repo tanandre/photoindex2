@@ -26,8 +26,9 @@
     background: linear-gradient(to right, #111, #222);
     width: 100%;
     height: 100%;
-    z-index: 3;
+    z-index: 4;
     position: fixed;
+    top: 0;
   }
 
   .photoDetailsPane {
