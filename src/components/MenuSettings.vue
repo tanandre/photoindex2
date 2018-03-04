@@ -17,7 +17,6 @@
           </md-select>
         </md-field>
       </md-list-item>
-
     </MdCard>
     <MdCard>
       <TagSelector v-model="selectedTags"></TagSelector>
@@ -54,10 +53,6 @@
     methods: {
       onClose () {
         this.$emit('close')
-      },
-      updateServerUrl () {
-        this.$store.commit('serverUrl', this.serverUrl)
-        localStorage.setItem('serverUrl', this.serverUrl)
       }
     },
     watch: {
