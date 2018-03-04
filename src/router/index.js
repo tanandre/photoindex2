@@ -14,7 +14,12 @@ let router = new Router({
   }, {
     path: '/gallery/:page/photo/:photoid',
     name: 'gallery',
-    component: PhotoAlbum
+    component: PhotoAlbum,
+    query: {
+      q: '',
+      d: '',
+      r: 1
+    }
   }]
 })
 
@@ -27,7 +32,6 @@ router.beforeEach((to, from, next) => {
     }
   } else if (to.query.d !== from.query.d || to.query.r !== from.query.r) {
     new FilterListingAction(store).execute(to)
-    // store.dispatch('filter', to.query)
   } else if (to.query.q !== from.query.q) {
     new RetrieveListingAction(store).execute(to)
   } else if (to.params.page !== from.params.page) {
