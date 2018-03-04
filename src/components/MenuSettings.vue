@@ -7,16 +7,18 @@
       <span class="md-title">Menu</span>
     </md-toolbar>
     <MdCard>
-      <MdSwitch v-model="isSortDesc">sort</MdSwitch>
-      <md-list-item class="md-dense">
-        <md-icon>star</md-icon>
-        <md-field>
-          <label for="rating">Rating</label>
-          <md-select v-model="selectedRating" name="rating" id="rating">
-            <md-option v-for="idx in 5" :key="idx" :value="idx">{{idx}}</md-option>
-          </md-select>
-        </md-field>
-      </md-list-item>
+      <!--<MdSwitch v-model="isSortDesc">sort</MdSwitch>-->
+      <MdList>
+        <MdListItem class="md-dense">
+          <MdIcon>star</MdIcon>
+          <MdField>
+            <label for="rating">Rating</label>
+            <MdSelect v-model="selectedRating" name="rating" id="rating">
+              <MdOption v-for="idx in 5" :key="idx" :value="idx">{{idx}}</MdOption>
+            </MdSelect>
+          </MdField>
+        </MdListItem>
+      </MdList>
     </MdCard>
     <MdCard>
       <TagSelector v-model="selectedTags"></TagSelector>

@@ -1,15 +1,15 @@
 <template>
-  <md-list>
-    <md-list-item class="md-dense" v-for="tagGroup in tagGroups" :key="tagGroup.id">
-      <md-icon>local_offer</md-icon>
-      <md-field>
+  <MdList>
+    <MdListItem class="md-dense" v-for="tagGroup in tagGroups" :key="tagGroup.id">
+      <MdIcon>local_offer</MdIcon>
+      <MdField>
         <label for="tags">{{tagGroup.name}}</label>
-        <md-select v-model="selectedTags" name="tags" id="tags" multiple>
-          <md-option v-for="tag in tagGroup.tags" :key="tag.name" :value="tag.name">{{tag.name}}</md-option>
-        </md-select>
-      </md-field>
-    </md-list-item>
-  </md-list>
+        <MdSelect v-model="selectedTags" name="tags" id="tags" multiple>
+          <MdOption v-for="tag in tagGroup.tags" :key="tag.name" :value="tag.name">{{tag.name}}</MdOption>
+        </MdSelect>
+      </MdField>
+    </MdListItem>
+  </MdList>
 </template>
 
 <script>
