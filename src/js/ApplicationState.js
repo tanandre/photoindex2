@@ -1,18 +1,22 @@
+function safeGet (value) {
+  return (value !== null && value !== undefined) ? '?' + value : ''
+}
+
 class ApplicationState {
   setTagsUpdateTime (date) {
-    this.tagsUpdateTime = date
+    localStorage.setItem('tagsUpdateTime', date)
   }
 
   getTagsUpdateTime () {
-    return this.tagsUpdateTime ? '?' + this.tagsUpdateTime : ''
+    return safeGet(localStorage.getItem('tagsUpdateTime'))
   }
 
   setListingUpdateTime (date) {
-    this.listingUpdateTime = date
+    localStorage.setItem('setListingUpdateTime', date)
   }
 
   getListingUpdateTime () {
-    return this.listingUpdateTime ? '?' + this.listingUpdateTime : ''
+    return safeGet(localStorage.getItem('setListingUpdateTime'))
   }
 }
 
