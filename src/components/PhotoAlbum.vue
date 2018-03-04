@@ -82,11 +82,10 @@
   }
 
   .loadingBar {
-    position: absolute;
-    z-index: 2;
-    top: 0;
+    z-index: 3;
     left: 0;
     width: 100%;
+    position: fixed;
   }
 
 </style>
