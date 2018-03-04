@@ -2,7 +2,7 @@
   <div class="pagination">
     <md-button :class="getCssClass(idx)" v-if="shouldDisplay(idx)" v-for="idx in pageCount"
                :key="idx" @click="onClick(idx)"
-               class="paginationButton md-icon-button md-raised pageButton">{{idx}}
+               class="paginationButton md-raised pageButton">{{idx}}
     </md-button>
   </div>
 </template>
@@ -12,7 +12,7 @@
     dependencies: ['navigator'],
     data () {
       return {
-        range: 1
+        range: 2
       }
     },
     computed: {
@@ -32,15 +32,18 @@
         if (this.pageCount < 6) {
           return true
         }
-        if (idx === this.pageCount) {
+        if (idx === 1 || idx === this.pageCount) {
           return true
         }
-        if (idx === 1) {
-          return true
+
+        if (this.page === 1 || this.page === 2) {
+          return idx < 6
         }
+
         if (Math.abs(idx - this.page) <= this.range) {
           return true
         }
+
         return false
       },
 
@@ -55,11 +58,9 @@
 </script>
 
 <style scoped>
-  .paginationButton:first-child {
-    margin-right: 10px;
-  }
-
-  .paginationButton:last-child {
-    margin-left: 10px;
+  .paginationButton {
+    width: 40px;
+    min-width: inherit;
+    margin: 0;
   }
 </style>
