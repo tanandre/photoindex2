@@ -62,8 +62,8 @@
 <style scoped>
   .toolbar {
     top: 0;
-    position: fixed;
     z-index: 3;
+    position:sticky;
   }
 
   .searchInput {
