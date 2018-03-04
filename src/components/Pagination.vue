@@ -1,9 +1,12 @@
 <template>
+
   <div class="pagination">
-    <md-button :class="getCssClass(idx)" v-if="shouldDisplay(idx)" v-for="idx in pageCount"
-               :key="idx" @click="onClick(idx)"
-               class="paginationButton md-raised pageButton">{{idx}}
-    </md-button>
+    <MdButton :class="getCssClass(idx)" v-if="shouldDisplay(idx)" v-for="idx in pageCount"
+              :key="idx" @click="onClick(idx)"
+              class="paginationButton md-raised pageButton">{{idx}}
+    </MdButton>
+    <!--<input v-if="pageCount > pageThreshold" class="pageInput" type="number" md-layout="box" v-model="page"/>-->
+    <input v-if="pageCount > pageThreshold" type="range" min="1" :max="pageCount" v-model="page" class="slider">
   </div>
 </template>
 
@@ -12,12 +15,18 @@
     dependencies: ['navigator'],
     data () {
       return {
-        range: 2
+        range: 2,
+        pageThreshold: 7
       }
     },
     computed: {
-      page () {
-        return this.$store.state.gallery.page
+      page: {
+        get () {
+          return this.$store.state.gallery.page
+        },
+        set (value) {
+          this.navigator.setPage(value)
+        }
       },
       pageCount () {
         return this.$store.state.gallery.pageCount
@@ -29,15 +38,23 @@
       },
 
       shouldDisplay (idx) {
-        if (this.pageCount < 6) {
+        if (this.pageCount === 1) {
+          return false
+        }
+
+        if (this.pageCount < this.pageThreshold) {
           return true
         }
         if (idx === 1 || idx === this.pageCount) {
           return true
         }
 
-        if (this.page === 1 || this.page === 2) {
-          return idx < 6
+        if (idx < 7 && this.page <= 3) {
+          return true
+        }
+
+        if (idx > (this.pageCount - (this.pageThreshold - 1)) && this.page >= (this.pageCount - 3)) {
+          return true
         }
 
         if (Math.abs(idx - this.page) <= this.range) {
@@ -62,5 +79,47 @@
     width: 40px;
     min-width: inherit;
     margin: 0;
+  }
+
+  .pageInput {
+    border: 0;
+    width: 40px;
+    /*background-color: transparent;*/
+    /*color: white;*/
+  }
+
+  .slider {
+    -webkit-appearance: none; /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 10px; /* Specified height */
+    background: #555; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+  }
+
+  /* Mouse-over effects */
+  .slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 15px; /* Set a specific slider handle width */
+    height: 15px; /* Slider handle height */
+    background: #448aff; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+    border-radius: 5px;
+  }
+
+  .slider::-moz-range-thumb {
+    width: 15px; /* Set a specific slider handle width */
+    height: 15px; /* Slider handle height */
+    background: #448aff; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+    border-radius: 5px;
   }
 </style>

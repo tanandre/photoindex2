@@ -5,8 +5,10 @@
     </md-button>
     <h2 class="md-title">{{ title }}</h2>
     <search-input class="searchInput"></search-input>
-    <span>{{photoCountLabel}}</span>
-    <span> photos</span>
+    <div :title="album.images.length + ' photos'">
+      <span>{{photoCountLabel}}</span>
+      <span> photos</span>
+    </div>
     <pagination></pagination>
     <div v-if="selectedPhotos.length > 0" class="md-toolbar-section-end">
       <ToolbarSelection class="toolbarEnd"></ToolbarSelection>

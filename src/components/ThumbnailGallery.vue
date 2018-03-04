@@ -5,6 +5,10 @@
                :key="image.id" @click.native="onClickThumbnail(image, $event)">
       <MdIcon class="selectedIcon" v-if="isSelected(image)">check_circle</MdIcon>
     </thumbnail>
+    <md-empty-state v-if="!loading && images.length === 0"
+                    md-icon="wallpaper"
+                    md-label="No photos matching query or filter">
+    </md-empty-state>
   </div>
 </template>
 
@@ -30,6 +34,12 @@
         let begin = (this.$store.state.gallery.page - 1) * imagesPerPage
         let end = Math.min(images.length, begin + imagesPerPage)
         return images.slice(begin, end)
+      },
+      images () {
+        return this.$store.state.album.images
+      },
+      loading () {
+        return this.$store.state.loading
       }
 
     },
