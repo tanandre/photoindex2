@@ -7,7 +7,7 @@
       <md-progress-bar class="loadingBar" md-mode="indeterminate" v-if="loading"></md-progress-bar>
     </MdContent>
     <md-dialog-actions>
-      <md-button class="md-primary" @click="onClose" title="close dialog">Close</md-button>
+      <md-button class="md-primary" @click="close" title="close dialog">Close</md-button>
       <md-button class="md-primary" @click="saveRating" title="update images with date">
         Update ({{selectedPhotos.length}})
       </md-button>
@@ -41,7 +41,7 @@
       }
     },
     methods: {
-      onClose () {
+      close () {
         this.$store.commit('showEditRating', false)
       },
       saveRating () {
@@ -51,7 +51,10 @@
         return this.dataUpdater.updatePhotosRating(ids, this.rating).then(resp => {
           this.loading = false
           this.response = resp.body
-          new RetrieveListingAction(this.$store).execute(this.$route)
+          new RetrieveListingAction(this.$store).execute(this.$route).then(() => {
+            this.$store.commit('selectedPhotos', [])
+            this.close()
+          })
         }).catch(err => {
           this.loading = false
           console.error(err)
