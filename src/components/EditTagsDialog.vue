@@ -5,19 +5,10 @@
     <MdContent class="dialogContent">
       <TagSelector v-model="toAddTags"></TagSelector>
       <div class="item">
-        <MdIcon>local_offer</MdIcon>
-        <MdChip class="md-primary" md-deletable v-for="tag in currentTags" :key="tag.name" md-clickable
-                @click="removeTag(tag)">{{tag.name}}
+        <MdChip v-for="tag in currentTags" :key="tag.name">{{tag.name}}
         </MdChip>
-
-        <MdChip class="md-accent" md-deletable v-for="tag in toAddTags" :key="tag" md-clickable
+        <MdChip class="md-primary" md-deletable v-for="tag in toAddTags" :key="tag" md-clickable
                 @click="removeAddedTag(tag)">{{tag}}
-        </MdChip>
-      </div>
-      <div class="item">
-        <MdIcon>remove_circle</MdIcon>
-        <MdChip md-deletable v-for="tag in toRemoveTags" :key="tag.name" md-clickable @click="unremoveTag(tag)">
-          {{tag.name}}
         </MdChip>
       </div>
       <div v-if="response">{{response.rowCount}} photos updated</div>
@@ -25,7 +16,7 @@
     </MdContent>
     <md-dialog-actions>
       <md-button class="md-primary" @click="onClose" title="close dialog">Close</md-button>
-      <md-button class="md-primary" @click="saveTags" title="update images with date">
+      <md-button class="md-primary" @click="saveTags" title="update images with tags">
         Update ({{selectedPhotos.length}})
       </md-button>
     </md-dialog-actions>
@@ -37,7 +28,7 @@
   import TagSelector from './TagSelector.vue'
 
   export default {
-    dependencies: ['dataRetriever'],
+    dependencies: ['dataRetriever', 'dataUpdater'],
 
     components: {
       TagSelector
@@ -47,7 +38,6 @@
         loading: false,
         response: null,
         currentTags: [],
-        toRemoveTags: [],
         toAddTags: []
       }
     },
@@ -67,16 +57,16 @@
       removeAddedTag (tag) {
         util.removeFromArray(this.toAddTags, tag)
       },
-      removeTag (tag) {
-        util.removeFromArray(this.currentTags, tag)
-        this.toRemoveTags.push(tag)
-      },
-      unremoveTag (tag) {
-        util.removeFromArray(this.toRemoveTags, tag)
-        this.currentTags.push(tag)
-      },
       saveTags () {
+        console.log('tags', this.toAddTags)
+        console.log('photos', this.selectedPhotos)
 
+        this.dataRetriever.retrieveAllTags().then(data => {
+          let tags = data.body
+          let tagIds = this.toAddTags.map(tagname => tags.find(tag => tag.name === tagname)).map(tag => tag.id);
+          console.log('tids', tagIds)
+          this.dataUpdater.editPhotosTags(this.selectedPhotos.map(p => p.id), tagIds)
+        })
       },
       loadTags () {
         if (this.selectedPhotos.length === 0) {
@@ -84,7 +74,6 @@
         }
 
         this.currentTags = []
-        // TODO support for more photos
         this.dataRetriever.retrieveTags(this.selectedPhotos[0]).then(data => {
           this.currentTags = data.body
         })
@@ -94,11 +83,9 @@
     watch: {
       '$store.state.action.showEditTags' (showEditTags) {
         this.currentTags = []
-        this.toRemoveTags = []
+        this.toAddTags = []
         if (showEditTags) {
           this.loadTags()
-        } else {
-
         }
       }
     }

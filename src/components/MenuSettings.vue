@@ -23,6 +23,9 @@
     <MdCard>
       <TagSelector v-model="selectedTags"></TagSelector>
     </MdCard>
+    <MdCard>
+      <MdButton @click="showEditTagGroups()">Edit Tags Groups</MdButton>
+    </MdCard>
   </div>
 </template>
 
@@ -55,6 +58,9 @@
     methods: {
       onClose () {
         this.$emit('close')
+      },
+      showEditTagGroups () {
+        this.$store.commit('showEditTagGroups', true)
       }
     },
     watch: {

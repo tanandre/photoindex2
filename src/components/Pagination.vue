@@ -113,6 +113,7 @@
     background: #448aff; /* Green background */
     cursor: pointer; /* Cursor on hover */
     border-radius: 5px;
+    border: 1px solid black;
   }
 
   .slider::-moz-range-thumb {
@@ -121,5 +122,6 @@
     background: #448aff; /* Green background */
     cursor: pointer; /* Cursor on hover */
     border-radius: 5px;
+    border: 1px solid black;
   }
 </style>

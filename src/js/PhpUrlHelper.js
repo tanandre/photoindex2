@@ -19,6 +19,18 @@ class PhpUrlHelper {
     return '/photoindex/php/editrating.php'
   }
 
+  getAddTagsUrl () {
+    return '/photoindex/php/addtags.php'
+  }
+
+  getAddGroupUrl () {
+    return '/photoindex/php/addgroup.php'
+  }
+
+  getTagGroupsUrl () {
+    return '/photoindex/php/taggroups.php'
+  }
+
   getEditTagsUrl () {
     return '/photoindex/php/edittags.php'
   }

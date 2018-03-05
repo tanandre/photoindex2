@@ -5,13 +5,14 @@ import util from './util'
  * old calls
  */
 function doRetrieveSerial (promiseMap, loader, url, params) {
-  let promise = promiseMap[url]
-  if (promise && !promise.isDone()) {
-    promise.cancel()
-  }
-
-  promiseMap[url] = loader.load(url, params)
-  return promiseMap[url]
+  // let promise = promiseMap[url]
+  // if (promise && !promise.isDone()) {
+  //   promise.cancel()
+  // }
+  //
+  // promiseMap[url] = loader.load(url, params)
+  // return promiseMap[url]
+  return loader.load(url, params)
 }
 
 class DataRetriever {
@@ -32,20 +33,28 @@ class DataRetriever {
     return doRetrieveSerial(this.promiseMap, this.tagsLoader, this.urlHelper.getTagsUrl(photo) + this.applicationState.getTagsUpdateTime(), {})
   }
 
-  retrieveAllTags () {
-    return doRetrieveSerial(this.promiseMap, this.tagsLoader, this.urlHelper.getAllTags() + this.applicationState.getTagsUpdateTime(), {}).then(data => {
+  retrieveTagGroups () {
+    return doRetrieveSerial(this.promiseMap, this.tagsLoader, this.urlHelper.getTagGroupsUrl() + this.applicationState.getTagsUpdateTime(), {}).then(data => {
       let response = data.body
-      let groups = response.map(tagItem => tagItem.groupName)
-      let responseMap = util.removeDuplicates(groups).map(group => {
-        return {
-          'name': group,
-          'id': response.find(tagItem => tagItem.groupName === group).groupId,
-          'tags': response.filter(tagItem => tagItem.groupName === group)
-        }
-      })
-      console.log('responseMap', responseMap)
-      return responseMap
+      return response.map(tagItem => tagItem.name)
     })
+  }
+
+  retrieveAllTags () {
+    return doRetrieveSerial(this.promiseMap, this.tagsLoader, this.urlHelper.getAllTags() + this.applicationState.getTagsUpdateTime(), {})
+    //   .then(data => {
+    //   let response = data.body
+    //   let groups = response.map(tagItem => tagItem.groupName)
+    //   let responseMap = util.removeDuplicates(groups).map(group => {
+    //     return {
+    //       'name': group,
+    //       'id': response.find(tagItem => tagItem.groupName === group).groupId,
+    //       'tags': response.filter(tagItem => tagItem.groupName === group)
+    //     }
+    //   })
+    //   console.log('responseMap', responseMap)
+    //   return responseMap
+    // })
   }
 
   retrieveExif (photo) {

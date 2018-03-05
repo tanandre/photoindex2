@@ -23,6 +23,18 @@ export default {
     return Array.from(new Set(arr))
   },
 
+  mapTagsToGroups (tags) {
+    let groups = tags.map(tagItem => tagItem.groupName)
+    let responseMap = this.removeDuplicates(groups).map(group => {
+      return {
+        'name': group,
+        'id': tags.find(tagItem => tagItem.groupName === group).groupId,
+        'tags': tags.filter(tagItem => tagItem.groupName === group)
+      }
+    })
+    return responseMap
+  },
+
   /**
    * make sure the return value is an array if the input is not an array otherwise returns the input
    * @param value

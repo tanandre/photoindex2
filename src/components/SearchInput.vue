@@ -1,16 +1,16 @@
 <template>
   <div>
     <div class="inputTag">
-      <md-field>
+      <MdField md-clearable>
         <MdIcon>search</MdIcon>
-        <md-input class="searchInput" v-model="searchTxt" placeholder="Search..."
-                  v-on:keyup.enter="onEnter" autofocus></md-input>
-      </md-field>
+        <MdInput class="searchInput" v-model="searchTxt" placeholder="Search..."
+                 v-on:keyup.enter="onEnter" autofocus></MdInput>
+      </MdField>
     </div>
-    <md-chip md-deletable v-for="tag in dateTags" v-on:click="onCloseTag(tag)" :key="tag">{{tag}}
-    </md-chip>
-    <md-chip md-deletable v-for="tag in tags" v-on:click="onCloseTag(tag)" :key="tag">{{tag}}
-    </md-chip>
+    <MdChip md-deletable v-for="tag in dateTags" v-on:click="onCloseTag(tag)" :key="tag">{{tag}}
+    </MdChip>
+    <MdChip md-deletable v-for="tag in tags" v-on:click="onCloseTag(tag)" :key="tag">{{tag}}
+    </MdChip>
   </div>
 </template>
 

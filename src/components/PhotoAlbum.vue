@@ -2,6 +2,7 @@
   <div class="photoAlbum">
     <photo-detail-view v-if="photo !== null" :photo="photo"></photo-detail-view>
     <EditTagsDialog></EditTagsDialog>
+    <EditTagGroupsDialog></EditTagGroupsDialog>
     <EditDatesDialog></EditDatesDialog>
     <EditRatingDialog></EditRatingDialog>
     <toolbar v-on:click-menu="showMenu = true"></toolbar>
@@ -24,6 +25,7 @@
   import ErrorToaster from './ErrorToaster.vue'
   import EditDatesDialog from './EditDatesDialog.vue'
   import EditTagsDialog from './EditTagsDialog.vue'
+  import EditTagGroupsDialog from './EditTagGroupsDialog.vue'
   import EditRatingDialog from './EditRatingDialog.vue'
   import RetrieveListingAction from '../js/action/RetrieveListingAction'
 
@@ -37,6 +39,7 @@
       ErrorToaster,
       EditDatesDialog,
       EditRatingDialog,
+      EditTagGroupsDialog,
       EditTagsDialog
     },
     computed: {

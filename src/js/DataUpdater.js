@@ -40,6 +40,41 @@ class DataUpdater {
       return resp
     })
   }
+
+  editPhotosTags (ids, tags) {
+    return this.httpClient.post(this.urlHelper.getEditTagsUrl(), {
+      tags: tags,
+      id: ids
+    }, {
+      emulateJSON: true
+    }).then((resp) => {
+      this.applicationState.setTagsUpdateTime(new Date().getTime())
+      return resp
+    })
+  }
+
+  addTags (group, tags) {
+    return this.httpClient.post(this.urlHelper.getAddTagsUrl(), {
+      group: group,
+      tags: tags
+    }, {
+      emulateJSON: true
+    }).then((resp) => {
+      this.applicationState.setTagsUpdateTime(new Date().getTime())
+      return resp
+    })
+  }
+
+  addGroup (group) {
+    return this.httpClient.post(this.urlHelper.getAddGroupUrl(), {
+      group: group
+    }, {
+      emulateJSON: true
+    }).then((resp) => {
+      this.applicationState.setTagsUpdateTime(new Date().getTime())
+      return resp
+    })
+  }
 }
 
 export default DataUpdater

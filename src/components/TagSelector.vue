@@ -1,7 +1,7 @@
 <template>
   <MdList>
     <MdListItem class="md-dense" v-for="tagGroup in tagGroups" :key="tagGroup.id">
-      <MdIcon>local_offer</MdIcon>
+      <MdIcon>{{icon}}</MdIcon>
       <MdField>
         <label for="tags">{{tagGroup.name}}</label>
         <MdSelect v-model="selectedTags" name="tags" id="tags" multiple>
@@ -13,18 +13,20 @@
 </template>
 
 <script>
+  import util from '../js/util'
+
   export default {
     dependencies: ['dataRetriever'],
     props: ['value'],
     data () {
       return {
-        tagGroups: []
+        tagGroups: [],
+        icon: 'local_offer'
       }
     },
     mounted () {
       this.dataRetriever.retrieveAllTags().then(data => {
-        console.log('data tagg', data)
-        this.tagGroups = data
+        this.tagGroups = util.mapTagsToGroups(data.body)
       })
     },
     computed: {

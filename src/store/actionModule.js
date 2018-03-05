@@ -2,6 +2,7 @@ const actionModule = {
   state: {
     showEditDate: false,
     showEditTags: false,
+    showEditTagGroups: false,
     showEditRating: false
   },
   mutations: {
@@ -13,6 +14,9 @@ const actionModule = {
     },
     showEditTags (state, showEditTags) {
       state.showEditTags = showEditTags
+    },
+    showEditTagGroups (state, value) {
+      state.showEditTagGroups = value
     }
   }
 }
