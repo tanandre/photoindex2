@@ -24,7 +24,10 @@
       <TagSelector v-model="selectedTags"></TagSelector>
     </MdCard>
     <MdCard>
-      <MdButton @click="showEditTagGroups()">Edit Tags Groups</MdButton>
+      <MdButton @click="showEditTagGroups()" class="md-raised">
+        <md-icon>local_offer</md-icon>
+        Manage
+      </MdButton>
     </MdCard>
   </div>
 </template>
