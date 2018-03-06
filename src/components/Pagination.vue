@@ -11,12 +11,15 @@
 </template>
 
 <script>
+  import util from '../js/util'
+
   export default {
     dependencies: ['navigator'],
     data () {
       return {
         range: 2,
-        pageThreshold: 7
+        pageThreshold: 7,
+        delay: util.delay()
       }
     },
     computed: {
@@ -25,7 +28,9 @@
           return this.$store.state.gallery.page
         },
         set (value) {
-          this.navigator.setPage(value)
+          this.delay(() => {
+            this.navigator.setPage(value)
+          }, 500)
         }
       },
       pageCount () {
@@ -76,14 +81,16 @@
 
 <style scoped>
   .paginationButton {
-    width: 40px;
+    /*width: 40px;*/
+    width: calc(100% / 7);
     min-width: inherit;
     margin: 0;
   }
 
   .pageInput {
     border: 0;
-    width: 40px;
+    /*width: 40px;*/
+    width: calc(100% / 7);
     /*background-color: transparent;*/
     /*color: white;*/
   }

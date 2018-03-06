@@ -23,6 +23,14 @@ export default {
     return Array.from(new Set(arr))
   },
 
+  delay () {
+    let timer = 0
+    return (callback, ms) => {
+      clearTimeout(timer)
+      timer = setTimeout(callback, ms)
+    }
+  },
+
   mapTagsToGroups (tags) {
     let groups = tags.map(tagItem => tagItem.groupName)
     let responseMap = this.removeDuplicates(groups).map(group => {
