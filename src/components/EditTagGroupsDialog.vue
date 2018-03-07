@@ -91,9 +91,9 @@
         this.$store.commit('showEditTagGroups', false)
       },
       saveTags () {
-        console.log('tagGroup', this.tagGroup)
-        console.log('tags', this.newTags)
-        this.dataUpdater.addTags(this.tagGroup, this.newTags)
+        this.dataUpdater.addTags(this.tagGroup, this.newTags).then(resp => {
+          this.response = resp.body
+        })
       }
     },
     watch: {
