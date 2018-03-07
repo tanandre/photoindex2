@@ -25,8 +25,8 @@
     </MdCard>
     <MdCard>
       <MdButton @click="showEditTagGroups()" class="md-raised">
-        <md-icon>local_offer</md-icon>
-        Manage
+        <md-icon>settings</md-icon>
+        Manage Tags
       </MdButton>
     </MdCard>
   </div>
