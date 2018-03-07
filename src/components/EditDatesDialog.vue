@@ -120,14 +120,17 @@
         this.response = null
         this.isOffset = false
         let selectedPhotos = this.selectedPhotos
+        this.date = selectedPhotos.length === 0 ? '' : selectedPhotos[0].date.substring(0, 10)
+        this.time = selectedPhotos.length === 0 ? '' : selectedPhotos[0].date.substring(11)
+
         if (showEditDate && selectedPhotos.length > 0) {
           let suggestedDate = dateUtil.getDateTimeFromFileName(selectedPhotos[0].path)
-          this.suggestedDates = suggestedDate ? [suggestedDate] : []
+          if (suggestedDate && suggestedDate !== this.date) {
+            this.suggestedDates = [suggestedDate]
+          }
         } else {
           this.suggestedDates = []
         }
-        this.date = selectedPhotos.length === 0 ? '' : selectedPhotos[0].date.substring(0, 10)
-        this.time = selectedPhotos.length === 0 ? '' : selectedPhotos[0].date.substring(11)
       }
     }
   }
