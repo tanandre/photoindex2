@@ -4,7 +4,7 @@
     <MdContent class="dialogContent">
       <RatingInput v-model="rating"></RatingInput>
       <div v-if="response">{{response.rowCount}} photos updated</div>
-      <md-progress-bar class="loadingBar" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+      <PromiseAwareLoader :promise="promise" v-if="promise !== null"></PromiseAwareLoader>
     </MdContent>
     <md-dialog-actions>
       <md-button class="md-primary" @click="close" title="close dialog">Close</md-button>
@@ -18,15 +18,17 @@
 <script>
   import RatingInput from './RatingInput.vue'
   import RetrieveListingAction from '../js/action/RetrieveListingAction'
+  import PromiseAwareLoader from './PromiseAwareLoader.vue'
 
   export default {
     dependencies: ['dataUpdater'],
     components: {
-      RatingInput
+      RatingInput,
+      PromiseAwareLoader
     },
     data () {
       return {
-        loading: false,
+        promise: null,
         response: null,
         rating: 1
       }
@@ -46,17 +48,13 @@
       },
       saveRating () {
         this.response = null
-        this.loading = true
         let ids = this.selectedPhotos.map(p => p.id)
-        return this.dataUpdater.updatePhotosRating(ids, this.rating).then(resp => {
-          this.loading = false
+        this.promise = this.dataUpdater.updatePhotosRating(ids, this.rating).then(resp => {
           this.response = resp.body
           new RetrieveListingAction(this.$store).execute(this.$route).then(() => {
             this.$store.commit('selectedPhotos', [])
-            this.close()
           })
         }).catch(err => {
-          this.loading = false
           console.error(err)
         })
       }
@@ -64,7 +62,7 @@
     watch: {
       '$store.state.action.showEditRating' () {
         this.response = null
-        this.loading = false
+        this.promise = null
         this.rating = 0
       }
     }

@@ -23,12 +23,10 @@
           </template>
         </MdAutocomplete>
       </div>
-      <div v-if="response">{{response.rowCount}} photos updated</div>
-      <md-progress-bar class="loadingBar" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+      <div v-if="response">{{response.rowCount}} tag(s) added</div>
+      <PromiseAwareLoader :promise="promise" v-if="promise !== null"></PromiseAwareLoader>
     </MdContent>
-
     <md-dialog-actions>
-
       <md-button class="md-primary" @click="onClose" title="close dialog">Close</md-button>
       <md-button class="md-primary" @click="saveTags" title="update Tags"
                  :disabled="tagGroup === '' || newTags.length === 0">
@@ -40,18 +38,18 @@
 
 <script>
   import util from '../js/util'
+  import PromiseAwareLoader from './PromiseAwareLoader.vue'
 
   export default {
     dependencies: ['dataRetriever', 'dataUpdater'],
+    components: {PromiseAwareLoader},
     data () {
       return {
-        loading: false,
         response: null,
         tagName: '',
         tagGroup: '',
-        tagGroups: [
-          {id: 1, name: 'Camera'},
-          {id: 2, name: 'Date'}],
+        promise: null,
+        tagGroups: [],
         newTags: []
       }
     },
@@ -91,8 +89,11 @@
         this.$store.commit('showEditTagGroups', false)
       },
       saveTags () {
-        this.dataUpdater.addTags(this.tagGroup, this.newTags).then(resp => {
+        this.response = null
+        this.promise = this.dataUpdater.addTags(this.tagGroup, this.newTags).then(resp => {
           this.response = resp.body
+        }).catch(err => {
+          console.error(err)
         })
       }
     },
@@ -102,6 +103,7 @@
         this.tagGroup = ''
         this.tagName = ''
         this.response = null
+        this.promise = null
       }
     }
   }

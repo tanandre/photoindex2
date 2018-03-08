@@ -29,7 +29,7 @@
       <md-checkbox v-model="isOffset" class="offsetCheckbox md-primary">Update Offset
       </md-checkbox>
       <div v-if="response">{{response.rowCount}} photos updated</div>
-      <md-progress-bar class="loadingBar" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+      <PromiseAwareLoader :promise="promise" v-if="promise !== null"></PromiseAwareLoader>
     </MdContent>
     <md-dialog-actions>
       <md-button class="md-primary" @click="onClose" title="close dialog">Close</md-button>
@@ -43,14 +43,16 @@
 <script>
   import dateUtil from '../js/DateUtil'
   import RetrieveListingAction from '../js/action/RetrieveListingAction'
+  import PromiseAwareLoader from './PromiseAwareLoader.vue'
 
   export default {
     dependencies: ['dataUpdater'],
+    components: {PromiseAwareLoader},
     data () {
       return {
         suggestedDates: [],
-        loading: false,
         response: null,
+        promise: null,
         isOffset: false,
         date: '',
         time: ''
@@ -90,17 +92,15 @@
       },
 
       save () {
-        this.loading = true
         this.response = null
-        let promise = this.isOffset ? this.saveDateOffset() : this.saveDate()
-        promise.then(resp => {
-          this.loading = false
+        this.promise = this.isOffset ? this.saveDateOffset() : this.saveDate()
+        this.promise.then(resp => {
           this.response = resp.body
           new RetrieveListingAction(this.$store).execute(this.$route)
         }).catch(err => {
-          this.loading = false
           console.error(err)
         })
+
       },
 
       saveDate () {
@@ -118,6 +118,7 @@
     watch: {
       '$store.state.action.showEditDate' (showEditDate) {
         this.response = null
+        this.promise = null
         this.isOffset = false
         let selectedPhotos = this.selectedPhotos
         this.date = selectedPhotos.length === 0 ? '' : selectedPhotos[0].date.substring(0, 10)
