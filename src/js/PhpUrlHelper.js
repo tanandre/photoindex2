@@ -39,8 +39,8 @@ class PhpUrlHelper {
     return '/photoindex/php/tags.php'
   }
 
-  getVideoUrl (photo) {
-    return '/photoindex/php/video.php?id=' + photo.id + '&type=original'
+  getVideoUrl (photo, type) {
+    return '/photoindex/php/video.php?id=' + photo.id + '&type=' + type
   }
 
   getPhotoUrl (photo, quality) {

@@ -30,10 +30,12 @@
           </div>
         </MdListItem>
         <MdListItem>
-          <md-button class="md-icon-button">
-            <mdIcon v-if="isVideo">videocam</mdIcon>
-            <mdIcon v-if="!isVideo">photo_camera</mdIcon>
-          </md-button>
+          <MdButton v-if="!isVideo" class="md-icon-button">
+            <mdIcon>photo_camera</mdIcon>
+          </MdButton>
+          <StateButton v-if="isVideo" class="md-icon-button" title="click to toggle video" @click.native="toggleVideo">
+            <mdIcon>videocam</mdIcon>
+          </StateButton>
           <div class="md-list-item-text">
             <span>{{photoFileName}}</span>
             <span class="small" :title="photo.path">{{photo.path}}</span>
@@ -50,6 +52,7 @@
   import ExifDetailsPane from './ExifDetailsPane.vue'
   import TagDetailsPane from './TagDetailsPane.vue'
   import ActionMenu from './ActionMenu.vue'
+  import StateButton from './StateButton.vue'
   import Rating from './Rating.vue'
   import util from '../js/util'
 
@@ -60,6 +63,7 @@
       ExifDetailsPane,
       TagDetailsPane,
       ActionMenu,
+      StateButton,
       Rating
     },
     data () {
@@ -86,6 +90,9 @@
       }
     },
     methods: {
+      toggleVideo () {
+        this.$emit('toggleVideo')
+      },
       onClickAction () {
         console.log('onclikc')
       },

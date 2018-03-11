@@ -67,5 +67,15 @@ export default {
     if (found > -1) {
       arr.splice(found, 1)
     }
+  },
+
+  browser: {
+    isChrome () {
+      return navigator.userAgent.indexOf("Chrome") !== -1
+    },
+
+    isFirefox () {
+      return navigator.userAgent.indexOf("Firefox") !== -1
+    }
   }
 }

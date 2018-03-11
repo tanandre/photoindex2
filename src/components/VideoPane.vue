@@ -2,12 +2,15 @@
   <div class="videoPane">
     <md-progress-bar class="loadingBar" v-if="loading" md-mode="indeterminate"></md-progress-bar>
     <video class="video" ref="videoNode" :src="videoUrl" :poster="thumbnailUrl" controls>
+      <!--<source :src="videoUrl" type="video/mp4">-->
       Your browser does not support the video tag.
     </video>
   </div>
 </template>
 
 <script>
+  import util from '../js/util'
+
   export default {
     dependencies: ['urlHelper'],
     props: ['photo'],
@@ -18,20 +21,20 @@
     },
     computed: {
       videoUrl () {
-        return this.urlHelper.getVideoUrl(this.photo)
+        return this.urlHelper.getVideoUrl(this.photo, (util.browser.isChrome() || util.browser.isFirefox()) ? 'mp4' : 'original')
       },
       thumbnailUrl () {
         return this.urlHelper.getThumbnailUrl(this.photo)
       }
     },
     mounted () {
-      this.$refs['videoNode'].addEventListener('progress', () => {
-        this.loading = true
-      })
-
-      this.$refs['videoNode'].addEventListener('progress', () => {
-        this.loading = false
-      })
+//      this.$refs['videoNode'].addEventListener('progress', () => {
+//        this.loading = true
+//      })
+//
+//      this.$refs['videoNode'].onloadeddata = () => {
+//        this.loading = false
+//      }
     }
   }
 </script>
