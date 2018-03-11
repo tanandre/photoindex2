@@ -1,17 +1,25 @@
 <template>
   <div class="photoDetailView">
     <DetailsPane class="photoDetailsPane" :photo="photo"></DetailsPane>
-    <PhotoPane class="photoPane" :photo="photo"></PhotoPane>
+    <PhotoPane v-if="!isVideo" class="photoPane" :photo="photo"></PhotoPane>
+    <VideoPane v-if="isVideo" class="videoPane" :photo="photo"></VideoPane>
   </div>
 </template>
 
 <script>
+  import util from '../js/util'
   import PhotoPane from './PhotoPane.vue'
+  import VideoPane from './VideoPane.vue'
   import DetailsPane from './DetailsPane.vue'
 
   export default {
-    components: {PhotoPane, DetailsPane},
+    components: {PhotoPane, VideoPane, DetailsPane},
     props: ['photo'],
+    computed: {
+      isVideo () {
+        return util.isVideo(this.photo)
+      }
+    },
     mounted () {
       document.body.classList.add('noScroll')
     },
