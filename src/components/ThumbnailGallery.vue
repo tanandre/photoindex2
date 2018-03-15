@@ -1,6 +1,6 @@
 <template>
   <div class="thumbnailGallery" ref="gallery">
-    <!--<HUDGallery></HUDGallery>-->
+    <HUDGallery></HUDGallery>
     <thumbnail class="thumbnail" :class="{ selected: isSelected(image) }" v-for="image in imagesForCurrentPage"
                :photo="image"
                :key="image.id" @click.native="onClickThumbnail(image, $event)">
