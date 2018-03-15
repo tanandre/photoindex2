@@ -7,7 +7,11 @@
       <span class="md-title">Menu</span>
     </md-toolbar>
     <MdCard>
-      <!--<MdSwitch v-model="isSortDesc">sort</MdSwitch>-->
+      <MdList>
+        <MdListItem class="md-dense">
+          <MdSwitch v-model="showHUD">HUD display</MdSwitch>
+        </MdListItem>
+      </MdList>
       <MdList>
         <MdListItem class="md-dense">
           <MdIcon>star</MdIcon>
@@ -44,17 +48,27 @@
     props: ['showMenu'],
     data () {
       return {
-        isSortDesc: true,
         selectedRating: this.$route.query.r ? Number(this.$route.query.r) : 1
       }
     },
     computed: {
+      showHUD: {
+        get () {
+          return this.$store.state.action.showHUD
+        },
+        set (value) {
+          this.$store.commit('showHUD', value)
+        }
+      },
       selectedTags: {
         get () {
           return util.tagsToArray(this.$route.query.q)
         },
         set (values) {
-          this.navigator.setTags(util.tagsToHashObject(values), this.$route)
+          let tags = util.tagsToHashObject(values)
+          if (tags !== this.$route.query.q) {
+            this.navigator.setTags(tags, this.$route)
+          }
         }
       }
     },

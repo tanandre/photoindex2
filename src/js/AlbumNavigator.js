@@ -4,6 +4,10 @@ class AlbumNavigator {
   }
 
   setRating (rating, route) {
+    if (route.query.r === rating) {
+      console.log('skipping setting route - nothing changed')
+      return
+    }
     this.router.push({
       name: 'gallery',
       query: {
@@ -15,6 +19,10 @@ class AlbumNavigator {
   }
 
   setTags (tags, route) {
+    if (route.query.q === tags) {
+      console.log('skipping setting route - nothing changed')
+      return
+    }
     this.router.push({
       name: 'gallery',
       query: {
@@ -26,6 +34,10 @@ class AlbumNavigator {
   }
 
   setDates (dates, route) {
+    if (route.query.d === dates) {
+      console.log('skipping setting route - nothing changed')
+      return
+    }
     this.router.push({
       name: 'gallery',
       query: {
