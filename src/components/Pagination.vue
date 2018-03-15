@@ -81,10 +81,13 @@
 
 <style scoped>
   .paginationButton {
-    /*width: 40px;*/
     width: calc(100% / 7);
     min-width: inherit;
     margin: 0;
+  }
+
+  .md-button .md-ripple {
+    padding: 0;
   }
 
   .pageInput {

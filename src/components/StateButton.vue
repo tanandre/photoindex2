@@ -5,12 +5,6 @@
 </template>
 
 <script>
-  import ExifDetailsPane from './ExifDetailsPane.vue'
-  import TagDetailsPane from './TagDetailsPane.vue'
-  import ActionMenu from './ActionMenu.vue'
-  import Rating from './Rating.vue'
-  import util from '../js/util'
-
   export default {
     data () {
       return {

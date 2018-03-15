@@ -15,19 +15,10 @@ class FilterListingAction {
     let datesArray = util.tagsToArray(dates)
     if (datesArray.length === 0) {
       this.store.commit('images', this.store.state.album.all.filter(img => rating ? img.rating >= rating : true))
-      // this.store.commit('album', {
-      //   images: this.store.state.album.all.filter(img => rating ? img.rating >= rating : true),
-      //   all: this.store.state.album.all
-      // })
-      return
+      return Promise.resolve()
     }
     let filteredImages = this.store.state.album.all.filter(img => img.rating >= rating).filter(img => isPhotoInDateRange(img, datesArray))
     this.store.commit('images', filteredImages)
-    // this.store.commit('album', {
-    //   images: filteredImages,
-    //   all: this.store.state.album.all
-    // })
-
     this.store.commit('query', route.query)
     return Promise.resolve()
   }

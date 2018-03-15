@@ -100,9 +100,7 @@
         }).catch(err => {
           console.error(err)
         })
-
       },
-
       saveDate () {
         let ids = this.selectedPhotos.map(p => p.id)
         let datetime = (this.date.trim() + ' ' + this.time.trim())
