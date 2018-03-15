@@ -69,13 +69,20 @@ export default {
     }
   },
 
+  imagesForCurrentPage (images, gallery) {
+    let imagesPerPage = gallery.thumbnailsPerPage
+    let begin = (gallery.page - 1) * imagesPerPage
+    let end = Math.min(images.length, begin + imagesPerPage)
+    return images.slice(begin, end)
+  },
+
   browser: {
     isChrome () {
-      return navigator.userAgent.indexOf("Chrome") !== -1
+      return navigator.userAgent.indexOf('Chrome') !== -1
     },
 
     isFirefox () {
-      return navigator.userAgent.indexOf("Firefox") !== -1
+      return navigator.userAgent.indexOf('Firefox') !== -1
     }
   }
 }

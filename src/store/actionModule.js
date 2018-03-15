@@ -1,22 +1,26 @@
 const actionModule = {
   state: {
+    showHUD: true,
     showEditDate: false,
     showEditTags: false,
     showEditTagGroups: false,
     showEditRating: false
   },
   mutations: {
-    showEditDate (state, showEditDate) {
-      state.showEditDate = showEditDate
+    showEditDate (state, value) {
+      state.showEditDate = value
     },
-    showEditRating (state, showEditRating) {
-      state.showEditRating = showEditRating
+    showEditRating (state, value) {
+      state.showEditRating = value
     },
-    showEditTags (state, showEditTags) {
-      state.showEditTags = showEditTags
+    showEditTags (state, value) {
+      state.showEditTags = value
     },
     showEditTagGroups (state, value) {
       state.showEditTagGroups = value
+    },
+    showHUD (state, value) {
+      state.showHUD = value
     }
   }
 }

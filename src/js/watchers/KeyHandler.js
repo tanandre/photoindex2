@@ -22,7 +22,9 @@ class KeyHandler {
 
   handlKeyEventGallery (key) {
     let page = store.state.gallery.page
-    if (key.keyCode === 36 && key.ctrlKey) { // HOME
+    if (key.keyCode === 192) { // `tilde
+      store.commit('showHUD', !store.state.action.showHUD)
+    } else if (key.keyCode === 36 && key.ctrlKey) { // HOME
       this.navigator.setPage(1)
     } else if (key.keyCode === 35 && key.ctrlKey) { // END
       this.navigator.setPage(store.state.gallery.pageCount)

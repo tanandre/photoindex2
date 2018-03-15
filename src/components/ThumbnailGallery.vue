@@ -1,5 +1,6 @@
 <template>
-  <div class="thumbnailGallery">
+  <div class="thumbnailGallery" ref="gallery">
+    <!--<HUDGallery></HUDGallery>-->
     <thumbnail class="thumbnail" :class="{ selected: isSelected(image) }" v-for="image in imagesForCurrentPage"
                :photo="image"
                :key="image.id" @click.native="onClickThumbnail(image, $event)">
@@ -14,26 +15,18 @@
 
 <script>
   import Thumbnail from './Thumbnail.vue'
+  import HUDGallery from './HUDGallery.vue'
   import util from '../js/util'
 
   export default {
     dependencies: ['navigator'],
     components: {
-      Thumbnail
+      Thumbnail,
+      HUDGallery
     },
     computed: {
-      pageCount () {
-        return this.$store.state.gallery.pageCount
-      },
-      imagesPerPage () {
-        return this.$store.state.gallery.thumbnailsPerPage
-      },
       imagesForCurrentPage () {
-        let imagesPerPage = this.imagesPerPage
-        let images = this.$store.state.album.images
-        let begin = (this.$store.state.gallery.page - 1) * imagesPerPage
-        let end = Math.min(images.length, begin + imagesPerPage)
-        return images.slice(begin, end)
+        return util.imagesForCurrentPage(this.$store.state.album.images, this.$store.state.gallery)
       },
       images () {
         return this.$store.state.album.images
@@ -85,6 +78,11 @@
         } else {
           this.navigator.setPhoto(photo.id)
         }
+      }
+    },
+    watch: {
+      '$store.state.gallery.page' () {
+        window.scrollTo(0, 0)
       }
     }
   }
