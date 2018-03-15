@@ -1,8 +1,9 @@
 import Deferred from '../Deferred.js'
+import WatachableQueue from './WatachableQueue.js'
 
 class QueuedLoader {
   constructor (workers, isFifo) {
-    this.queue = []
+    this.queue = new WatachableQueue()
     this.workers = workers
     this._stop = false
     this.isFifo = isFifo
@@ -19,7 +20,7 @@ class QueuedLoader {
   }
 
   clear () {
-    this.queue = []
+    this.queue.clear()
   }
 
   stop () {
@@ -50,10 +51,10 @@ class QueuedLoader {
         let promise = worker.execute.apply(worker, item.args)
         promise.then((data) => {
           item.deferred.resolve(data)
-          loadNext(worker, _this.queue)
+          loadNext(worker)
         }, (err) => {
           item.deferred.reject(err)
-          loadNext(worker, _this.queue)
+          loadNext(worker)
         }, (progress) => {
           item.deferred.progress(progress)
         })
