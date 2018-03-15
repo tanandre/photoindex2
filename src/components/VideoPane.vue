@@ -40,9 +40,13 @@
 </script>
 
 <style scoped>
+  .videoPane {
+    height: 100%;
+  }
+
   .video {
     width: 80%;
-    height: 500px;
+    height: 100%;
   }
 
   .loadingBar {
