@@ -16,11 +16,22 @@
     </md-toolbar>
     <MdContent class="sideBar">
       <MdList>
-        <MdListItem class="test">
+        <MdListItem>
+          <md-button class="md-icon-button" @click="rotate(1)" title="rotate clockwise">
+            <mdIcon>rotate_right</mdIcon>
+          </md-button>
+          <md-button class="md-icon-button" @click="rotate(-1)" title="rotate 180 degrees">
+            <mdIcon>repeat</mdIcon>
+          </md-button>
+          <md-button class="md-icon-button" @click="rotate(-1)" title="rotate counter-clockwise">
+            <mdIcon>rotate_left</mdIcon>
+          </md-button>
+        </MdListItem>
+        <MdListItem>
           <Rating :rating="photo.rating"></Rating>
           {{photo.rating}}
         </MdListItem>
-        <MdListItem class="test">
+        <MdListItem>
           <md-button class="md-icon-button" @click="onClickDate" title="search by date">
             <mdIcon>event</mdIcon>
           </md-button>
@@ -90,6 +101,9 @@
       }
     },
     methods: {
+      rotate (direction) {
+        this.$emit('rotate', direction)
+      },
       toggleVideo () {
         this.$emit('toggleVideo')
       },

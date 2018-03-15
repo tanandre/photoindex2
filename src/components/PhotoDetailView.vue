@@ -1,7 +1,8 @@
 <template>
   <div class="photoDetailView">
-    <DetailsPane class="photoDetailsPane" :photo="photo" v-on:toggleVideo="toggleVideo"></DetailsPane>
-    <PhotoPane v-if="!isVideo" class="photoPane" :photo="photo"></PhotoPane>
+    <DetailsPane class="photoDetailsPane" :photo="photo" v-on:toggleVideo="toggleVideo"
+                 v-on:rotate="onRotate"></DetailsPane>
+    <PhotoPane v-if="!isVideo" class="photoPane" :photo="photo" :rotate="rotate"></PhotoPane>
     <VideoPane v-if="isVideo" class="videoPane" :photo="photo"></VideoPane>
   </div>
 </template>
@@ -16,13 +17,22 @@
     props: ['photo'],
     data () {
       return {
-        isVideo: false
+        isVideo: false,
+        rotate: 0
       }
     },
     mounted () {
       document.body.classList.add('noScroll')
     },
     methods: {
+      onRotate (direction) {
+        this.rotate = this.rotate + direction
+        if (this.rotate === -1) {
+          this.rotate = 3
+        } else if (this.rotate === 4) {
+          this.rotate = 0
+        }
+      },
       toggleVideo () {
         this.isVideo = !this.isVideo
       }

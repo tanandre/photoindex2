@@ -1,5 +1,6 @@
 <template>
-  <div class="photoPane" ref="photoPane">
+  <div class="photoPane" ref="photoPane"
+       :class="{'rotate90': rotate == 1, 'rotate180': rotate == 2, 'rotate270': rotate == 3}">
     <md-progress-bar class="loadingBar" v-if="status == 'loading'" md-mode="indeterminate"></md-progress-bar>
     <div class="errorPane" v-if="errorMsg">
       <mdIcon class="md-size-2x" v-if="status === 'error'">error_outline</mdIcon>
@@ -11,7 +12,7 @@
 <script>
   export default {
     dependencies: ['urlHelper', 'photoLoader'],
-    props: ['photo'],
+    props: ['photo', 'rotate'],
     data () {
       return {
         status: 'idle',
@@ -38,9 +39,7 @@
           this.status = 'completed'
           photoPane.style.backgroundImage = 'url(' + url + ')'
         }, (err) => {
-          console.error(err)
           this.status = 'error'
-          console.error(err)
           this.errorMsg = 'error loading: ' + err
           this.isDone = true
         }, () => {
@@ -82,5 +81,20 @@
     position: absolute;
     width: 100%;
     top: 0;
+  }
+
+  .photoPane.rotate90 {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+
+  .photoPane.rotate180 {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+
+  .photoPane.rotate270 {
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
   }
 </style>
