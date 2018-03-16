@@ -18,6 +18,21 @@ class AlbumNavigator {
     })
   }
 
+  setBothTags (tags, dateTags, route) {
+    if (route.query.q === tags && route.query.d === dateTags) {
+      console.log('skipping setting route - nothing changed')
+      return
+    }
+    this.router.push({
+      name: 'gallery',
+      query: {
+        q: tags,
+        d: dateTags,
+        r: route.query.r
+      }
+    })
+  }
+
   setTags (tags, route) {
     if (route.query.q === tags) {
       console.log('skipping setting route - nothing changed')

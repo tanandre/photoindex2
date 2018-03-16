@@ -1,10 +1,12 @@
 <template>
-  <div class="photoDetailView">
-    <DetailsPane class="photoDetailsPane" :photo="photo" v-on:toggleVideo="toggleVideo"
-                 v-on:rotate="onRotate"></DetailsPane>
-    <PhotoPane v-if="!isVideo" class="photoPane" :photo="photo" :rotate="rotate"></PhotoPane>
-    <VideoPane v-if="isVideo" class="videoPane" :photo="photo"></VideoPane>
-  </div>
+  <transition name="fade">
+    <div class="photoDetailView">
+      <DetailsPane ref="detailsPane" class="photoDetailsPane" :photo="photo" v-on:toggleVideo="toggleVideo"
+                   v-on:rotate="onRotate"></DetailsPane>
+      <PhotoPane v-if="!isVideo" class="photoPane" :photo="photo" :rotate="rotate"></PhotoPane>
+      <VideoPane v-if="isVideo" class="videoPane" :photo="photo"></VideoPane>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -37,7 +39,7 @@
         this.isVideo = !this.isVideo
       }
     },
-    beforeDestroy () {
+    destroyed () {
       document.body.classList.remove('noScroll')
     }
   }
@@ -66,6 +68,14 @@
     position: absolute;
     width: 80%;
     height: 100%;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
   }
 
 </style>

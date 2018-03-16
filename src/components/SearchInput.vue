@@ -7,29 +7,22 @@
                  v-on:keyup.enter="onEnter" autofocus></MdInput>
       </MdField>
     </div>
-    <MdChip md-deletable v-for="tag in dateTags" v-on:click="onCloseTag(tag)" :key="tag">{{tag}}
-    </MdChip>
-    <MdChip md-deletable v-for="tag in tags" v-on:click="onCloseTag(tag)" :key="tag">{{tag}}
-    </MdChip>
+    <TagChips></TagChips>
   </div>
 </template>
 
 <script>
   import util from '../js/util'
+  import TagChips from './TagChips.vue'
 
   export default {
     dependencies: ['navigator'],
+    components: {
+      TagChips
+    },
     data () {
       return {
         searchTxt: ''
-      }
-    },
-    computed: {
-      tags () {
-        return util.tagsToArray(this.$route.query.q)
-      },
-      dateTags () {
-        return util.tagsToArray(this.$route.query.d)
       }
     },
     methods: {
@@ -44,36 +37,17 @@
         this.searchTxt = ''
       },
 
-      onCloseTag (tag) {
-        if (util.isDate(tag)) {
-          this.removeDateTag(tag)
-        } else {
-          this.removeTag(tag)
-        }
-      },
       addTag (value) {
         if (util.isDate(value)) {
-          this.setDateTags(this.dateTags.concat([value]))
+          let dateTags = util.tagsToArray(this.$route.query.d)
+          this.setDateTags(dateTags.concat([value]))
         } else {
-          this.setTags(this.tags.concat([value]))
-        }
-      },
-      removeTag (tag) {
-        let found = this.tags.indexOf(tag)
-        if (found > -1) {
-          this.tags.splice(found, 1)
-          this.setTags(this.tags)
-        }
-      },
-      removeDateTag (tag) {
-        let foundD = this.dateTags.indexOf(tag)
-        if (foundD > -1) {
-          this.dateTags.splice(foundD, 1)
-          this.setDateTags(this.dateTags)
+          let tags = util.tagsToArray(this.$route.query.q)
+          this.setTags(tags.concat([value]))
         }
       },
       clearTags () {
-        this.setBothTags([], [])
+        this.navigator.setBothTags(util.tagsToHashObject([]), util.tagsToHashObject([]), this.$route)
       },
 
       setTags (tags) {
