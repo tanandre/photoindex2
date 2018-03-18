@@ -20,9 +20,6 @@
           <md-button class="md-icon-button" @click="rotate(1)" title="rotate clockwise">
             <mdIcon>rotate_right</mdIcon>
           </md-button>
-          <md-button class="md-icon-button" @click="rotate(-1)" title="rotate 180 degrees">
-            <mdIcon>repeat</mdIcon>
-          </md-button>
           <md-button class="md-icon-button" @click="rotate(-1)" title="rotate counter-clockwise">
             <mdIcon>rotate_left</mdIcon>
           </md-button>
@@ -50,6 +47,9 @@
           <div class="md-list-item-text">
             <span>{{photoFileName}}</span>
             <span class="small" :title="photo.path">{{photo.path}}</span>
+            <a :href="kanjiPath">
+              <span class="small" :title="kanjiPath">{{kanjiPath}}</span>
+            </a>
           </div>
         </MdListItem>
       </MdList>
@@ -86,6 +86,10 @@
       photoFileName () {
         let index = this.photo.path.lastIndexOf('/')
         return this.photo.path.substring(index + 1)
+      },
+      kanjiPath () {
+        let index = this.photo.path.lastIndexOf('/')
+        return this.photo.path.substring(0, index).replace('/volume1', '\\\\kanji').replace(/\//g, '\\')
       },
       photoDate () {
         return this.photo.date.substring(0, 11)

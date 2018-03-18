@@ -1,6 +1,6 @@
 class PhpUrlHelper {
-  getListing () {
-    return '/photoindex/php/listing.php'
+  getListing (rating) {
+    return '/photoindex/php/listing.php?rating=' + (rating !== undefined ? rating : 1)
   }
 
   getThumbnailUrl (photo) {
