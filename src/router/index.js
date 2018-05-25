@@ -10,7 +10,7 @@ Vue.use(Router)
 let router = new Router({
   routes: [{
     path: '/',
-    redirect: '/gallery/1/photo/-1'
+    redirect: '/gallery/1/photo/-1?r=3'
   }, {
     path: '/gallery/:page/photo/:photoid',
     name: 'gallery',
