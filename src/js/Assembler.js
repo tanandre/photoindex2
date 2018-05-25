@@ -23,29 +23,29 @@ class Assembler {
   assemble () {
     this.router.beforeEach(titleUpdater)
 
-    this.injector.constant('router', this.router)
     let photoCache = {}
     let jsonCache = {}
     let tagCache = {}
     let exifCache = {}
 
     let gallerySizeListener = new GallerySizeListener()
-    this.injector.constant('thumbnailLoader', new QueuedLoader([new ImageWorker(), new ImageWorker(), new ImageWorker(), new ImageWorker()], true))
-    this.injector.constant('photoLoader', new CachedLoader(photoCache, new QueuedLoader([new ImageWorker()], false)))
-    this.injector.constant('tagsLoader', new CachedLoader(tagCache, new QueuedLoader([new XhrWorker(this.http)], false)))
-    this.injector.constant('exifLoader', new CachedLoader(exifCache, new QueuedLoader([new XhrWorker(this.http)], true)))
-    this.injector.constant('jsonLoader', new CachedLoader(jsonCache, new QueuedLoader([new XhrWorker(this.http)], true)))
-    this.injector.constant('store', this.store)
-    this.injector.constant('applicationState', new ApplicationState())
-    this.injector.constant('httpClient', this.http)
-    this.injector.constant('gallerySizeListener', gallerySizeListener)
+    let thumbnailLoader = new QueuedLoader([new ImageWorker(), new ImageWorker(), new ImageWorker(), new ImageWorker()], true);
+    let photoLoader = new CachedLoader(photoCache, new QueuedLoader([new ImageWorker()], false));
+    let tagsLoader = new CachedLoader(tagCache, new QueuedLoader([new XhrWorker(this.http)], false));
+    let exifLoader = new CachedLoader(exifCache, new QueuedLoader([new XhrWorker(this.http)], true));
+    let jsonLoader = new CachedLoader(jsonCache, new QueuedLoader([new XhrWorker(this.http)], true));
 
-    this.injector.service('errorHandler', ErrorHandler)
-    this.injector.service('dataRetriever', DataRetriever)
-    this.injector.service('dataUpdater', DataUpdater)
-    this.injector.service('navigator', AlbumNavigator)
-    this.injector.service('urlHelper', PhpUrlHelper)
-    this.injector.service('keyHandler', KeyHandler)
+    let urlHelper = new PhpUrlHelper()
+    let applicationState = new ApplicationState()
+    let navigator = new AlbumNavigator(this.router);
+    this.store.commit('urlHelper', urlHelper)
+    this.store.commit('dataUpdater', new DataUpdater(this.http, urlHelper, applicationState))
+    this.store.commit('dataRetriever', new DataRetriever(jsonLoader, tagsLoader, exifLoader, urlHelper, applicationState))
+    this.store.commit('applicationState', applicationState)
+    this.store.commit('keyHandler', new KeyHandler(navigator))
+    this.store.commit('navigator', navigator)
+    this.store.commit('thumbnailLoader', thumbnailLoader)
+    this.store.commit('photoLoader', photoLoader)
 
     window.addEventListener('resize', gallerySizeListener.calibrateThumbnails)
     this.store.watch(state => state.album.images, () => {

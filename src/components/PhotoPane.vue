@@ -11,7 +11,6 @@
 
 <script>
   export default {
-    dependencies: ['urlHelper', 'photoLoader'],
     props: ['photo', 'rotate'],
     data () {
       return {
@@ -25,7 +24,7 @@
     methods: {
       drawPhoto () {
         this.errorMsg = ''
-        let thumbnailUrl = this.urlHelper.getThumbnailUrl(this.photo)
+        let thumbnailUrl = this.$store.state.service.urlHelper.getThumbnailUrl(this.photo)
         let photoPane = this.$refs['photoPane']
         photoPane.style.backgroundImage = 'url(' + thumbnailUrl + ')'
 
@@ -33,9 +32,9 @@
           this.promise.cancel()
         }
 
-        let url = this.urlHelper.getPhotoUrl(this.photo, 2)
+        let url = this.$store.state.service.urlHelper.getPhotoUrl(this.photo, 2)
         // TODO cancel promise if existing
-        this.promise = this.photoLoader.load(url).then(() => {
+        this.promise = this.$store.state.service.photoLoader.load(url).then(() => {
           this.status = 'completed'
           photoPane.style.backgroundImage = 'url(' + url + ')'
         }, (err) => {

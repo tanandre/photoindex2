@@ -12,7 +12,6 @@
   import util from '../js/util'
 
   export default {
-    dependencies: ['urlHelper'],
     props: ['photo'],
     data () {
       return {
@@ -21,10 +20,10 @@
     },
     computed: {
       videoUrl () {
-        return this.urlHelper.getVideoUrl(this.photo, (util.browser.isChrome() || util.browser.isFirefox()) ? 'mp4' : 'original')
+        return this.$store.state.service.urlHelper.getVideoUrl(this.photo, (util.browser.isChrome() || util.browser.isFirefox()) ? 'mp4' : 'original')
       },
       thumbnailUrl () {
-        return this.urlHelper.getThumbnailUrl(this.photo)
+        return this.$store.state.service.urlHelper.getThumbnailUrl(this.photo)
       }
     },
     mounted () {

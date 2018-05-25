@@ -18,7 +18,6 @@
   import util from '../js/util'
 
   export default {
-    dependencies: ['dataRetriever'],
     props: ['value', 'suppress'],
     data () {
       return {
@@ -27,7 +26,7 @@
       }
     },
     mounted () {
-      this.dataRetriever.retrieveAllTags().then(data => {
+      this.$store.state.service.dataRetriever.retrieveAllTags().then(data => {
         this.tagGroups = util.mapTagsToGroups(data.body)
       })
     },

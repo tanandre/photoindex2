@@ -6,6 +6,8 @@ import actionModule from './store/actionModule'
 import selectionModule from './store/selectionModule'
 import galleryModule from './store/galleryModule'
 import albumModule from './store/albumModule'
+import serviceModule from './store/serviceModule'
+import stateModule from './store/stateModule'
 
 Vue.use(Vuex)
 
@@ -14,7 +16,9 @@ const store = new Vuex.Store({
     selection: selectionModule,
     action: actionModule,
     gallery: galleryModule,
-    album: albumModule
+    album: albumModule,
+    service: serviceModule,
+    state: stateModule
   },
   state: {
     serverUrl: localStorage.getItem('serverUrl'),
@@ -59,9 +63,9 @@ const store = new Vuex.Store({
       return Promise.resolve()
     },
 
-    query ({commit}, q) {
+    query ({commit, state}, q) {
       commit('loading', true)
-      return injector.get('dataRetriever').retrieveImages({tag: util.tagsToArray(q)}).then((response) => {
+      return state.service.dataRetriever.retrieveImages({tag: util.tagsToArray(q)}).then((response) => {
         commit('images', response.body)
         commit('all', response.body)
         commit('loading', false)

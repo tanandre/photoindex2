@@ -16,7 +16,6 @@
   import TagChips from './TagChips.vue'
 
   export default {
-    dependencies: ['navigator'],
     components: {
       TagChips
     },
@@ -47,15 +46,15 @@
         }
       },
       clearTags () {
-        this.navigator.setBothTags(util.tagsToHashObject([]), util.tagsToHashObject([]), this.$route)
+        this.$store.state.service.navigator.setBothTags(util.tagsToHashObject([]), util.tagsToHashObject([]), this.$route)
       },
 
       setTags (tags) {
-        this.navigator.setTags(util.tagsToHashObject(tags), this.$route)
+        this.$store.state.service.navigator.setTags(util.tagsToHashObject(tags), this.$route)
       },
 
       setDateTags (dateTags) {
-        this.navigator.setDates(util.tagsToHashObject(dateTags), this.$route)
+        this.$store.state.service.navigator.setDates(util.tagsToHashObject(dateTags), this.$route)
       }
     }
   }

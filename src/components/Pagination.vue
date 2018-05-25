@@ -14,7 +14,6 @@
   import util from '../js/util'
 
   export default {
-    dependencies: ['navigator'],
     data () {
       return {
         range: 2,
@@ -29,7 +28,7 @@
         },
         set (value) {
           this.delay(() => {
-            this.navigator.setPage(value)
+            this.$store.state.service.navigator.setPage(value)
           }, 500)
         }
       },
@@ -39,7 +38,7 @@
     },
     methods: {
       onClick (idx) {
-        this.navigator.setPage(idx)
+        this.$store.state.service.navigator.setPage(idx)
       },
 
       shouldDisplay (idx) {

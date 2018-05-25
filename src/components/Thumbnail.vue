@@ -23,7 +23,6 @@
   }
 
   export default {
-    dependencies: ['urlHelper', 'thumbnailLoader'],
     props: ['photo'],
     data () {
       return {
@@ -91,8 +90,8 @@
         this.status = 'inQueue'
         let thumbnail = this.$refs['thumbnail']
 
-        let url = this.urlHelper.getThumbnailUrl(this.photo)
-        this.promise = this.thumbnailLoader.load(url).then(() => {
+        let url = this.$store.state.service.urlHelper.getThumbnailUrl(this.photo)
+        this.promise = this.$store.state.service.thumbnailLoader.load(url).then(() => {
           this.status = 'completed'
           thumbnail.style.backgroundImage = 'url(' + url + ')'
         }, (err) => {

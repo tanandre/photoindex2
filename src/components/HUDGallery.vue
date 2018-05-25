@@ -19,8 +19,8 @@
       </div>
       <div>
         <span>Workers:</span>
-        <span>({{getActiveWorkeres(thumbnailLoader.workers).length}}</span>
-        <span>/ {{thumbnailLoader.workers.length}})</span>
+        <span>({{getActiveWorkeres($store.state.service.thumbnailLoader.workers).length}}</span>
+        <span>/ {{$store.state.service.thumbnailLoader.workers.length}})</span>
       </div>
       <div>
         <span>Selected photos:</span>
@@ -47,7 +47,6 @@
   import TagChips from './TagChips.vue'
 
   export default {
-    dependencies: ['thumbnailLoader'],
     components: {
       TagChips
     },
@@ -57,11 +56,11 @@
           begin: new Date(),
           end: new Date()
         },
-        queue: this.thumbnailLoader.queue.queue
+        queue: this.$store.state.service.thumbnailLoader.queue.queue
       }
     },
     mounted () {
-      this.thumbnailLoader.queue.watchable.watch(queue => {
+      this.$store.state.service.thumbnailLoader.queue.watchable.watch(queue => {
         this.queue = queue
       })
     },

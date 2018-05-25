@@ -41,7 +41,6 @@
   import TagSelector from './TagSelector.vue'
 
   export default {
-    dependencies: ['urlHelper', 'navigator', 'dataRetriever'],
     components: {
       TagSelector
     },
@@ -67,7 +66,7 @@
         set (values) {
           let tags = util.tagsToHashObject(values)
           if (tags !== this.$route.query.q) {
-            this.navigator.setTags(tags, this.$route)
+            this.$store.state.service.navigator.setTags(tags, this.$route)
           }
         }
       }
@@ -82,7 +81,7 @@
     },
     watch: {
       'selectedRating' (selectedRating) {
-        this.navigator.setRating(selectedRating, this.$route)
+        this.$store.state.service.navigator.setRating(selectedRating, this.$route)
       }
     }
   }
