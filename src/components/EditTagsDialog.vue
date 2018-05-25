@@ -64,7 +64,7 @@
           let tagIds = this.toAddTags.map(tagname => tags.find(tag => tag.name === tagname)).map(tag => tag.id)
           this.dataUpdater.editPhotosTags(this.selectedPhotos.map(p => p.id), tagIds).then(resp => {
             this.response = resp.body
-          })
+          }).catch(this.errorHandler.handle)
         })
       },
       loadTags () {
@@ -77,7 +77,6 @@
           this.currentTags = data.body
         })
       }
-
     },
     watch: {
       '$store.state.action.showEditTags' (showEditTags) {
