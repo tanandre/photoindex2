@@ -41,6 +41,7 @@
   import PromiseAwareLoader from './PromiseAwareLoader.vue'
 
   export default {
+    dependencies: ['dataRetriever', 'dataUpdater'],
     components: {PromiseAwareLoader},
     data () {
       return {
@@ -66,12 +67,12 @@
     },
     methods: {
       loadTags () {
-        this.$store.state.service.dataRetriever.retrieveTagGroups().then(data => {
+        this.dataRetriever.retrieveTagGroups().then(data => {
           this.tagGroups = data
         })
       },
       createGroup (value) {
-        this.$store.state.service.dataUpdater.addGroup(value).then(() => {
+        this.dataUpdater.addGroup(value).then(() => {
           this.loadTags()
         })
       },
@@ -89,7 +90,7 @@
       },
       saveTags () {
         this.response = null
-        this.promise = this.$store.state.service.dataUpdater.addTags(this.tagGroup, this.newTags).then(resp => {
+        this.promise = this.dataUpdater.addTags(this.tagGroup, this.newTags).then(resp => {
           this.response = resp.body
         }).catch(err => {
           console.error(err)

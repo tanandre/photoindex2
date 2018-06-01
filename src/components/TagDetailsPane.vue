@@ -9,6 +9,7 @@
   import util from '../js/util'
 
   export default {
+    dependencies: ['navigator', 'dataRetriever'],
     props: ['photo'],
     data () {
       return {
@@ -17,12 +18,13 @@
     },
     methods: {
       onClickTag (tag) {
-        this.$store.state.service.navigator.setTags(util.tagsToHashObject([tag.name]), this.$route)
-        this.$store.state.service.navigator.clearPhoto()
+        this.navigator.setTags(util.tagsToHashObject([tag.name]), this.$route)
+        this.navigator.clearPhoto()
       },
       loadTags () {
         this.tags = []
-        this.$store.state.service.dataRetriever.retrieveTags(this.photo).then(data => {
+
+        this.dataRetriever.retrieveTags(this.photo).then(data => {
           this.status = 'completed'
           this.tags = data.body
         }, () => {

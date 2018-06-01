@@ -11,6 +11,7 @@
   import util from '../js/util'
 
   export default {
+    dependencies: ['navigator'],
     computed: {
       tags () {
         return util.tagsToArray(this.$route.query.q)
@@ -43,11 +44,11 @@
       },
 
       setTags (tags) {
-        this.$store.state.service.navigator.setTags(util.tagsToHashObject(tags), this.$route)
+        this.navigator.setTags(util.tagsToHashObject(tags), this.$route)
       },
 
       setDateTags (dateTags) {
-        this.$store.state.service.navigator.setDates(util.tagsToHashObject(dateTags), this.$route)
+        this.navigator.setDates(util.tagsToHashObject(dateTags), this.$route)
       }
     }
   }

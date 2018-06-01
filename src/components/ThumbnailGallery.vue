@@ -19,6 +19,7 @@
   import util from '../js/util'
 
   export default {
+    dependencies: ['navigator'],
     components: {
       Thumbnail,
       HUDGallery
@@ -75,7 +76,7 @@
         } else if (event.shiftKey) {
           this.updatePhotoSelection(photo)
         } else {
-          this.$store.state.service.navigator.setPhoto(photo.id)
+          this.navigator.setPhoto(photo.id)
         }
       }
     },

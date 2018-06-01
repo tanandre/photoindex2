@@ -37,6 +37,7 @@
   import RetrieveListingAction from '../js/action/RetrieveListingAction'
 
   export default {
+    dependencies: ['dataUpdater'],
     computed: {
       selectedPhotos () {
         return this.$store.state.photo ? [this.$store.state.photo] : this.$store.state.selection.selectedPhotos
@@ -49,7 +50,7 @@
       updatePhotosRating (value) {
         this.$store.commit('loading', true)
         let ids = this.selectedPhotos.map(p => p.id)
-        return this.$store.state.service.dataUpdater.updatePhotosRating(ids, value).then(resp => {
+        return this.dataUpdater.updatePhotosRating(ids, value).then(resp => {
           this.$store.commit('loading', false)
           this.response = resp.body
 

@@ -21,6 +21,7 @@
   import PromiseAwareLoader from './PromiseAwareLoader.vue'
 
   export default {
+    dependencies: ['dataUpdater'],
     components: {
       RatingInput,
       PromiseAwareLoader
@@ -48,7 +49,7 @@
       saveRating () {
         this.response = null
         let ids = this.selectedPhotos.map(p => p.id)
-        this.promise = this.$store.state.service.dataUpdater.updatePhotosRating(ids, this.rating).then(resp => {
+        this.promise = this.dataUpdater.updatePhotosRating(ids, this.rating).then(resp => {
           this.response = resp.body
           new RetrieveListingAction(this.$store).execute(this.$route).then(() => {
             this.$store.commit('selectedPhotos', [])

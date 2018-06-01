@@ -30,6 +30,7 @@
   import RetrieveListingAction from '../js/action/RetrieveListingAction'
 
   export default {
+    dependencies: ['keyHandler', 'dataRetriever'],
     components: {
       ThumbnailGallery,
       PhotoDetailView,
@@ -69,9 +70,9 @@
     methods: {
       onKeyDown (event) {
         if (this.$store.state.photo === null) {
-          this.$store.state.service.keyHandler.handlKeyEventGallery(event)
+          this.keyHandler.handlKeyEventGallery(event)
         } else {
-          this.$store.state.service.keyHandler.handlKeyEventPhoto(event)
+          this.keyHandler.handlKeyEventPhoto(event)
         }
       }
     }

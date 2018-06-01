@@ -16,6 +16,7 @@
 
 <script>
   export default {
+    dependencies: ['urlHelper', 'navigator', 'dataRetriever'],
     props: ['photo'],
     data () {
       return {
@@ -25,7 +26,8 @@
     methods: {
       loadExif () {
         this.exif = {}
-        this.$store.state.service.dataRetriever.retrieveExif(this.photo).then(data => {
+
+        this.dataRetriever.retrieveExif(this.photo).then(data => {
           this.exif = data.body
         })
       }

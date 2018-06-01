@@ -68,6 +68,7 @@
   import util from '../js/util'
 
   export default {
+    dependencies: ['urlHelper', 'navigator'],
     props: ['photo'],
     components: {
       ExifDetailsPane,
@@ -100,7 +101,7 @@
         return util.isVideo(this.photo)
       },
       downloadUrl () {
-        return this.$store.state.service.urlHelper.getPhotoUrl(this.photo)
+        return this.urlHelper.getPhotoUrl(this.photo)
       }
     },
     methods: {
@@ -115,11 +116,11 @@
       },
       onClickDate () {
         let date = this.photo.date.substring(0, 10).replace(/-/g, '')
-        this.$store.state.service.navigator.setDates(util.tagsToHashObject([date]), this.$route)
-        this.$store.state.service.navigator.clearPhoto()
+        this.navigator.setDates(util.tagsToHashObject([date]), this.$route)
+        this.navigator.clearPhoto()
       },
       onClose () {
-        this.$store.state.service.navigator.clearPhoto()
+        this.navigator.clearPhoto()
       }
     }
   }

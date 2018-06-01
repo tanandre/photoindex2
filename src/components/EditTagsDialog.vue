@@ -28,6 +28,8 @@
   import TagSelector from './TagSelector.vue'
 
   export default {
+    dependencies: ['dataRetriever', 'dataUpdater'],
+
     components: {
       TagSelector
     },
@@ -57,12 +59,12 @@
         util.removeFromArray(this.toAddTags, tag)
       },
       saveTags () {
-        this.$store.state.service.dataRetriever.retrieveAllTags().then(data => {
+        this.dataRetriever.retrieveAllTags().then(data => {
           let tags = data.body
           let tagIds = this.toAddTags.map(tagname => tags.find(tag => tag.name === tagname)).map(tag => tag.id)
-          this.$store.state.service.dataUpdater.editPhotosTags(this.selectedPhotos.map(p => p.id), tagIds).then(resp => {
+          this.dataUpdater.editPhotosTags(this.selectedPhotos.map(p => p.id), tagIds).then(resp => {
             this.response = resp.body
-          })
+          }).catch(this.errorHandler.handle)
         })
       },
       loadTags () {
@@ -71,7 +73,7 @@
         }
 
         this.currentTags = []
-        this.$store.state.service.dataRetriever.retrieveTags(this.selectedPhotos[0]).then(data => {
+        this.dataRetriever.retrieveTags(this.selectedPhotos[0]).then(data => {
           this.currentTags = data.body
         })
       }

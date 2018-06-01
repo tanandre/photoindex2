@@ -46,6 +46,7 @@
   import PromiseAwareLoader from './PromiseAwareLoader.vue'
 
   export default {
+    dependencies: ['dataUpdater'],
     components: {PromiseAwareLoader},
     data () {
       return {
@@ -104,12 +105,12 @@
         let ids = this.selectedPhotos.map(p => p.id)
         let datetime = (this.date.trim() + ' ' + this.time.trim())
 
-        return this.$store.state.service.dataUpdater.updatePhotoDate(ids, datetime)
+        return this.dataUpdater.updatePhotoDate(ids, datetime)
       },
       saveDateOffset () {
         let ids = this.selectedPhotos.map(p => p.id)
         let offset = this.daysOffset + ' ' + this.timeOffset
-        return this.$store.state.service.dataUpdater.updatePhotoDateOffset(ids, offset)
+        return this.dataUpdater.updatePhotoDateOffset(ids, offset)
       }
     },
     watch: {
