@@ -33,6 +33,7 @@ router.beforeEach((to, from, next) => {
   } else if (to.query.d !== from.query.d || to.query.r !== from.query.r) {
     new FilterListingAction(store).execute(to)
   } else if (to.query.q !== from.query.q) {
+    store.commit('selectedPhotos', [])
     new RetrieveListingAction(store).execute(to)
   } else if (to.params.page !== from.params.page) {
     store.commit('page', Number(to.params.page))

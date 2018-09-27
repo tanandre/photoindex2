@@ -40,12 +40,12 @@ class Assembler {
     this.injector.constant('httpClient', this.http)
     this.injector.constant('gallerySizeListener', gallerySizeListener)
 
-    this.injector.service('errorHandler', ErrorHandler)
-    this.injector.service('dataRetriever', DataRetriever)
-    this.injector.service('dataUpdater', DataUpdater)
-    this.injector.service('navigator', AlbumNavigator)
+    this.injector.service('errorHandler', ['store'], ErrorHandler)
+    this.injector.service('dataRetriever', ['jsonLoader', 'tagsLoader', 'exifLoader', 'urlHelper', 'applicationState'], DataRetriever)
+    this.injector.service('dataUpdater', ['httpClient', 'urlHelper', 'applicationState'], DataUpdater)
+    this.injector.service('navigator', ['router'], AlbumNavigator)
     this.injector.service('urlHelper', PhpUrlHelper)
-    this.injector.service('keyHandler', KeyHandler)
+    this.injector.service('keyHandler', ['navigator'], KeyHandler)
 
     window.addEventListener('resize', gallerySizeListener.calibrateThumbnails)
     this.store.watch(state => state.album.images, () => {

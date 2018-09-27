@@ -2,7 +2,10 @@
   <md-dialog md-active md-close-on-esc v-if="showEditTags">
     <md-dialog-title>
       <span>Edit Tags</span></md-dialog-title>
-    <MdContent class="dialogContent">
+    <MdContent v-if="selectedPhotos.length == 0" class="dialogContent">
+      <div>No photos selected</div>
+    </MdContent>
+    <MdContent v-if="selectedPhotos.length > 0" class="dialogContent">
       <TagSelector v-model="toAddTags" :suppress="suppressTagGroups"></TagSelector>
       <div class="item">
         <MdChip v-for="tag in currentTags" :key="tag.name">{{tag.name}}
@@ -15,7 +18,7 @@
       <md-progress-bar class="loadingBar" md-mode="indeterminate" v-if="loading"></md-progress-bar>
     </MdContent>
     <md-dialog-actions>
-      <md-button class="md-primary" @click="onClose" title="close dialog">Close</md-button>
+      <md-button class="md-primary" @click="onClose" title="close dialog">Close (esc)</md-button>
       <md-button class="md-primary" @click="saveTags" title="update images with tags">
         Update ({{selectedPhotos.length}})
       </md-button>
@@ -59,10 +62,12 @@
         util.removeFromArray(this.toAddTags, tag)
       },
       saveTags () {
+        this.loading = true
         this.dataRetriever.retrieveAllTags().then(data => {
           let tags = data.body
           let tagIds = this.toAddTags.map(tagname => tags.find(tag => tag.name === tagname)).map(tag => tag.id)
           this.dataUpdater.editPhotosTags(this.selectedPhotos.map(p => p.id), tagIds).then(resp => {
+            this.loading = false
             this.response = resp.body
           }).catch(this.errorHandler.handle)
         })
@@ -82,6 +87,7 @@
       '$store.state.action.showEditTags' (showEditTags) {
         this.currentTags = []
         this.toAddTags = []
+        this.response = null
         if (showEditTags) {
           this.loadTags()
         }

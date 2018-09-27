@@ -1,6 +1,6 @@
 const actionModule = {
   state: {
-    showHUD: true,
+    showHUD: false,
     showEditDate: false,
     showEditTags: false,
     showEditTagGroups: false,

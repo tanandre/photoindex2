@@ -1,12 +1,10 @@
 <template>
   <MdList>
     <MdListItem class="md-dense" v-for="tagGroup in tagGroups" :key="tagGroup.id" v-if="suppress ? suppress.indexOf(tagGroup.name) : true">
-      <MdIcon v-if="tagGroup.name === 'Person'">person</MdIcon>
-      <MdIcon v-if="tagGroup.name === 'Camera'">photo_camera</MdIcon>
-      <MdIcon v-if="tagGroup.name === 'Date'">event</MdIcon>
-      <MdField>
+      <MdIcon>{{getTagGroupIcon(tagGroup.name)}}</MdIcon>
+      <MdField class="field">
         <label for="tags">{{tagGroup.name}}</label>
-        <MdSelect v-model="selectedTags" name="tags" id="tags" multiple>
+        <MdSelect v-model="selectedTags" name="tags" id="tags" md-dense multiple>
           <MdOption v-for="tag in tagGroup.tags" :key="tag.name" :value="tag.name">{{tag.name}}</MdOption>
         </MdSelect>
       </MdField>
@@ -16,6 +14,14 @@
 
 <script>
   import util from '../js/util'
+
+  const iconMap = {
+    'Location': 'location_on',
+    'Group': 'group',
+    'Person': 'person',
+    'Camera': 'photo_camera',
+    'Date': 'event'
+  }
 
   export default {
     dependencies: ['dataRetriever'],
@@ -40,9 +46,19 @@
           this.$emit('input', values)
         }
       }
+    },
+    methods: {
+      getTagGroupIcon (groupName) {
+        const icon = iconMap[groupName]
+        return icon || 'local_offer'
+      }
     }
   }
 </script>
 
 <style scoped>
+  .field,
+  .md-field {
+    margin: 0;
+  }
 </style>
