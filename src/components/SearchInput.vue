@@ -1,11 +1,8 @@
 <template>
   <div>
     <div class="inputTag">
-      <MdField md-clearable>
-        <MdIcon>search</MdIcon>
-        <MdInput class="searchInput" v-model="searchTxt" placeholder="Search..."
-                 v-on:keyup.enter="onEnter" autofocus></MdInput>
-      </MdField>
+      <v-text-field dark v-model="searchTxt" placeholder="Search..." clearable prepend-icon="search"  v-on:keyup.enter="onEnter" autofocus>
+      </v-text-field>
     </div>
     <TagChips></TagChips>
   </div>
@@ -20,13 +17,13 @@
     components: {
       TagChips
     },
-    data () {
+    data() {
       return {
         searchTxt: ''
       }
     },
     methods: {
-      onEnter () {
+      onEnter() {
         if (this.searchTxt.startsWith('/')) {
           if (this.searchTxt === '/clear') {
             this.clearTags()
@@ -37,7 +34,7 @@
         this.searchTxt = ''
       },
 
-      addTag (value) {
+      addTag(value) {
         if (util.isDate(value)) {
           let dateTags = util.tagsToArray(this.$route.query.d)
           this.setDateTags(dateTags.concat([value]))
@@ -46,15 +43,15 @@
           this.setTags(tags.concat([value]))
         }
       },
-      clearTags () {
+      clearTags() {
         this.navigator.setBothTags(util.tagsToHashObject([]), util.tagsToHashObject([]), this.$route)
       },
 
-      setTags (tags) {
+      setTags(tags) {
         this.navigator.setTags(util.tagsToHashObject(tags), this.$route)
       },
 
-      setDateTags (dateTags) {
+      setDateTags(dateTags) {
         this.navigator.setDates(util.tagsToHashObject(dateTags), this.$route)
       }
     }
@@ -65,5 +62,4 @@
   .inputTag {
     display: inline-block;
   }
-
 </style>

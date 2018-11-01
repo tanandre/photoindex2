@@ -1,9 +1,9 @@
 <template>
   <div class="chipsContainer">
-    <MdChip md-deletable v-for="tag in dateTags" v-on:click="onCloseTag(tag)" :key="tag">{{tag}}
-    </MdChip>
-    <MdChip md-deletable v-for="tag in tags" v-on:click="onCloseTag(tag)" :key="tag">{{tag}}
-    </MdChip>
+    <v-chip close v-for="tag in dateTags" v-on:click="onCloseTag(tag)" :key="tag">{{tag}}
+    </v-chip>
+    <v-chip close v-for="tag in tags" v-on:click="onCloseTag(tag)" :key="tag">{{tag}}
+    </v-chip>
   </div>
 </template>
 
