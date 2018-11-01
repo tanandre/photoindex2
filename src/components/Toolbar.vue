@@ -1,9 +1,7 @@
 <template>
-  <md-toolbar class="md-dense toolbar" :class="{ 'md-primary': selectedPhotos.length > 0 }">
-    <md-button class="md-icon-button" @click="onClickMenu">
-      <md-icon>menu</md-icon>
-    </md-button>
-    <h2 class="md-title">{{ title }}</h2>
+  <v-toolbar app fixed clipped-left dense class="toolbar">
+    <v-toolbar-side-icon @click.stop="onClickMenu"></v-toolbar-side-icon>
+    <v-toolbar-title>{{title}}</v-toolbar-title>
     <search-input class="searchInput"></search-input>
     <div :title="album.images.length + ' photos'">
       <span>{{photoCountLabel}}</span>
@@ -13,7 +11,7 @@
     <div v-if="selectedPhotos.length > 0" class="md-toolbar-section-end">
       <ToolbarSelection class="toolbarEnd"></ToolbarSelection>
     </div>
-  </md-toolbar>
+  </v-toolbar>
 </template>
 
 <script>

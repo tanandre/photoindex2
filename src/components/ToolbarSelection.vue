@@ -1,9 +1,9 @@
 <template>
   <div class="flexFlow">
-    <md-button class="flex md-icon-button" @click="selectedPhotos = []">
-      <md-icon>clear</md-icon>
-    </md-button>
-    <h2 class="flex  md-title">{{selectedPhotos.length}} selected</h2>
+    <v-btn fab small flat @click="selectedPhotos = []">
+      <v-icon>clear</v-icon>
+    </v-btn>
+    <div class="flex">{{selectedPhotos.length}} selected</div>
     <ActionMenu></ActionMenu>
   </div>
 </template>

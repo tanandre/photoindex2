@@ -1,20 +1,22 @@
 <template>
+<v-app dark>
+  <toolbar v-on:click-menu="showMenu = true"></toolbar>
   <div class="photoAlbum">
     <photo-detail-view v-if="photo !== null" :photo="photo"></photo-detail-view>
     <EditTagsDialog></EditTagsDialog>
     <EditTagGroupsDialog></EditTagGroupsDialog>
     <EditDatesDialog></EditDatesDialog>
     <EditRatingDialog></EditRatingDialog>
-    <toolbar v-on:click-menu="showMenu = true"></toolbar>
     <MdDrawer md-fixed :md-active.sync="showMenu">
       <MenuSettings v-on:close="showMenu = false"></MenuSettings>
     </MdDrawer>
     <div class="container">
-      <md-progress-bar v-if="loading" class="md-accent loadingBar" md-mode="indeterminate"></md-progress-bar>
+      <v-progress-linear  v-if="loading" class="loadingBar" :indeterminate="true"></v-progress-linear>
       <thumbnail-gallery class="gallery"></thumbnail-gallery>
     </div>
     <ErrorToaster></ErrorToaster>
   </div>
+</v-app>
 </template>
 
 <script>

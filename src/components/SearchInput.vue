@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="inputTag">
-      <v-text-field dark v-model="searchTxt" placeholder="Search..." clearable prepend-icon="search"  v-on:keyup.enter="onEnter" autofocus>
+      <v-text-field v-model="searchTxt" placeholder="Search..." clearable prepend-icon="search" v-on:keyup.enter="onEnter" autofocus>
       </v-text-field>
     </div>
     <TagChips></TagChips>

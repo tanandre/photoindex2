@@ -21,7 +21,6 @@ class Watchable {
       w(value)
     })
   }
-
 }
 
 export default Watchable

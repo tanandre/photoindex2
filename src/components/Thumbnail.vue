@@ -1,12 +1,12 @@
 <template>
   <div ref="thumbnail" class="thumbnail highlightable" v-on:mouseover="mouseOver">
-    <MdProgressBar v-if="status == 'loading'" class="loadingBar" md-mode="indeterminate"></MdProgressBar>
-    <MdIcon v-if="status == 'inQueue' || status == 'loading'" class="center">crop_original</MdIcon>
+    <v-progress-linear v-if="status == 'loading'" class="loadingBar" :indeterminate="true"></v-progress-linear>
+    <v-icon v-if="status == 'inQueue' || status == 'loading'" class="center">crop_original</v-icon>
     <div class="overlay">
       <MdTooltip md-direction="bottom">{{photo.date}}</MdTooltip>
-      <MdIcon v-if="isFavorite && status == 'completed'">favorite</MdIcon>
-      <MdIcon v-if="isVideo && status == 'completed'">videocam</MdIcon>
-      <MdIcon class="errorIcon" v-if="status === 'error'">not_interested</MdIcon>
+      <v-icon v-if="isFavorite && status == 'completed'">favorite</v-icon>
+      <v-icon v-if="isVideo && status == 'completed'">videocam</v-icon>
+      <v-icon class="errorIcon" v-if="status === 'error'">not_interested</v-icon>
       <slot></slot>
     </div>
   </div>
@@ -15,7 +15,7 @@
 <script>
   import util from '../js/util'
 
-  function isElementInViewport (el) {
+  function isElementInViewport(el) {
     let rect = el.getBoundingClientRect()
     return rect.bottom > 0 && rect.right > 0 && rect.top <
       (window.innerHeight || document.documentElement.clientHeight) && rect.left <
@@ -25,7 +25,7 @@
   export default {
     dependencies: ['urlHelper', 'thumbnailLoader'],
     props: ['photo'],
-    data () {
+    data() {
       return {
         status: 'idle',
         isDone: false,
@@ -33,22 +33,22 @@
       }
     },
     computed: {
-      isVideo () {
+      isVideo() {
         return util.isVideo(this.photo)
       },
-      isFavorite () {
+      isFavorite() {
         return this.photo.rating === 6
       }
     },
 
-    mounted () {
+    mounted() {
       ['DOMContentLoaded', 'load', 'scroll', 'resize'].forEach((event) => {
         window.addEventListener(event, this.loadThumbnailIfInViewport)
       })
       this.loadThumbnailIfInViewport()
     },
 
-    beforeDestroy () {
+    beforeDestroy() {
       ['DOMContentLoaded', 'load', 'scroll', 'resize'].forEach((event) => {
         window.removeEventListener(event, this.loadThumbnailIfInViewport)
       })
@@ -59,15 +59,15 @@
       }
     },
 
-    updated () {
+    updated() {
       this.loadThumbnailIfInViewport()
     },
 
     methods: {
-      mouseOver () {
-//        console.log('mouseOver2')
+      mouseOver() {
+        //        console.log('mouseOver2')
       },
-      loadThumbnailIfInViewport () {
+      loadThumbnailIfInViewport() {
         if (this.isDone) {
           return
         }
@@ -165,5 +165,4 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-
 </style>

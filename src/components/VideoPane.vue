@@ -1,6 +1,6 @@
 <template>
   <div class="videoPane">
-    <md-progress-bar class="loadingBar" v-if="loading" md-mode="indeterminate"></md-progress-bar>
+    <v-progress-linear v-if="loading" class="loadingBar" :indeterminate="true"></v-progress-linear>
     <video class="video" ref="videoNode" :src="videoUrl" :poster="thumbnailUrl" controls>
       <!--<source :src="videoUrl" type="video/mp4">-->
       Your browser does not support the video tag.

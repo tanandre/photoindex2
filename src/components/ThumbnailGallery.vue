@@ -4,12 +4,9 @@
     <thumbnail class="thumbnail" :class="{ selected: isSelected(image) }" v-for="image in imagesForCurrentPage"
                :photo="image"
                :key="image.id" @click.native="onClickThumbnail(image, $event)">
-      <MdIcon class="selectedIcon" v-if="isSelected(image)">check_circle</MdIcon>
+      <v-icon class="selectedIcon" v-if="isSelected(image)">check_circle</v-icon>
     </thumbnail>
-    <md-empty-state v-if="!loading && images.length === 0"
-                    md-icon="wallpaper"
-                    md-label="No photos matching query or filter">
-    </md-empty-state>
+    <div v-if="!loading && images.length === 0">No photos matching query or filter</div>
   </div>
 </template>
 
