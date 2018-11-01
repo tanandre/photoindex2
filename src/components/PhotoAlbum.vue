@@ -1,22 +1,15 @@
 <template>
-<v-app dark>
-  <toolbar v-on:click-menu="showMenu = true"></toolbar>
-  <div class="photoAlbum">
+  <v-app dark>
+    <toolbar v-on:click-menu="showMenu = true"></toolbar>
     <photo-detail-view v-if="photo !== null" :photo="photo"></photo-detail-view>
-    <EditTagsDialog></EditTagsDialog>
-    <EditTagGroupsDialog></EditTagGroupsDialog>
-    <EditDatesDialog></EditDatesDialog>
-    <EditRatingDialog></EditRatingDialog>
     <MdDrawer md-fixed :md-active.sync="showMenu">
       <MenuSettings v-on:close="showMenu = false"></MenuSettings>
     </MdDrawer>
-    <div class="container">
-      <v-progress-linear  v-if="loading" class="loadingBar" :indeterminate="true"></v-progress-linear>
+    <v-content class="container">
+      <v-progress-linear v-if="loading" class="loadingBar" :indeterminate="true"></v-progress-linear>
       <thumbnail-gallery class="gallery"></thumbnail-gallery>
-    </div>
-    <ErrorToaster></ErrorToaster>
-  </div>
-</v-app>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
@@ -24,11 +17,6 @@
   import PhotoDetailView from './PhotoDetailView.vue'
   import MenuSettings from './MenuSettings.vue'
   import Toolbar from './Toolbar.vue'
-  import ErrorToaster from './ErrorToaster.vue'
-  import EditDatesDialog from './EditDatesDialog.vue'
-  import EditTagsDialog from './EditTagsDialog.vue'
-  import EditTagGroupsDialog from './EditTagGroupsDialog.vue'
-  import EditRatingDialog from './EditRatingDialog.vue'
   import RetrieveListingAction from '../js/action/RetrieveListingAction'
 
   export default {
@@ -38,26 +26,21 @@
       PhotoDetailView,
       MenuSettings,
       Toolbar,
-      ErrorToaster,
-      EditDatesDialog,
-      EditRatingDialog,
-      EditTagGroupsDialog,
-      EditTagsDialog
     },
     computed: {
-      photo () {
+      photo() {
         return this.$store.state.photo
       },
-      loading () {
+      loading() {
         return this.$store.state.loading
       }
     },
-    data () {
+    data() {
       return {
         showMenu: false
       }
     },
-    mounted () {
+    mounted() {
       window.addEventListener('keydown', this.onKeyDown)
       new RetrieveListingAction(this.$store).execute(this.$route).then(() => {
         this.$store.commit('page', Number(this.$route.params.page))
@@ -65,12 +48,12 @@
       })
     },
 
-    beforeDestroy () {
+    beforeDestroy() {
       window.removeEventListener('keydown', this.onKeyDown)
     },
 
     methods: {
-      onKeyDown (event) {
+      onKeyDown(event) {
         if (this.$store.state.photo === null) {
           this.keyHandler.handlKeyEventGallery(event)
         } else {
@@ -92,5 +75,4 @@
     width: 100%;
     position: fixed;
   }
-
 </style>
