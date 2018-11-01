@@ -1,15 +1,15 @@
 <template>
-  <MdList>
-    <MdListItem class="md-dense" v-for="tagGroup in tagGroups" :key="tagGroup.id" v-if="suppress ? suppress.indexOf(tagGroup.name) : true">
-      <MdIcon>{{getTagGroupIcon(tagGroup.name)}}</MdIcon>
-      <MdField class="field">
-        <label for="tags">{{tagGroup.name}}</label>
-        <MdSelect v-model="selectedTags" name="tags" id="tags" md-dense multiple>
-          <MdOption v-for="tag in tagGroup.tags" :key="tag.name" :value="tag.name">{{tag.name}}</MdOption>
-        </MdSelect>
-      </MdField>
-    </MdListItem>
-  </MdList>
+  <v-list dense>
+    <v-list-tile v-for="tagGroup in tagGroups" :key="tagGroup.id" v-if="suppress ? suppress.indexOf(tagGroup.name) : true">
+      <v-list-tile-action>
+        <v-icon>{{getTagGroupIcon(tagGroup.name)}}</v-icon>
+      </v-list-tile-action>
+      <v-list-tile-content class="field">
+        <v-combobox :return-object="false" multiple item-text="name" item-value="name" :placeholder="tagGroup.name" v-model="selectedTags" name="tags" id="tags" :items="tagGroup.tags">
+        </v-combobox>
+      </v-list-tile-content>
+    </v-list-tile>
+  </v-list>
 </template>
 
 <script>
@@ -26,29 +26,29 @@
   export default {
     dependencies: ['dataRetriever'],
     props: ['value', 'suppress'],
-    data () {
+    data() {
       return {
         tagGroups: [],
         icon: 'local_offer'
       }
     },
-    mounted () {
+    mounted() {
       this.dataRetriever.retrieveAllTags().then(data => {
         this.tagGroups = util.mapTagsToGroups(data.body)
       })
     },
     computed: {
       selectedTags: {
-        get () {
+        get() {
           return this.value
         },
-        set (values) {
+        set(values) {
           this.$emit('input', values)
         }
       }
     },
     methods: {
-      getTagGroupIcon (groupName) {
+      getTagGroupIcon(groupName) {
         const icon = iconMap[groupName]
         return icon || 'local_offer'
       }
@@ -57,8 +57,7 @@
 </script>
 
 <style scoped>
-  .field,
-  .md-field {
+  .field {
     margin: 0;
   }
 </style>
