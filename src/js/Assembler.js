@@ -44,7 +44,7 @@ class Assembler {
     this.injector.service('dataRetriever', ['jsonLoader', 'tagsLoader', 'exifLoader', 'urlHelper', 'applicationState'], DataRetriever)
     this.injector.service('dataUpdater', ['httpClient', 'urlHelper', 'applicationState'], DataUpdater)
     this.injector.service('navigator', ['router'], AlbumNavigator)
-    this.injector.service('urlHelper', PhpUrlHelper)
+    this.injector.service('urlHelper', [], PhpUrlHelper)
     this.injector.service('keyHandler', ['navigator'], KeyHandler)
 
     window.addEventListener('resize', gallerySizeListener.calibrateThumbnails)

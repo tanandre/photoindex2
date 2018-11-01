@@ -1,7 +1,7 @@
 <template>
-  <MdButton @click="onClick" class="md-raised" :class="{'md-primary': selected}">
+  <v-btn fab small flat @click="onClick" :class="{'primary': selected}">
     <slot></slot>
-  </MdButton>
+  </v-btn>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
   <v-menu offset-y>
-    <v-btn fab small slot="activator">
+    <v-btn flat fab small slot="activator">
       <v-icon>more_vert</v-icon>
     </v-btn>
     <v-list>

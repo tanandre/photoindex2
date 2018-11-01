@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar app fixed clipped-left dense class="toolbar">
+  <v-toolbar app fixed clipped-left dense class="toolbar" :class="{'primary': selectedPhotos.length > 0}">
     <v-toolbar-side-icon @click.stop="onClickMenu"></v-toolbar-side-icon>
     <v-toolbar-title>{{title}}</v-toolbar-title>
     <search-input class="searchInput"></search-input>

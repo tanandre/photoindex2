@@ -1,9 +1,9 @@
 <template>
   <div class="photoPane" ref="photoPane"
        :class="{'rotate90': rotate == 1, 'rotate180': rotate == 2, 'rotate270': rotate == 3}">
-    <md-progress-bar class="loadingBar" v-if="status == 'loading'" md-mode="indeterminate"></md-progress-bar>
+   <v-progress-linear v-if="status == 'loading'" class="loadingBar" :indeterminate="true"></v-progress-linear>
     <div class="errorPane" v-if="errorMsg">
-      <mdIcon class="md-size-2x" v-if="status === 'error'">error_outline</mdIcon>
+      <v-icon x-large v-if="status === 'error'">error_outline</v-icon>
       <div>{{errorMsg}}</div>
     </div>
   </div>

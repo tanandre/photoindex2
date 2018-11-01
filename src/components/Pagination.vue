@@ -1,5 +1,4 @@
 <template>
-
   <div class="pagination">
     <v-btn depressed :class="getCssClass(idx)" v-if="shouldDisplay(idx)" v-for="idx in pageCount"
               :key="idx" @click="onClick(idx)" class="paginationButton pageButton">{{idx}}</v-btn>

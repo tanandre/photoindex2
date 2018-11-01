@@ -1,62 +1,70 @@
 <template>
-  <MdContent class="photoDetailsPane md-scrollbar">
-    <md-progress-bar class="loadingBar" v-if="status == 'loading'" md-mode="indeterminate"></md-progress-bar>
-    <md-toolbar class="md-transparent md-dense" md-elevation="0">
+  <div class="photoDetailsPane">
+    <v-progress-linear v-if="status == 'loading'" class="loadingBar" :indeterminate="true"></v-progress-linear>
+<v-toolbar dense flat>
       <ActionMenu @click.native="onClickAction"></ActionMenu>
       <a :href="downloadUrl" download>
-        <md-button class="md-icon-button" title="download">
-          <md-icon>get_app</md-icon>
-        </md-button>
+        <v-btn small fab flat title="download">
+          <v-icon>get_app</v-icon>
+        </v-btn>
       </a>
-      <div class="md-toolbar-section-end">
-        <md-button class="md-raised md-icon-button" @click="onClose" title="close">
-          <md-icon>clear</md-icon>
-        </md-button>
+      <div>
+        <v-btn fab small @click="onClose" title="close">
+          <v-icon>clear</v-icon>
+        </v-btn>
       </div>
-    </md-toolbar>
-    <MdContent class="sideBar">
-      <MdList>
-        <MdListItem>
-          <md-button class="md-icon-button" @click="rotate(1)" title="rotate clockwise">
-            <mdIcon>rotate_right</mdIcon>
-          </md-button>
-          <md-button class="md-icon-button" @click="rotate(-1)" title="rotate counter-clockwise">
-            <mdIcon>rotate_left</mdIcon>
-          </md-button>
-        </MdListItem>
-        <MdListItem>
+</v-toolbar>
+    <v-card class="sideBar">
+      <v-list>
+        <v-list-tile>
+          <v-btn fab small flat @click="rotate(1)" title="rotate clockwise">
+            <v-icon>rotate_right</v-icon>
+          </v-btn>
+          <v-btn fab small flat @click="rotate(-1)" title="rotate counter-clockwise">
+            <v-icon>rotate_left</v-icon>
+          </v-btn>
+        </v-list-tile>
+        <v-list-tile>
           <Rating :rating="photo.rating"></Rating>
           {{photo.rating}}
-        </MdListItem>
-        <MdListItem>
-          <md-button class="md-icon-button" @click="onClickDate" title="search by date">
-            <mdIcon>event</mdIcon>
-          </md-button>
-          <div class="md-list-item-text">
-            <span>{{photoDate}}</span>
-            <span class="small" :title="photoDateTime">{{photoDateTime}}</span>
-          </div>
-        </MdListItem>
-        <MdListItem>
-          <MdButton v-if="!isVideo" class="md-icon-button">
-            <mdIcon>photo_camera</mdIcon>
-          </MdButton>
-          <StateButton v-if="isVideo" class="md-icon-button" title="click to toggle video" @click.native="toggleVideo">
-            <mdIcon>videocam</mdIcon>
-          </StateButton>
-          <div class="md-list-item-text">
-            <span>{{photoFileName}}</span>
-            <span class="small" :title="photo.path">{{photo.path}}</span>
-            <a :href="kanjiPath">
-              <span class="small" :title="kanjiPath">{{kanjiPath}}</span>
-            </a>
-          </div>
-        </MdListItem>
-      </MdList>
+        </v-list-tile>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-btn fab small flat @click="onClickDate" title="search by date">
+              <v-icon>event</v-icon>
+            </v-btn>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <div>
+              <span>{{photoDate}}</span>
+              <span class="small" :title="photoDateTime">{{photoDateTime}}</span>
+            </div>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-btn v-if="!isVideo" fab small flat>
+              <v-icon>photo_camera</v-icon>
+            </v-btn>
+            <StateButton v-if="isVideo" title="click to toggle video" @click.native="toggleVideo">
+              <v-icon>videocam</v-icon>
+            </StateButton>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <div>
+              <span>{{photoFileName}}</span>
+              <span class="small" :title="photo.path">{{photo.path}}</span>
+              <a :href="kanjiPath">
+                <span class="small" :title="kanjiPath">{{kanjiPath}}</span>
+              </a>
+            </div>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
       <TagDetailsPane :photo="photo"></TagDetailsPane>
       <ExifDetailsPane :photo="photo"></ExifDetailsPane>
-    </MdContent>
-  </MdContent>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -77,49 +85,49 @@
       StateButton,
       Rating
     },
-    data () {
+    data() {
       return {
         status: 'idle'
       }
     },
     computed: {
-      photoFileName () {
+      photoFileName() {
         let index = this.photo.path.lastIndexOf('/')
         return this.photo.path.substring(index + 1)
       },
-      kanjiPath () {
+      kanjiPath() {
         let index = this.photo.path.lastIndexOf('/')
         return this.photo.path.substring(0, index).replace('/volume1', '\\\\kanji').replace(/\//g, '\\')
       },
-      photoDate () {
+      photoDate() {
         return this.photo.date.substring(0, 11)
       },
-      photoDateTime () {
+      photoDateTime() {
         return this.photo.date.substring(11)
       },
-      isVideo () {
+      isVideo() {
         return util.isVideo(this.photo)
       },
-      downloadUrl () {
+      downloadUrl() {
         return this.urlHelper.getPhotoUrl(this.photo)
       }
     },
     methods: {
-      rotate (direction) {
+      rotate(direction) {
         this.$emit('rotate', direction)
       },
-      toggleVideo () {
+      toggleVideo() {
         this.$emit('toggleVideo')
       },
-      onClickAction () {
+      onClickAction() {
         console.log('onclikc')
       },
-      onClickDate () {
+      onClickDate() {
         let date = this.photo.date.substring(0, 10).replace(/-/g, '')
         this.navigator.setDates(util.tagsToHashObject([date]), this.$route)
         this.navigator.clearPhoto()
       },
-      onClose () {
+      onClose() {
         this.navigator.clearPhoto()
       }
     }
@@ -139,10 +147,6 @@
 
   .filePath {
     word-break: break-all;
-  }
-
-  .md-card {
-    margin: 5px 0;
   }
 
   .small {
