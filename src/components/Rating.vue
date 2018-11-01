@@ -1,6 +1,6 @@
 <template>
   <div>
-    <MdIcon v-for='idx in rating' :key="idx">star</MdIcon>
+    <v-icon v-for='idx in rating' :key="idx">star</v-icon>
   </div>
 </template>
 

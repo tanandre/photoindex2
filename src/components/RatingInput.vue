@@ -1,9 +1,9 @@
 <template>
   <div>
-    <MdButton class="md-icon-button" v-for='idx in 5' :key="idx" @click="updateRating(idx)" :title="'rate ' + idx">
-      <MdIcon v-if="idx <= selectedRating">star</MdIcon>
-      <MdIcon v-if="idx > selectedRating">star_border</MdIcon>
-    </MdButton>
+    <v-btn flat icon  v-for='idx in 5' :key="idx" @click="updateRating(idx)" :title="'rate ' + idx">
+      <v-icon v-if="idx <= selectedRating">star</v-icon>
+      <v-icon v-if="idx > selectedRating">star_border</v-icon>
+    </v-btn>
   </div>
 </template>
 
