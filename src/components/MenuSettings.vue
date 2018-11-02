@@ -33,7 +33,7 @@
   import TagSelector from './TagSelector.vue'
 
   export default {
-    dependencies: ['urlHelper', 'navigator', 'dataRetriever'],
+    dependencies: ['navigator'],
     components: {
       TagSelector
     },

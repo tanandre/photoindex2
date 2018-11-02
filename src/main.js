@@ -15,12 +15,16 @@ import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default-dark.css'
 import 'vuetify/dist/vuetify.min.css'
 
+import Assembler from '@/js/Assembler'
+
 Vue.use(injector)
 Vue.use(VueResource)
 Vue.use(VueMaterial)
 Vue.use(Vuetify)
 
 Vue.config.productionTip = false
+
+new Assembler(injector, Vue.http, router, store).assemble()
 
 /* eslint-disable no-new */
 new Vue({

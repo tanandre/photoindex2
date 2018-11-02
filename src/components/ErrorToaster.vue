@@ -1,23 +1,28 @@
 <template>
-  <md-snackbar md-position="center" :md-duration="Infinity" md-active
-               v-if="errors.length > 0"
-               md-persistent>
+  <v-snackbar bottom v-model="showErrors">
     <ul>
       <li v-for="error in errors">{{error}}</li>
     </ul>
-    <md-button class="md-primary" @click="errors = []">Close</md-button>
-  </md-snackbar>
+    <v-btn class="primary" @click="errors = []">Close</v-btn>
+  </v-snackbar>
 </template>
 
 <script>
   export default {
-    props: ['error'],
     computed: {
+      showErrors: {
+        get() {
+          return this.$store.state.errors.length > 0
+        },
+        set() {
+          this.$store.commit('errors', [])
+        }
+      },
       errors: {
-        get () {
+        get() {
           return this.$store.state.errors.reverse()
         },
-        set (errors) {
+        set(errors) {
           this.$store.commit('errors', errors)
         }
       }

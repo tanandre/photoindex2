@@ -5,10 +5,6 @@
     <v-navigation-drawer clipped fixed v-model="showMenu" app>
       <MenuSettings v-on:close="showMenu = false"></MenuSettings>
     </v-navigation-drawer>
-
-    <!-- <MdDrawer md-fixed :md-active.sync="showMenu">
-      <MenuSettings v-on:close="showMenu = false"></MenuSettings>
-    </MdDrawer> -->
     <v-content class="container">
       <v-progress-linear v-if="loading" class="loadingBar" :indeterminate="true"></v-progress-linear>
       <thumbnail-gallery class="gallery"></thumbnail-gallery>
@@ -34,7 +30,7 @@
   import ErrorToaster from '@/components/ErrorToaster.vue'
 
   export default {
-    dependencies: ['keyHandler', 'dataRetriever'],
+    dependencies: ['keyHandler'],
     components: {
       ThumbnailGallery,
       PhotoDetailView,

@@ -8,7 +8,7 @@
       <span> photos</span>
     </div>
     <pagination></pagination>
-    <div v-if="selectedPhotos.length > 0" class="md-toolbar-section-end">
+    <div v-if="selectedPhotos.length > 0">
       <ToolbarSelection class="toolbarEnd"></ToolbarSelection>
     </div>
   </v-toolbar>
