@@ -1,11 +1,11 @@
 <template>
   <v-app dark>
-    <toolbar app v-on:click-menu="showMenu = !showMenu"></toolbar>
     <photo-detail-view v-if="photo !== null" :photo="photo"></photo-detail-view>
     <v-navigation-drawer clipped fixed v-model="showMenu" app>
       <MenuSettings v-on:close="showMenu = false"></MenuSettings>
     </v-navigation-drawer>
-    <v-content app class="container">
+    <toolbar app v-on:click-menu="showMenu = !showMenu"></toolbar>
+    <v-content app>
       <v-progress-linear v-if="loading" class="loadingBar" :indeterminate="true"></v-progress-linear>
       <thumbnail-gallery class="gallery"></thumbnail-gallery>
     </v-content>
@@ -80,10 +80,6 @@
 </script>
 
 <style scoped>
-  .container {
-    position: relative;
-  }
-
   .loadingBar {
     z-index: 3;
     left: 0;
