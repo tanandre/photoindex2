@@ -8,18 +8,14 @@ import VueResource from 'vue-resource'
 import store from './store'
 
 // fix issue: https://github.com/vuematerial/vue-material/issues/1182
-import VueMaterial from 'vue-material'
 import Vuetify from 'vuetify'
 
-import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default-dark.css'
 import 'vuetify/dist/vuetify.min.css'
 
 import Assembler from '@/js/Assembler'
 
 Vue.use(injector)
 Vue.use(VueResource)
-Vue.use(VueMaterial)
 Vue.use(Vuetify)
 
 Vue.config.productionTip = false
