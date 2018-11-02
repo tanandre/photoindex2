@@ -81,6 +81,7 @@
 
 <style scoped>
   .loadingBar {
+    margin: 0;
     z-index: 3;
     left: 0;
     width: 100%;

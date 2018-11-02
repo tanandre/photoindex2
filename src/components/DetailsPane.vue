@@ -1,7 +1,7 @@
 <template>
   <div class="photoDetailsPane">
     <v-progress-linear v-if="status == 'loading'" class="loadingBar" :indeterminate="true"></v-progress-linear>
-    <v-toolbar dense flat>
+    <v-toolbar dense flat class="detailsToolbar">
       <ActionMenu @click.native="onClickAction"></ActionMenu>
       <a :href="downloadUrl" download>
         <v-btn small fab flat title="download">
@@ -135,11 +135,16 @@
 </script>
 
 <style scoped>
+  .v-toolbar.detailsToolbar {
+    background-color: transparent;
+  }
+
   .sideBar {
     padding: 10px;
   }
 
   .photoDetailsPane {
+background-color: #424242;
     overflow: auto;
     font-size: 11px;
     padding: 0;

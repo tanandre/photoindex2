@@ -78,6 +78,7 @@
   }
 
   .loadingBar {
+    margin: 0;
     position: absolute;
     width: 100%;
     top: 0;
