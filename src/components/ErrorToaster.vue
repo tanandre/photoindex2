@@ -9,7 +9,6 @@
 
 <script>
   export default {
-    dependencies: ['keyHandler', 'jsonLoader', 'dataUpdater'],
     computed: {
       showErrors: {
         get() {
