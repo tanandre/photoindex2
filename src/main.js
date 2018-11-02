@@ -6,12 +6,9 @@ import router from './router'
 import injector from 'vue-inject'
 import VueResource from 'vue-resource'
 import store from './store'
-
-// fix issue: https://github.com/vuematerial/vue-material/issues/1182
 import Vuetify from 'vuetify'
 
 import 'vuetify/dist/vuetify.min.css'
-
 import Assembler from '@/js/Assembler'
 
 Vue.use(injector)

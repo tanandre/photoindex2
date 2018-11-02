@@ -5,17 +5,8 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import injector from 'vue-inject'
-  import Assembler from './js/Assembler'
-
   export default {
-    components: {
-    },
     name: 'PhotoIndex',
-    beforeCreate () {
-      // new Assembler(injector, Vue.http, this.$router, this.$store).assemble()
-    }
   }
 </script>
 
