@@ -1,29 +1,32 @@
 <template>
-  <md-dialog md-active md-close-on-esc v-if="showEditTags">
-    <md-dialog-title>
-      <span>Edit Tags</span></md-dialog-title>
-    <MdContent v-if="selectedPhotos.length == 0" class="dialogContent">
+  <v-dialog v-model="showEditTags" max-width="500">
+<v-card>
+  <v-card-title>
+      <span>Edit Tags</span>
+      </v-card-title>
+    <v-card-text v-if="selectedPhotos.length == 0" class="dialogContent">
       <div>No photos selected</div>
-    </MdContent>
-    <MdContent v-if="selectedPhotos.length > 0" class="dialogContent">
+    </v-card-text>
+    <v-card-text v-if="selectedPhotos.length > 0" class="dialogContent">
       <TagSelector v-model="toAddTags" :suppress="suppressTagGroups"></TagSelector>
       <div class="item">
-        <MdChip v-for="tag in currentTags" :key="tag.name">{{tag.name}}
-        </MdChip>
-        <MdChip class="md-primary" md-deletable v-for="tag in toAddTags" :key="tag" md-clickable
+        <v-chip v-for="tag in currentTags" :key="tag.name">{{tag.name}}
+        </v-chip>
+        <v-chip class="primary" close v-for="tag in toAddTags" :key="tag"
                 @click="removeAddedTag(tag)">{{tag}}
-        </MdChip>
+        </v-chip>
       </div>
       <div v-if="response">{{response.rowCount}} photos updated</div>
-      <md-progress-bar class="loadingBar" md-mode="indeterminate" v-if="loading"></md-progress-bar>
-    </MdContent>
-    <md-dialog-actions>
-      <md-button class="md-primary" @click="onClose" title="close dialog">Close (esc)</md-button>
-      <md-button class="md-primary" @click="saveTags" title="update images with tags">
+      <v-progress-linear v-if="loading" class="loadingBar" :indeterminate="true"></v-progress-linear>
+    </v-card-text>
+    <v-card-actions>
+      <v-btn @click="onClose" title="close dialog">Close (esc)</v-btn>
+      <v-btn class="primary" @click="saveTags" title="update images with tags">
         Update ({{selectedPhotos.length}})
-      </md-button>
-    </md-dialog-actions>
-  </md-dialog>
+      </v-btn>
+    </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>

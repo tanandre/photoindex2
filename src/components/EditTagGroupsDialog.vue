@@ -1,39 +1,28 @@
 <template>
-  <md-dialog md-active md-close-on-esc v-if="showEditTagGroups">
-    <md-dialog-title>
-      <span>Add Tags and Groups</span></md-dialog-title>
-    <MdContent class="dialogContent">
-      <div class="item">
-        <md-field md-clearable>
-          <MdIcon>local_offer</MdIcon>
-          <md-input class="searchInput" v-model="tagName" placeholder="Tag name..."
-                    v-on:keyup.enter="addTag"
-                    autofocus></md-input>
-        </md-field>
-        <MdChip class="md-primary" md-deletable v-for="tag in newTags" :key="tag" md-clickable
-                @click="removeTag(tag)">{{tag}}
-        </MdChip>
-        <MdAutocomplete v-model="tagGroup" :md-options="tagGroups">
-          <label>Group</label>
-          <template slot="md-autocomplete-item" slot-scope="{ item, term }">
-            <md-highlight-text :md-term="term">{{ item }}</md-highlight-text>
-          </template>
-          <template slot="md-autocomplete-empty" slot-scope="{ term }">
-            Group not found, <a @click="createGroup(term)" class="action">Create {{term}}</a>
-          </template>
-        </MdAutocomplete>
-      </div>
-      <div v-if="response">{{response.rowCount}} tag(s) added</div>
-      <PromiseAwareLoader :promise="promise" v-if="promise !== null"></PromiseAwareLoader>
-    </MdContent>
-    <md-dialog-actions>
-      <md-button class="md-primary" @click="onClose" title="close dialog">Close</md-button>
-      <md-button class="md-primary" @click="saveTags" title="update Tags"
-                 :disabled="tagGroup === '' || newTags.length === 0">
-        Add Tags ({{newTags.length}})
-      </md-button>
-    </md-dialog-actions>
-  </md-dialog>
+  <v-dialog v-model="showEditTagGroups" max-width="500">
+    <v-card>
+      <v-card-title>
+        <span>Add Tags and Groups</span>
+      </v-card-title>
+      <v-card-text>
+        <div class="item">
+          <v-text-field clearable prepend-icon="local_offer" class="searchInput" v-model="tagName" placeholder="Tag name..." v-on:keyup.enter="addTag" autofocus></v-text-field>
+          <v-chip class="primary" close v-for="tag in newTags" :key="tag" @click="removeTag(tag)">{{tag}}
+          </v-chip>
+          <v-autocomplete v-model="tagGroup" :items="tagGroups" label="Group">
+          </v-autocomplete>
+        </div>
+        <div v-if="response">{{response.rowCount}} tag(s) added</div>
+        <PromiseAwareLoader :promise="promise" v-if="promise !== null"></PromiseAwareLoader>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn @click="onClose" title="close dialog">Close</v-btn>
+        <v-btn class="primary" @click="saveTags" title="update Tags" :disabled="tagGroup === '' || newTags.length === 0">
+          Add Tags ({{newTags.length}})
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -42,8 +31,10 @@
 
   export default {
     dependencies: ['dataRetriever', 'dataUpdater'],
-    components: {PromiseAwareLoader},
-    data () {
+    components: {
+      PromiseAwareLoader
+    },
+    data() {
       return {
         response: null,
         tagName: '',
@@ -54,41 +45,41 @@
       }
     },
     computed: {
-      selectedPhotos () {
+      selectedPhotos() {
         return this.$store.state.photo ? [this.$store.state.photo] : this.$store.state.selection.selectedPhotos
       },
 
-      showEditTagGroups () {
+      showEditTagGroups() {
         return this.$store.state.action.showEditTagGroups
       }
     },
-    mounted () {
+    mounted() {
       this.loadTags()
     },
     methods: {
-      loadTags () {
+      loadTags() {
         this.dataRetriever.retrieveTagGroups().then(data => {
           this.tagGroups = data
         })
       },
-      createGroup (value) {
+      createGroup(value) {
         this.dataUpdater.addGroup(value).then(() => {
           this.loadTags()
         })
       },
-      addTag (event) {
+      addTag(event) {
         event.target.select()
         if (this.tagName && !util.arrayContains(this.newTags, this.tagName)) {
           this.newTags.push(this.tagName)
         }
       },
-      removeTag (tag) {
+      removeTag(tag) {
         util.removeFromArray(this.newTags, tag)
       },
-      onClose () {
+      onClose() {
         this.$store.commit('showEditTagGroups', false)
       },
-      saveTags () {
+      saveTags() {
         this.response = null
         this.promise = this.dataUpdater.addTags(this.tagGroup, this.newTags).then(resp => {
           this.response = resp.body
@@ -98,7 +89,7 @@
       }
     },
     watch: {
-      '$store.state.action.showEditTagGroups' () {
+      '$store.state.action.showEditTagGroups'() {
         this.newTags = []
         this.tagGroup = ''
         this.tagName = ''
@@ -133,5 +124,4 @@
   .item {
     padding: 10px;
   }
-
 </style>
