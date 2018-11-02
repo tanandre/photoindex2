@@ -1,11 +1,6 @@
 <template>
   <div id="app">
     <router-view/>
-    <EditRatingDialog></EditRatingDialog>
-    <EditTagsDialog></EditTagsDialog>
-    <EditTagGroupsDialog></EditTagGroupsDialog>
-    <EditDatesDialog></EditDatesDialog>
-    <ErrorToaster></ErrorToaster>
   </div>
 </template>
 

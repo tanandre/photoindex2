@@ -1,43 +1,55 @@
 <template>
-  <md-dialog md-active md-close-on-esc v-if="showEditDate">
-    <md-dialog-title>Edit date & time</md-dialog-title>
-    <MdContent class="dialogContent">
-      <MdChip v-for="date in suggestedDates" :key="date" md-clickable @click="onClickSuggestedDate(date)">{{date}}
-      </MdChip>
-      <md-list class="md-double-line">
-        <md-list-item>
-          <MdIcon>event</MdIcon>
-          <div class="md-list-item-text">
-            <input class="inputStyle" type="date" v-model="date"/>
-            <div>
-              <span class="originalValue">{{referenceDate}}</span>
-              <span class="offsetValue" v-if="isOffset"> ({{daysOffset}} days)</span>
-            </div>
-          </div>
-        </md-list-item>
-        <md-list-item>
-          <MdIcon>query_builder</MdIcon>
-          <div class="md-list-item-text">
-            <input class="inputStyle" v-model="time"/>
-            <div>
-              <span class="originalValue">{{referenceTime}}</span>
-              <span class="offsetValue" v-if="isOffset"> ({{timeOffset}})</span>
-            </div>
-          </div>
-        </md-list-item>
-      </md-list>
-      <md-checkbox v-model="isOffset" class="offsetCheckbox md-primary">Update Offset
-      </md-checkbox>
-      <div v-if="response">{{response.rowCount}} photos updated</div>
-      <PromiseAwareLoader :promise="promise" v-if="promise !== null"></PromiseAwareLoader>
-    </MdContent>
-    <md-dialog-actions>
-      <md-button class="md-primary" @click="onClose" title="close dialog">Close</md-button>
-      <md-button class="md-primary" @click="save" title="update images with date">
-        Update ({{selectedPhotos.length}})
-      </md-button>
-    </md-dialog-actions>
-  </md-dialog>
+  <v-dialog v-model="showEditDate" max-width="500">
+    <v-card>
+      <v-card-title class="headline">Edit date &amp; time</v-card-title>
+      <v-card-text>
+        <v-chip v-for="date in suggestedDates" :key="date" @click="onClickSuggestedDate(date)">{{date}}
+        </v-chip>
+        <v-list>
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-icon>event</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                <input class="inputStyle" type="date" v-model="date" />
+              </v-list-tile-title>
+              <v-list-tile-sub-title>
+                <div>
+                  <span class="originalValue">{{referenceDate}}</span>
+                  <span class="offsetValue" v-if="isOffset"> ({{daysOffset}} days)</span>
+                </div>
+              </v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-icon>query_builder</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <div class="v-list-tile-text">
+                <input class="inputStyle" v-model="time" />
+                <div>
+                  <span class="originalValue">{{referenceTime}}</span>
+                  <span class="offsetValue" v-if="isOffset"> ({{timeOffset}})</span>
+                </div>
+              </div>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+        <v-checkbox v-model="isOffset" class="offsetCheckbox" label="Update Offset">
+        </v-checkbox>
+        <div v-if="response">{{response.rowCount}} photos updated</div>
+        <PromiseAwareLoader :promise="promise" v-if="promise !== null"></PromiseAwareLoader>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn @click="onClose" title="close dialog">Close</v-btn>
+        <v-btn color="primary" @click="save" title="update images with date">
+          Update ({{selectedPhotos.length}})
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -47,8 +59,10 @@
 
   export default {
     dependencies: ['dataUpdater'],
-    components: {PromiseAwareLoader},
-    data () {
+    components: {
+      PromiseAwareLoader
+    },
+    data() {
       return {
         suggestedDates: [],
         response: null,
@@ -59,39 +73,39 @@
       }
     },
     computed: {
-      referenceDate () {
+      referenceDate() {
         return this.selectedPhotos.length === 0 ? '' : this.selectedPhotos[0].date.substring(0, 10)
       },
-      referenceTime () {
+      referenceTime() {
         return this.selectedPhotos.length === 0 ? '' : this.selectedPhotos[0].date.substring(11)
       },
-      daysOffset () {
+      daysOffset() {
         let date1 = new Date(this.referenceDate)
         let date2 = new Date(this.date)
         let timeDiff = date2.getTime() - date1.getTime()
         return Math.ceil(timeDiff / (1000 * 3600 * 24))
       },
-      timeOffset () {
+      timeOffset() {
         return '00:00'
       },
-      selectedPhotos () {
+      selectedPhotos() {
         return this.$store.state.photo ? [this.$store.state.photo] : this.$store.state.selection.selectedPhotos
       },
 
-      showEditDate () {
+      showEditDate() {
         return this.$store.state.action.showEditDate
       }
     },
     methods: {
-      onClose () {
+      onClose() {
         this.$store.commit('showEditDate', false)
       },
 
-      onClickSuggestedDate (date) {
+      onClickSuggestedDate(date) {
         this.date = date
       },
 
-      save () {
+      save() {
         this.response = null
         this.promise = this.isOffset ? this.saveDateOffset() : this.saveDate()
         this.promise.then(resp => {
@@ -101,20 +115,20 @@
           console.error(err)
         })
       },
-      saveDate () {
+      saveDate() {
         let ids = this.selectedPhotos.map(p => p.id)
         let datetime = (this.date.trim() + ' ' + this.time.trim())
 
         return this.dataUpdater.updatePhotoDate(ids, datetime)
       },
-      saveDateOffset () {
+      saveDateOffset() {
         let ids = this.selectedPhotos.map(p => p.id)
         let offset = this.daysOffset + ' ' + this.timeOffset
         return this.dataUpdater.updatePhotoDateOffset(ids, offset)
       }
     },
     watch: {
-      '$store.state.action.showEditDate' (showEditDate) {
+      '$store.state.action.showEditDate'(showEditDate) {
         this.response = null
         this.promise = null
         this.isOffset = false

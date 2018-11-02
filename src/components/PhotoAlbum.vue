@@ -13,6 +13,11 @@
       <v-progress-linear v-if="loading" class="loadingBar" :indeterminate="true"></v-progress-linear>
       <thumbnail-gallery class="gallery"></thumbnail-gallery>
     </v-content>
+    <EditRatingDialog></EditRatingDialog>
+    <EditTagsDialog></EditTagsDialog>
+    <EditTagGroupsDialog></EditTagGroupsDialog>
+    <EditDatesDialog></EditDatesDialog>
+    <ErrorToaster></ErrorToaster>
   </v-app>
 </template>
 
@@ -22,6 +27,11 @@
   import MenuSettings from './MenuSettings.vue'
   import Toolbar from './Toolbar.vue'
   import RetrieveListingAction from '../js/action/RetrieveListingAction'
+  import EditRatingDialog from '@/components/EditRatingDialog.vue'
+  import EditDatesDialog from '@/components/EditDatesDialog.vue'
+  import EditTagsDialog from '@/components/EditTagsDialog.vue'
+  import EditTagGroupsDialog from '@/components/EditTagGroupsDialog.vue'
+  import ErrorToaster from '@/components/ErrorToaster.vue'
 
   export default {
     dependencies: ['keyHandler', 'dataRetriever'],
@@ -30,6 +40,11 @@
       PhotoDetailView,
       MenuSettings,
       Toolbar,
+      ErrorToaster,
+      EditRatingDialog,
+      EditDatesDialog,
+      EditTagGroupsDialog,
+      EditTagsDialog
     },
     computed: {
       photo() {

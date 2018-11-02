@@ -1,7 +1,7 @@
 <template>
   <div class="photoDetailsPane">
     <v-progress-linear v-if="status == 'loading'" class="loadingBar" :indeterminate="true"></v-progress-linear>
-<v-toolbar dense flat>
+    <v-toolbar dense flat>
       <ActionMenu @click.native="onClickAction"></ActionMenu>
       <a :href="downloadUrl" download>
         <v-btn small fab flat title="download">
@@ -13,7 +13,7 @@
           <v-icon>clear</v-icon>
         </v-btn>
       </div>
-</v-toolbar>
+    </v-toolbar>
     <v-card class="sideBar">
       <v-list>
         <v-list-tile>

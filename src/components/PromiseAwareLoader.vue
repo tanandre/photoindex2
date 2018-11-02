@@ -1,5 +1,5 @@
 <template>
-  <md-progress-bar class="loadingBar" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+  <v-progress-linear v-if="loading" class="loadingBar" :indeterminate="true"></v-progress-linear>
 </template>
 
 <script>
