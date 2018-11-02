@@ -2,13 +2,15 @@
   <div ref="thumbnail" class="thumbnail highlightable" v-on:mouseover="mouseOver">
     <v-progress-linear v-if="status == 'loading'" class="loadingBar" :indeterminate="true"></v-progress-linear>
     <v-icon v-if="status == 'inQueue' || status == 'loading'" class="center">crop_original</v-icon>
-    <div class="overlay">
-      <MdTooltip md-direction="bottom">{{photo.date}}</MdTooltip>
-      <v-icon v-if="isFavorite && status == 'completed'">favorite</v-icon>
-      <v-icon v-if="isVideo && status == 'completed'">videocam</v-icon>
-      <v-icon class="errorIcon" v-if="status === 'error'">not_interested</v-icon>
-      <slot></slot>
-    </div>
+    <v-tooltip bottom>
+      <div class="overlay" slot="activator">
+        <v-icon v-if="isFavorite && status == 'completed'">favorite</v-icon>
+        <v-icon v-if="isVideo && status == 'completed'">videocam</v-icon>
+        <v-icon class="errorIcon" v-if="status === 'error'">not_interested</v-icon>
+        <slot></slot>
+      </div>
+      <span>{{photo.date}}</span>
+    </v-tooltip>
   </div>
 </template>
 

@@ -2,7 +2,6 @@
   <div class="pagination">
     <v-btn depressed :class="getCssClass(idx)" v-if="shouldDisplay(idx)" v-for="idx in pageCount"
               :key="idx" @click="onClick(idx)" class="paginationButton pageButton">{{idx}}</v-btn>
-    <!--<input v-if="pageCount > pageThreshold" class="pageInput" type="number" md-layout="box" v-model="page"/>-->
     <input v-if="pageCount > pageThreshold" type="range" min="1" :max="pageCount" v-model="page" class="slider">
   </div>
 </template>

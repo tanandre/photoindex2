@@ -1,7 +1,7 @@
 <template>
   <div class="tagDetailsPane chips">
-    <md-chip v-for="tag in tags" :key="tag.name" md-clickable @click="onClickTag(tag)">{{tag.name}}
-    </md-chip>
+    <v-chip v-for="tag in tags" :key="tag.name" close @click="onClickTag(tag)">{{tag.name}}
+    </v-chip>
   </div>
 </template>
 
