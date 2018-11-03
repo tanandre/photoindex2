@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import util from '../js/util'
+  import util from '@/js/util'
 
   const iconMap = {
     'Location': 'location_on',

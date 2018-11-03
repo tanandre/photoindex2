@@ -22,7 +22,7 @@
   import PhotoDetailView from './PhotoDetailView.vue'
   import MenuSettings from './MenuSettings.vue'
   import Toolbar from './Toolbar.vue'
-  import RetrieveListingAction from '../js/action/RetrieveListingAction'
+  import RetrieveListingAction from '@/js/action/RetrieveListingAction'
   import EditRatingDialog from '@/components/EditRatingDialog.vue'
   import EditDatesDialog from '@/components/EditDatesDialog.vue'
   import EditTagsDialog from '@/components/EditTagsDialog.vue'

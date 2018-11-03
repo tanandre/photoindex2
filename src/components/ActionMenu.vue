@@ -58,7 +58,7 @@
 </template>
 
 <script>
-  import RetrieveListingAction from '../js/action/RetrieveListingAction'
+  import RetrieveListingAction from '@/js/action/RetrieveListingAction'
 
   export default {
     dependencies: ['dataUpdater'],

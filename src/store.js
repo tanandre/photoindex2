@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import injector from 'vue-inject'
-import util from './js/util'
-import actionModule from './store/actionModule'
-import selectionModule from './store/selectionModule'
-import galleryModule from './store/galleryModule'
-import albumModule from './store/albumModule'
+import util from '@/js/util'
+import actionModule from '@/store/actionModule'
+import galleryModule from '@/store/galleryModule'
+import selectionModule from '@/store/selectionModule'
+import albumModule from '@/store/albumModule'
 
 Vue.use(Vuex)
 

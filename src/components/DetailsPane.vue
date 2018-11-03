@@ -2,19 +2,21 @@
   <div class="photoDetailsPane">
     <v-progress-linear v-if="status == 'loading'" class="loadingBar" :indeterminate="true"></v-progress-linear>
     <v-toolbar dense flat class="detailsToolbar">
-      <ActionMenu @click.native="onClickAction"></ActionMenu>
-      <a :href="downloadUrl" download>
-        <v-btn small fab flat title="download">
-          <v-icon>get_app</v-icon>
-        </v-btn>
-      </a>
-      <div>
-        <v-btn fab small @click="onClose" title="close">
+      <v-toolbar-title class="white--text"></v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <ActionMenu @click.native="onClickAction"></ActionMenu>
+        <a :href="downloadUrl" download>
+          <v-btn small fab flat title="download">
+            <v-icon>get_app</v-icon>
+          </v-btn>
+        </a>
+        <v-btn small fab flat  @click="onClose" title="close">
           <v-icon>clear</v-icon>
         </v-btn>
-      </div>
+      </v-toolbar-items>
     </v-toolbar>
-    <v-card class="sideBar">
+    <div class="sideBar">
       <v-list>
         <v-list-tile>
           <v-btn fab small flat @click="rotate(1)" title="rotate clockwise">
@@ -63,7 +65,7 @@
       </v-list>
       <TagDetailsPane :photo="photo"></TagDetailsPane>
       <ExifDetailsPane :photo="photo"></ExifDetailsPane>
-    </v-card>
+    </div>
   </div>
 </template>
 

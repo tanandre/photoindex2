@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import util from '../js/util'
+  import util from '@/js/util'
 
   function isElementInViewport(el) {
     let rect = el.getBoundingClientRect()

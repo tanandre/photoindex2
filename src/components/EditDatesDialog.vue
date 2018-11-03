@@ -53,8 +53,8 @@
 </template>
 
 <script>
-  import dateUtil from '../js/DateUtil'
-  import RetrieveListingAction from '../js/action/RetrieveListingAction'
+  import dateUtil from '@/js/DateUtil'
+  import RetrieveListingAction from '@/js/action/RetrieveListingAction'
   import PromiseAwareLoader from './PromiseAwareLoader.vue'
 
   export default {

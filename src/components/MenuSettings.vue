@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import util from '../js/util'
+  import util from '@/js/util'
   import TagSelector from './TagSelector.vue'
 
   export default {

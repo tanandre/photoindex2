@@ -1,4 +1,4 @@
-import util from '../js/util'
+import util from '@/js/util'
 
 const selectionModule = {
   state: {

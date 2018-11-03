@@ -19,7 +19,7 @@
 
 <script>
   import RatingInput from './RatingInput.vue'
-  import RetrieveListingAction from '../js/action/RetrieveListingAction'
+  import RetrieveListingAction from '@/js/action/RetrieveListingAction'
   import PromiseAwareLoader from './PromiseAwareLoader.vue'
 
   export default {

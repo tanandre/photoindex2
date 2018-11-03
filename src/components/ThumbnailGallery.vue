@@ -13,7 +13,7 @@
 <script>
   import Thumbnail from './Thumbnail.vue'
   import HUDGallery from './HUDGallery.vue'
-  import util from '../js/util'
+  import util from '@/js/util'
 
   export default {
     dependencies: ['navigator'],

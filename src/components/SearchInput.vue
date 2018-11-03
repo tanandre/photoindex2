@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import util from '../js/util'
+  import util from '@/js/util'
   import TagChips from './TagChips.vue'
 
   export default {
