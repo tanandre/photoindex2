@@ -24,7 +24,7 @@
       }
     },
     mounted () {
-      document.body.classList.add('noScroll')
+      document.body.parentNode.classList.add('noScroll')
     },
     methods: {
       onRotate (direction) {
@@ -40,7 +40,7 @@
       }
     },
     destroyed () {
-      document.body.classList.remove('noScroll')
+      document.body.parentNode.classList.remove('noScroll')
     }
   }
 </script>
