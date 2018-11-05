@@ -5,8 +5,10 @@
         <v-icon>{{getTagGroupIcon(tagGroup.name)}}</v-icon>
       </v-list-tile-action>
       <v-list-tile-content class="field">
-        <v-combobox :return-object="false" multiple item-text="name" item-value="name" :placeholder="tagGroup.name" v-model="selectedTags" name="tags" id="tags" :items="tagGroup.tags">
-        </v-combobox>
+        <v-autocomplete :return-object="false" multiple
+                chips small-chips
+                deletable-chips item-text="name" item-value="name" :placeholder="tagGroup.name" v-model="selectedTags" name="tags" id="tags" :items="tagGroup.tags">
+        </v-autocomplete>
       </v-list-tile-content>
     </v-list-tile>
   </v-list>
