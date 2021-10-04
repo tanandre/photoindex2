@@ -11,18 +11,18 @@
   export default {
     computed: {
       showErrors: {
-        get() {
+        get () {
           return this.$store.state.errors.length > 0
         },
-        set() {
+        set () {
           this.$store.commit('errors', [])
         }
       },
       errors: {
-        get() {
+        get () {
           return this.$store.state.errors.reverse()
         },
-        set(errors) {
+        set (errors) {
           this.$store.commit('errors', errors)
         }
       }

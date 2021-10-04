@@ -63,15 +63,15 @@
   export default {
     dependencies: ['dataUpdater'],
     computed: {
-      selectedPhotos() {
+      selectedPhotos () {
         return this.$store.state.photo ? [this.$store.state.photo] : this.$store.state.selection.selectedPhotos
       }
     },
     methods: {
-      showEditDialog(value) {
+      showEditDialog (value) {
         this.$store.commit(value, true)
       },
-      updatePhotosRating(value) {
+      updatePhotosRating (value) {
         this.$store.commit('loading', true)
         let ids = this.selectedPhotos.map(p => p.id)
         return this.dataUpdater.updatePhotosRating(ids, value).then(resp => {

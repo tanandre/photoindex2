@@ -34,7 +34,7 @@
     components: {
       PromiseAwareLoader
     },
-    data() {
+    data () {
       return {
         response: null,
         tagName: '',
@@ -45,41 +45,41 @@
       }
     },
     computed: {
-      selectedPhotos() {
+      selectedPhotos () {
         return this.$store.state.photo ? [this.$store.state.photo] : this.$store.state.selection.selectedPhotos
       },
 
-      showEditTagGroups() {
+      showEditTagGroups () {
         return this.$store.state.action.showEditTagGroups
       }
     },
-    mounted() {
+    mounted () {
       this.loadTags()
     },
     methods: {
-      loadTags() {
+      loadTags () {
         this.dataRetriever.retrieveTagGroups().then(data => {
           this.tagGroups = data
         })
       },
-      createGroup(value) {
+      createGroup (value) {
         this.dataUpdater.addGroup(value).then(() => {
           this.loadTags()
         })
       },
-      addTag(event) {
+      addTag (event) {
         event.target.select()
         if (this.tagName && !util.arrayContains(this.newTags, this.tagName)) {
           this.newTags.push(this.tagName)
         }
       },
-      removeTag(tag) {
+      removeTag (tag) {
         util.removeFromArray(this.newTags, tag)
       },
-      onClose() {
+      onClose () {
         this.$store.commit('showEditTagGroups', false)
       },
-      saveTags() {
+      saveTags () {
         this.response = null
         this.promise = this.dataUpdater.addTags(this.tagGroup, this.newTags).then(resp => {
           this.response = resp.body
@@ -89,7 +89,7 @@
       }
     },
     watch: {
-      '$store.state.action.showEditTagGroups'() {
+      '$store.state.action.showEditTagGroups' () {
         this.newTags = []
         this.tagGroup = ''
         this.tagName = ''

@@ -62,7 +62,7 @@
     components: {
       PromiseAwareLoader
     },
-    data() {
+    data () {
       return {
         suggestedDates: [],
         response: null,
@@ -73,39 +73,39 @@
       }
     },
     computed: {
-      referenceDate() {
+      referenceDate () {
         return this.selectedPhotos.length === 0 ? '' : this.selectedPhotos[0].date.substring(0, 10)
       },
-      referenceTime() {
+      referenceTime () {
         return this.selectedPhotos.length === 0 ? '' : this.selectedPhotos[0].date.substring(11)
       },
-      daysOffset() {
+      daysOffset () {
         let date1 = new Date(this.referenceDate)
         let date2 = new Date(this.date)
         let timeDiff = date2.getTime() - date1.getTime()
         return Math.ceil(timeDiff / (1000 * 3600 * 24))
       },
-      timeOffset() {
+      timeOffset () {
         return '00:00'
       },
-      selectedPhotos() {
+      selectedPhotos () {
         return this.$store.state.photo ? [this.$store.state.photo] : this.$store.state.selection.selectedPhotos
       },
 
-      showEditDate() {
+      showEditDate () {
         return this.$store.state.action.showEditDate
       }
     },
     methods: {
-      onClose() {
+      onClose () {
         this.$store.commit('showEditDate', false)
       },
 
-      onClickSuggestedDate(date) {
+      onClickSuggestedDate (date) {
         this.date = date
       },
 
-      save() {
+      save () {
         this.response = null
         this.promise = this.isOffset ? this.saveDateOffset() : this.saveDate()
         this.promise.then(resp => {
@@ -115,20 +115,20 @@
           console.error(err)
         })
       },
-      saveDate() {
+      saveDate () {
         let ids = this.selectedPhotos.map(p => p.id)
         let datetime = (this.date.trim() + ' ' + this.time.trim())
 
         return this.dataUpdater.updatePhotoDate(ids, datetime)
       },
-      saveDateOffset() {
+      saveDateOffset () {
         let ids = this.selectedPhotos.map(p => p.id)
         let offset = this.daysOffset + ' ' + this.timeOffset
         return this.dataUpdater.updatePhotoDateOffset(ids, offset)
       }
     },
     watch: {
-      '$store.state.action.showEditDate'(showEditDate) {
+      '$store.state.action.showEditDate' (showEditDate) {
         this.response = null
         this.promise = null
         this.isOffset = false

@@ -17,13 +17,13 @@
     components: {
       TagChips
     },
-    data() {
+    data () {
       return {
         searchTxt: ''
       }
     },
     methods: {
-      onEnter() {
+      onEnter () {
         if (this.searchTxt.startsWith('/')) {
           if (this.searchTxt === '/clear') {
             this.clearTags()
@@ -34,7 +34,7 @@
         this.searchTxt = ''
       },
 
-      addTag(value) {
+      addTag (value) {
         if (util.isDate(value)) {
           let dateTags = util.tagsToArray(this.$route.query.d)
           this.setDateTags(dateTags.concat([value]))
@@ -43,15 +43,15 @@
           this.setTags(tags.concat([value]))
         }
       },
-      clearTags() {
+      clearTags () {
         this.navigator.setBothTags(util.tagsToHashObject([]), util.tagsToHashObject([]), this.$route)
       },
 
-      setTags(tags) {
+      setTags (tags) {
         this.navigator.setTags(util.tagsToHashObject(tags), this.$route)
       },
 
-      setDateTags(dateTags) {
+      setDateTags (dateTags) {
         this.navigator.setDates(util.tagsToHashObject(dateTags), this.$route)
       }
     }

@@ -28,7 +28,7 @@
       RatingInput,
       PromiseAwareLoader
     },
-    data() {
+    data () {
       return {
         promise: null,
         response: null,
@@ -36,19 +36,19 @@
       }
     },
     computed: {
-      selectedPhotos() {
+      selectedPhotos () {
         return this.$store.state.photo ? [this.$store.state.photo] : this.$store.state.selection.selectedPhotos
       },
 
-      showEditRating() {
+      showEditRating () {
         return this.$store.state.action.showEditRating
       }
     },
     methods: {
-      close() {
+      close () {
         this.$store.commit('showEditRating', false)
       },
-      saveRating() {
+      saveRating () {
         this.response = null
         let ids = this.selectedPhotos.map(p => p.id)
         this.promise = this.dataUpdater.updatePhotosRating(ids, this.rating).then(resp => {
@@ -62,7 +62,7 @@
       }
     },
     watch: {
-      '$store.state.action.showEditRating'() {
+      '$store.state.action.showEditRating' () {
         this.response = null
         this.promise = null
         this.rating = 0

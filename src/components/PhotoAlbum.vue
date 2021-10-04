@@ -43,19 +43,19 @@
       EditTagsDialog
     },
     computed: {
-      photo() {
+      photo () {
         return this.$store.state.photo
       },
-      loading() {
+      loading () {
         return this.$store.state.loading
       }
     },
-    data() {
+    data () {
       return {
         showMenu: false
       }
     },
-    mounted() {
+    mounted () {
       window.addEventListener('keydown', this.onKeyDown)
       new RetrieveListingAction(this.$store).execute(this.$route).then(() => {
         this.$store.commit('page', Number(this.$route.params.page))
@@ -63,12 +63,12 @@
       })
     },
 
-    beforeDestroy() {
+    beforeDestroy () {
       window.removeEventListener('keydown', this.onKeyDown)
     },
 
     methods: {
-      onKeyDown(event) {
+      onKeyDown (event) {
         if (this.$store.state.photo === null) {
           this.keyHandler.handlKeyEventGallery(event)
         } else {

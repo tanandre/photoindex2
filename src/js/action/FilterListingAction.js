@@ -1,15 +1,15 @@
 import util from '../util'
 
-function isPhotoInDateRange(photo, dates) {
+function isPhotoInDateRange (photo, dates) {
   return dates.some(d => photo.date.replace(/[^\d]/g, '').startsWith(d))
 }
 
 class FilterListingAction {
-  constructor(store) {
+  constructor (store) {
     this.store = store
   }
 
-  execute(route) {
+  execute (route) {
     let dates = route.query.d
     let rating = route.query.r
     let datesArray = util.tagsToArray(dates)

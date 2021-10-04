@@ -87,49 +87,49 @@
       StateButton,
       Rating
     },
-    data() {
+    data () {
       return {
         status: 'idle'
       }
     },
     computed: {
-      photoFileName() {
+      photoFileName () {
         let index = this.photo.path.lastIndexOf('/')
         return this.photo.path.substring(index + 1)
       },
-      kanjiPath() {
+      kanjiPath () {
         let index = this.photo.path.lastIndexOf('/')
         return this.photo.path.substring(0, index).replace('/volume1', '\\\\kanji').replace(/\//g, '\\')
       },
-      photoDate() {
+      photoDate () {
         return this.photo.date.substring(0, 11)
       },
-      photoDateTime() {
+      photoDateTime () {
         return this.photo.date.substring(11)
       },
-      isVideo() {
+      isVideo () {
         return util.isVideo(this.photo)
       },
-      downloadUrl() {
+      downloadUrl () {
         return this.urlHelper.getPhotoUrl(this.photo)
       }
     },
     methods: {
-      rotate(direction) {
+      rotate (direction) {
         this.$emit('rotate', direction)
       },
-      toggleVideo() {
+      toggleVideo () {
         this.$emit('toggleVideo')
       },
-      onClickAction() {
+      onClickAction () {
         console.log('onclikc')
       },
-      onClickDate() {
+      onClickDate () {
         let date = this.photo.date.substring(0, 10).replace(/-/g, '')
         this.navigator.setDates(util.tagsToHashObject([date]), this.$route)
         this.navigator.clearPhoto()
       },
-      onClose() {
+      onClose () {
         this.navigator.clearPhoto()
       }
     }

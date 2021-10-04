@@ -17,7 +17,7 @@
 <script>
   import util from '@/js/util'
 
-  function isElementInViewport(el) {
+  function isElementInViewport (el) {
     let rect = el.getBoundingClientRect()
     return rect.bottom > 0 && rect.right > 0 && rect.top <
       (window.innerHeight || document.documentElement.clientHeight) && rect.left <
@@ -27,7 +27,7 @@
   export default {
     dependencies: ['urlHelper', 'thumbnailLoader'],
     props: ['photo'],
-    data() {
+    data () {
       return {
         status: 'idle',
         isDone: false,
@@ -35,22 +35,22 @@
       }
     },
     computed: {
-      isVideo() {
+      isVideo () {
         return util.isVideo(this.photo)
       },
-      isFavorite() {
+      isFavorite () {
         return this.photo.rating === 6
       }
     },
 
-    mounted() {
+    mounted () {
       ['DOMContentLoaded', 'load', 'scroll', 'resize'].forEach((event) => {
         window.addEventListener(event, this.loadThumbnailIfInViewport)
       })
       this.loadThumbnailIfInViewport()
     },
 
-    beforeDestroy() {
+    beforeDestroy () {
       ['DOMContentLoaded', 'load', 'scroll', 'resize'].forEach((event) => {
         window.removeEventListener(event, this.loadThumbnailIfInViewport)
       })
@@ -61,15 +61,15 @@
       }
     },
 
-    updated() {
+    updated () {
       this.loadThumbnailIfInViewport()
     },
 
     methods: {
-      mouseOver() {
+      mouseOver () {
         //        console.log('mouseOver2')
       },
-      loadThumbnailIfInViewport() {
+      loadThumbnailIfInViewport () {
         if (this.isDone) {
           return
         }

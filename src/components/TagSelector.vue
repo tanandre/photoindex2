@@ -28,29 +28,29 @@
   export default {
     dependencies: ['dataRetriever'],
     props: ['value', 'suppress'],
-    data() {
+    data () {
       return {
         tagGroups: [],
         icon: 'local_offer'
       }
     },
-    mounted() {
+    mounted () {
       this.dataRetriever.retrieveAllTags().then(data => {
         this.tagGroups = util.mapTagsToGroups(data.body)
       })
     },
     computed: {
       selectedTags: {
-        get() {
+        get () {
           return this.value
         },
-        set(values) {
+        set (values) {
           this.$emit('input', values)
         }
       }
     },
     methods: {
-      getTagGroupIcon(groupName) {
+      getTagGroupIcon (groupName) {
         const icon = iconMap[groupName]
         return icon || 'local_offer'
       }

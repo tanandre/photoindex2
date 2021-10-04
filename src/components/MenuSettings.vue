@@ -38,25 +38,25 @@
       TagSelector
     },
     props: ['showMenu'],
-    data() {
+    data () {
       return {
         selectedRating: this.$route.query.r ? Number(this.$route.query.r) : 1
       }
     },
     computed: {
       showHUD: {
-        get() {
+        get () {
           return this.$store.state.action.showHUD
         },
-        set(value) {
+        set (value) {
           this.$store.commit('showHUD', value)
         }
       },
       selectedTags: {
-        get() {
+        get () {
           return util.tagsToArray(this.$route.query.q)
         },
-        set(values) {
+        set (values) {
           let tags = util.tagsToHashObject(values)
           if (tags !== this.$route.query.q) {
             this.navigator.setTags(tags, this.$route)
@@ -65,15 +65,15 @@
       }
     },
     methods: {
-      onClose() {
+      onClose () {
         this.$emit('close')
       },
-      showEditTagGroups() {
+      showEditTagGroups () {
         this.$store.commit('showEditTagGroups', true)
       }
     },
     watch: {
-      'selectedRating'(selectedRating) {
+      'selectedRating' (selectedRating) {
         this.navigator.setRating(selectedRating, this.$route)
       }
     }

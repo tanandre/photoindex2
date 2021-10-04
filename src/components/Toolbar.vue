@@ -27,34 +27,34 @@
       Pagination,
       ToolbarSelection
     },
-    data() {
+    data () {
       return {
         title: 'PhotoIndex'
       }
     },
     computed: {
-      photoCountLabel() {
+      photoCountLabel () {
         let count = this.album.images.length
         return (count > 1000) ? Math.round(count / 1000) + 'k' : count
       },
-      album() {
+      album () {
         return this.$store.state.album
       },
       selectedPhotos: {
-        get() {
+        get () {
           return this.$store.state.selection.selectedPhotos
         },
-        set(value) {
+        set (value) {
           this.$store.commit('selectedPhotos', value)
         }
       }
     },
 
     methods: {
-      onClickEditDates() {
+      onClickEditDates () {
         this.$store.commit('showEditDate', true)
       },
-      onClickMenu() {
+      onClickMenu () {
         this.$emit('click-menu')
       }
     }
