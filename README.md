@@ -1,6 +1,9 @@
 # photoindex
+A Synology photo album application that allows you to tag and search for photos. Back-end is NodeJS (separate repo) that auto creates tags using Jpeg EXIF data. 
 
-> synology photo application
+Since it's running on my local Synology server no demo available.
+
+![Screenshot](/photoindex.png?raw=true "Screenshot")
 
 ## Build Setup
 
