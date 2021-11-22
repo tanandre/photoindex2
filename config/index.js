@@ -19,7 +19,7 @@ module.exports = {
         }
       },
       '/photoindex': {
-        target: 'http://kanji/',
+        target: 'http://kanji.local/',
         changeOrigin: true
       }
     },

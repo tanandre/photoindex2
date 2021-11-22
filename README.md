@@ -7,6 +7,13 @@ Since it's running on my local Synology server no demo available.
 
 ## Build Setup
 
+
+1. Make sure the Synology can be accessed as is defined in config/index.js proxyTable.
+2. ```npm run i``` 
+3. ```npm run dev```.
+
+## NPM commands:
+
 ``` bash
 # install dependencies
 npm install
