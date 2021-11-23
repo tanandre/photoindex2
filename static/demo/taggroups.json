@@ -1,0 +1,26 @@
+[
+    {
+        "id": 5,
+        "name": "Album"
+    },
+    {
+        "id": 1,
+        "name": "Camera"
+    },
+    {
+        "id": 3,
+        "name": "Group"
+    },
+    {
+        "id": 4,
+        "name": "Location"
+    },
+    {
+        "id": 2,
+        "name": "Person"
+    },
+    {
+        "id": 7,
+        "name": "Work"
+    }
+]

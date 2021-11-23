@@ -1,0 +1,482 @@
+[
+    {
+        "id": 1,
+        "name": "Apple iPhone 8",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 81,
+        "name": "asus Nexus 7",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 526,
+        "name": "Canon DIGITAL IXUS",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 618,
+        "name": "Canon DIGITAL IXUS 100 IS",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 952,
+        "name": "Canon DIGITAL IXUS 40",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 271,
+        "name": "Canon DIGITAL IXUS 400",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 404,
+        "name": "Canon DIGITAL IXUS 430",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 273,
+        "name": "Canon DIGITAL IXUS 55",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 85,
+        "name": "Canon DIGITAL IXUS 70",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 832,
+        "name": "Canon DIGITAL IXUS 700",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 659,
+        "name": "Canon DIGITAL IXUS 850 IS",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 646,
+        "name": "Canon DIGITAL IXUS 860 IS",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 794,
+        "name": "Canon DIGITAL IXUS 950 IS",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 327,
+        "name": "Canon DIGITAL IXUS i",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 87,
+        "name": "Canon DIGITAL IXUS IIs",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 1046,
+        "name": "Canon EOS 300D DIGITAL",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 668,
+        "name": "Canon EOS 350D DIGITAL",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 663,
+        "name": "Canon EOS 400D DIGITAL",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 236,
+        "name": "Canon EOS 40D",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 638,
+        "name": "Canon EOS 450D",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 82,
+        "name": "Canon EOS 550D",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 169,
+        "name": "Canon EOS 60D",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 88,
+        "name": "Canon EOS 7D",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 793,
+        "name": "Canon EOS-1D Mark II",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 839,
+        "name": "Canon EOS-1D Mark II N",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 275,
+        "name": "Canon EOS-1DS",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 764,
+        "name": "Canon IXY DIGITAL 800 IS",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 401,
+        "name": "Canon PowerShot A310",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 826,
+        "name": "Canon PowerShot A540",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 483,
+        "name": "Canon PowerShot A60",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 1015,
+        "name": "Canon PowerShot A70",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 942,
+        "name": "Canon PowerShot G2",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 910,
+        "name": "Canon PowerShot G5",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 1008,
+        "name": "Canon PowerShot S1 IS",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 527,
+        "name": "Canon PowerShot S30",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 312,
+        "name": "Canon PowerShot S50",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 750,
+        "name": "Canon PowerShot SD850 IS",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 432,
+        "name": "CASIO COMPUTER CO.,LTD. EX-S1",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 1045,
+        "name": "CASIO QV-3000EX",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 1087,
+        "name": "Eastman Kodak Company Kodak CLAS",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 905,
+        "name": "FUJIFILM FinePix A303",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 272,
+        "name": "FUJIFILM FinePix E500",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 833,
+        "name": "FUJIFILM FinePix S3Pro",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 1009,
+        "name": "FUJIFILM FinePix S5500",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 233,
+        "name": "FUJIFILM FinePix S8000fd",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 246,
+        "name": "FUJIFILM FinePix Z1",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 429,
+        "name": "Hewlett-Packard hp photosmart 73",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 763,
+        "name": "HP pst2600",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 33,
+        "name": "HUAWEI P7-L10",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 946,
+        "name": "KYOCERA Finecam S3R",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 1114,
+        "name": "Lancome 2007",
+        "groupId": 5,
+        "groupName": "Album"
+    },
+    {
+        "id": 1107,
+        "name": "Leilani",
+        "groupId": 2,
+        "groupName": "Person"
+    },
+    {
+        "id": 1095,
+        "name": "Middelkerke",
+        "groupId": 4,
+        "groupName": "Location"
+    },
+    {
+        "id": 407,
+        "name": "Minolta Co., Ltd. DiMAGE X20",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 595,
+        "name": "NIKON CORPORATION NIKON D600",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 636,
+        "name": "NIKON CORPORATION NIKON D7000",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 84,
+        "name": "NIKON CORPORATION NIKON D70s",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 147,
+        "name": "Nokia N78",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 947,
+        "name": "OLYMPUS CORPORATION X-3,C-60Z",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 234,
+        "name": "OLYMPUS IMAGING CORP. SP510UZ",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 270,
+        "name": "Panasonic DMC-FX01",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 777,
+        "name": "Panasonic DMC-FX50",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 237,
+        "name": "Panasonic DMC-TZ5",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 158,
+        "name": "QCOM-AA QCAM-AA",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 314,
+        "name": "RICOH RDC-7",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 83,
+        "name": "RICOH RDC-i500",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 149,
+        "name": "SAMSUNG GT-I9000",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 111,
+        "name": "Samsung GT-I9100",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 86,
+        "name": "SAMSUNG GT-I9300",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 113,
+        "name": "SAMSUNG GT-S5830",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 36,
+        "name": "samsung SM-G920W8",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 963,
+        "name": "Samsung Techwin < Digimax U-CA 5",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 276,
+        "name": "SONY CYBERSHOT",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 408,
+        "name": "SONY DSC-P10",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 907,
+        "name": "SONY DSC-P8",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 749,
+        "name": "SONY DSC-W120",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 792,
+        "name": "SONY DSC-W30",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 665,
+        "name": "SONY DSC-W55",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 948,
+        "name": "Sony Ericsson K750i",
+        "groupId": 1,
+        "groupName": "Camera"
+    },
+    {
+        "id": 823,
+        "name": "Sony Ericsson W880i",
+        "groupId": 1,
+        "groupName": "Camera"
+    }
+]

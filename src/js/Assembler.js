@@ -1,4 +1,5 @@
-import PhpUrlHelper from '@/js/PhpUrlHelper.js'
+// import PhpUrlHelper from '@/js/PhpUrlHelper.js'
+import DemoUrlHelper from '@/js/DemoUrlHelper.js'
 import AlbumNavigator from '@/js/AlbumNavigator.js'
 import ImageWorker from '@/js/loaders/ImageWorker'
 import XhrWorker from '@/js/loaders/XhrWorker'
@@ -44,7 +45,7 @@ class Assembler {
     this.injector.service('dataRetriever', ['jsonLoader', 'tagsLoader', 'exifLoader', 'urlHelper', 'applicationState'], DataRetriever)
     this.injector.service('dataUpdater', ['httpClient', 'urlHelper', 'applicationState'], DataUpdater)
     this.injector.service('navigator', ['router'], AlbumNavigator)
-    this.injector.service('urlHelper', [], PhpUrlHelper)
+    this.injector.service('urlHelper', [], DemoUrlHelper)
     this.injector.service('keyHandler', ['navigator'], KeyHandler)
 
     window.addEventListener('resize', gallerySizeListener.calibrateThumbnails)
