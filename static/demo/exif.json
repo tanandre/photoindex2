@@ -1,0 +1,60 @@
+{
+    "FILE": {
+        "FileName": "IMG_20140314_222704.jpg",
+        "FileDateTime": 1394832424,
+        "FileSize": 2864202,
+        "FileType": 2,
+        "MimeType": "image\/jpeg",
+        "SectionsFound": "ANY_TAG, IFD0, THUMBNAIL, EXIF, GPS, INTEROP"
+    },
+    "COMPUTED": {
+        "html": "width=\"2592\" height=\"1944\"",
+        "Height": 1944,
+        "Width": 2592,
+        "IsColor": 1,
+        "ByteOrderMotorola": 1,
+        "Thumbnail.FileType": 2,
+        "Thumbnail.MimeType": "image\/jpeg"
+    },
+    "IFD0": {
+        "GPS_IFD_Pointer": 395,
+        "Model": "Nexus 7",
+        "Exif_IFD_Pointer": 139,
+        "YCbCrPositioning": 1,
+        "YResolution": "72\/1",
+        "ResolutionUnit": 2,
+        "XResolution": "72\/1",
+        "Make": "asus"
+    },
+    "THUMBNAIL": {
+        "YResolution": "72\/1",
+        "ResolutionUnit": 2,
+        "XResolution": "72\/1",
+        "Compression": 6,
+        "JPEGInterchangeFormat": 527,
+        "JPEGInterchangeFormatLength": 10205
+    },
+    "EXIF": {
+        "InteroperabilityOffset": 365,
+        "ExposureTime": "1\/33",
+        "DateTimeDigitized": "2014:03:14 22:27:04",
+        "ISOSpeedRatings": 470,
+        "ColorSpace": 1,
+        "DateTimeOriginal": "2014:03:14 22:27:04",
+        "FlashPixVersion": "0100",
+        "ComponentsConfiguration": "\u0001\u0002\u0003\u0000",
+        "ExposureBiasValue": "0\/6",
+        "ExifImageLength": 1944,
+        "ExifVersion": "0220",
+        "ExifImageWidth": 2592,
+        "FocalLength": "295\/100"
+    },
+    "GPS": {
+        "GPSImgDirection": "185\/1",
+        "GPSImgDirectionRef": "M"
+    },
+    "INTEROP": {
+        "InterOperabilityIndex": "R98",
+        "InterOperabilityVersion": "0100"
+    }
+}

@@ -36,7 +36,7 @@ class PhpUrlHelper {
   }
 
   getAllTags () {
-    return '/photoindex/php/tags.json'
+    return '/static/demo/alltags.json'
   }
 
   getVideoUrl (photo, type) {
@@ -49,11 +49,11 @@ class PhpUrlHelper {
   }
 
   getTagsUrl (photo) {
-    return '/photoindex/php/tags.php?id=' + photo.id
+    return '/static/demo/tags.json?id=' + photo.id
   }
 
   getExifUrl (photo) {
-    return '/photoindex/php/exif.php?id=' + photo.id
+    return '/static/demo/exif.json?id=' + photo.id
   }
 }
 
